@@ -110,7 +110,7 @@ h2::after { right: -40px; }
     100% { transform: translateY(0); }
 }
 
-/* NEW: Animation for individual letters */
+/* Animation for individual letters */
 @keyframes letterWave {
     0%, 100% { transform: translateY(0); }
     50% { transform: translateY(-8px); }
@@ -124,8 +124,13 @@ h2::after { right: -40px; }
     animation: float 4s ease-in-out infinite;
 }
 
-/* NEW: Styling for the individual letter spans */
-.hero-headline span {
+/* NEW: This class keeps words from breaking apart */
+.hero-headline .word {
+    display: inline-block;
+}
+
+/* UPDATED: Targets only the letter spans for the wave animation */
+.hero-headline .letter {
     display: inline-block; /* Required for transforms */
     position: relative;
     /* Applies the wave animation to each letter */
