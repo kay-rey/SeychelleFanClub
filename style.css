@@ -273,3 +273,9 @@ h2::after { right: -40px; }
         grid-template-columns: 1fr 1fr;
     }
 }
+
+@media (max-width: 380px) {
+    .hero-headline {
+        font-size: 2rem; /* Or a slightly smaller size */
+    }
+}
