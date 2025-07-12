@@ -103,25 +103,36 @@ h2::after { right: -40px; }
     margin-bottom: 30px;
 }
 
-/* UPDATED: More subtle floating animation */
+/* --- Animation Keyframes --- */
+
+/* Animation for the whole headline block */
 @keyframes float {
     0% { transform: translateY(0); }
-    50% { transform: translateY(-6px); } /* Reduced distance */
+    50% { transform: translateY(-6px); }
     100% { transform: translateY(0); }
 }
 
-/* UPDATED: More subtle letter wave animation */
+/* Animation for individual letters */
 @keyframes letterWave {
     0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-4px); } /* Reduced distance */
+    50% { transform: translateY(-4px); }
+}
+
+/* NEW: Sparkle animation */
+@keyframes sparkle {
+  0%, 100% {
+    text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 15px #fff;
+  }
+  50% {
+    text-shadow: 0 0 10px #fff, 0 0 20px var(--primary-yellow), 0 0 30px var(--accent-pink);
+  }
 }
 
 .hero-headline {
     font-size: clamp(2.5rem, 6vw, 4.5rem);
     color: var(--text-color);
     margin: 0;
-    /* Applies the floating animation to the entire block */
-    animation: float 5s ease-in-out infinite; /* Increased duration */
+    animation: float 5s ease-in-out infinite;
 }
 
 .hero-headline .word {
@@ -131,9 +142,12 @@ h2::after { right: -40px; }
 .hero-headline .letter {
     display: inline-block;
     position: relative;
-    /* Applies the wave animation to each letter */
-    animation: letterWave 2.5s ease-in-out infinite; /* Increased duration */
+    /* UPDATED: Added the new 'sparkle' animation alongside the existing 'letterWave' */
+    animation:
+        letterWave 2.5s ease-in-out infinite,
+        sparkle 4s ease-in-out infinite;
 }
+
 
 @keyframes fadeIn {
     from { opacity: 0; transform: translateY(20px); }
