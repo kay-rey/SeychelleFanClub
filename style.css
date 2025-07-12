@@ -28,7 +28,6 @@ body {
 }
 
 section {
-    /* UPDATED: Increased bottom padding to make space for the wave below the content */
     padding: 80px 0 120px 0; /* top, right, bottom, left */
     position: relative;
     background-color: transparent;
@@ -48,14 +47,13 @@ h1, h2, h3 {
 }
 
 h2 {
-    font-size: clamp(2.2rem, 8vw, 2.8rem); /* Adjusted for mobile */
+    font-size: clamp(2.2rem, 8vw, 2.8rem);
     text-align: center;
     margin-bottom: 50px;
     color: var(--accent-pink);
     position: relative;
 }
 
-/* Icons are hidden by default on mobile */
 h2::before, h2::after {
     display: none;
 }
@@ -74,7 +72,7 @@ h2::before, h2::after {
     position: relative;
     display: block;
     width: calc(100% + 1.3px);
-    height: 100px; /* Smaller wave on mobile */
+    height: 100px;
 }
 
 /* --- Hero Section --- */
@@ -95,7 +93,7 @@ h2::before, h2::after {
     animation: fadeIn 1.5s ease-in-out forwards;
 }
 .hero-image {
-    width: clamp(200px, 50vw, 280px); /* Adjusted for mobile */
+    width: clamp(200px, 50vw, 280px);
     height: clamp(200px, 50vw, 280px);
     border-radius: 50%;
     object-fit: cover;
@@ -110,14 +108,32 @@ h2::before, h2::after {
 @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
 @keyframes floatUp { 0% { transform: translateY(0) rotateY(0deg); opacity: 0; } 20% { opacity: 0.8; } 100% { transform: translateY(-120vh) rotateY(360deg); opacity: 0; } }
 
+/* RESTORED: The original text-shadow sparkle animation */
+@keyframes sparkle {
+  0%, 100% {
+    text-shadow: 0 0 5px #fff, 0 0 10px #fff;
+  }
+  50% {
+    text-shadow: 0 0 10px #fff, 0 0 20px var(--accent-pink);
+  }
+}
+
 .hero-headline {
-    font-size: clamp(2rem, 8vw, 3rem); /* Adjusted for mobile */
+    font-size: clamp(2rem, 8vw, 3rem);
     color: var(--text-color);
     margin: 0;
     animation: float 5s ease-in-out infinite;
 }
 .hero-headline .word { display: inline-block; }
-.hero-headline .letter { display: inline-block; position: relative; animation: letterWave 2.5s ease-in-out infinite; }
+
+/* RESTORED: Applying the sparkle animation to each letter */
+.hero-headline .letter {
+    display: inline-block;
+    position: relative;
+    animation:
+        letterWave 2.5s ease-in-out infinite,
+        sparkle 3s ease-in-out infinite;
+}
 
 /* --- Floating Shapes --- */
 .floating-shapes { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; }
@@ -129,7 +145,6 @@ h2::before, h2::after {
 .floating-shapes span:nth-child(odd) { border-radius: 50%; border: 2px solid rgba(255, 255, 255, 0.7); background-color: transparent !important; }
 .floating-shapes span:nth-child(4n+1) { background-color: var(--primary-yellow); }
 .floating-shapes span:nth-child(4n+1)::before, .floating-shapes span:nth-child(4n+1)::after { background-color: var(--primary-yellow); }
-/* Staggering for floating shapes */
 .floating-shapes span:nth-child(1) { left: 10%; animation-delay: 0s; }
 .floating-shapes span:nth-child(2) { left: 20%; animation-delay: 2s; animation-duration: 12s; transform: scale(1.2); }
 .floating-shapes span:nth-child(3) { left: 30%; animation-delay: 4s; }
@@ -201,7 +216,6 @@ h2::before, h2::after {
    ========================================================================== */
 @media (min-width: 768px) {
     section {
-        /* UPDATED: Increased bottom padding for desktop to prevent overlap */
         padding: 100px 0 160px 0;
     }
 
@@ -209,7 +223,6 @@ h2::before, h2::after {
         font-size: clamp(2.5rem, 5vw, 3.5rem);
     }
 
-    /* Make icons visible on larger screens */
     h2::before, h2::after {
         display: block;
         content: '\2726';
@@ -258,14 +271,12 @@ h2::before, h2::after {
         gap: 30px;
     }
 
-    /* Desktop hover effect for lookalike */
     @media (hover: hover) {
         .lookalike-container:hover .back-image { opacity: 1; }
         .lookalike-container:hover .front-image { opacity: 0; }
-        .lookalike-container::after { display: none; /* Hide tap cue on desktop */ }
+        .lookalike-container::after { display: none; }
     }
 
-    /* Mobile-only styles */
     @media (hover: none) {
         .lookalike-container::after { opacity: 1; }
         .lookalike-container.is-flipped::after { opacity: 0; }
