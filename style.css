@@ -26,7 +26,8 @@ body {
 }
 
 section {
-    padding: 80px 0;
+    padding: 100px 0;
+    position: relative;
 }
 
 h1, h2, h3 {
@@ -40,6 +41,37 @@ h2 {
     text-align: center;
     margin-bottom: 60px;
     color: var(--accent-pink);
+    position: relative; /* For pseudo-elements */
+}
+
+h2::before, h2::after {
+    content: '\2726'; /* Sparkle character */
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 0.5em;
+    opacity: 0.5;
+}
+
+h2::before { left: -40px; }
+
+h2::after { right: -40px; }
+
+/* --- Section Backgrounds --- */
+.about-section {
+    background: linear-gradient(180deg, var(--background-color) 0%, #fff8fa 100%);
+}
+
+.dogs-section {
+    background: linear-gradient(180deg, #fff8fa 0%, var(--primary-pink) 100%);
+}
+
+.lookalike-section {
+    background: linear-gradient(180deg, var(--primary-pink) 0%, var(--primary-yellow) 100%);
+}
+
+.news-section {
+    background: linear-gradient(180deg, var(--primary-yellow) 0%, var(--background-color) 100%);
 }
 
 /* --- Hero Section --- */
@@ -48,12 +80,16 @@ h2 {
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: var(--primary-yellow);
+    background: radial-gradient(circle, var(--primary-yellow) 0%, var(--accent-pink) 100%);
     text-align: center;
     padding: 40px 20px;
+    position: relative;
+    overflow: hidden;
 }
 
 .hero-content {
+    position: relative;
+    z-index: 2;
     animation: fadeIn 1.5s ease-in-out forwards;
 }
 
@@ -78,11 +114,62 @@ h2 {
     to { opacity: 1; transform: translateY(0); }
 }
 
-/* --- About Section --- */
-.about-section {
-    background-color: white;
+/* --- Floating Hearts Animation --- */
+.floating-shapes {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
 }
 
+.floating-shapes span {
+    position: absolute;
+    bottom: -50px;
+    width: 20px;
+    height: 20px;
+    background-color: white;
+    opacity: 0;
+    animation: floatUp 10s infinite linear;
+    transform: rotate(-45deg);
+}
+
+.floating-shapes span::before,
+.floating-shapes span::after {
+    content: '';
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    background-color: white;
+    border-radius: 50%;
+}
+
+.floating-shapes span::before { top: -10px; left: 0; }
+.floating-shapes span::after { top: 0; left: 10px; }
+
+.floating-shapes span:nth-child(odd) { background-color: var(--primary-yellow); }
+.floating-shapes span:nth-child(odd)::before, .floating-shapes span:nth-child(odd)::after { background-color: var(--primary-yellow); }
+
+/* Staggering animations and positions */
+.floating-shapes span:nth-child(1) { left: 10%; animation-delay: 0s; transform: scale(0.8) rotate(-45deg); }
+.floating-shapes span:nth-child(2) { left: 20%; animation-delay: 2s; animation-duration: 12s; transform: scale(1.2) rotate(-45deg); }
+.floating-shapes span:nth-child(3) { left: 30%; animation-delay: 4s; transform: scale(0.6) rotate(-45deg); }
+.floating-shapes span:nth-child(4) { left: 40%; animation-delay: 1s; animation-duration: 15s; transform: scale(1.0) rotate(-45deg); }
+.floating-shapes span:nth-child(5) { left: 50%; animation-delay: 3s; transform: scale(0.8) rotate(-45deg); }
+.floating-shapes span:nth-child(6) { left: 60%; animation-delay: 5s; animation-duration: 11s; transform: scale(1.1) rotate(-45deg); }
+.floating-shapes span:nth-child(7) { left: 70%; animation-delay: 2.5s; transform: scale(0.7) rotate(-45deg); }
+.floating-shapes span:nth-child(8) { left: 80%; animation-delay: 6s; animation-duration: 13s; transform: scale(1.3) rotate(-45deg); }
+.floating-shapes span:nth-child(9) { left: 90%; animation-delay: 3.5s; transform: scale(0.9) rotate(-45deg); }
+.floating-shapes span:nth-child(10) { left: 5%; animation-delay: 7s; animation-duration: 10s; transform: scale(1.0) rotate(-45deg); }
+
+@keyframes floatUp {
+    0% { transform: translateY(0) rotate(-45deg) rotateY(0deg); opacity: 0; }
+    20% { opacity: 0.8; }
+    100% { transform: translateY(-120vh) rotate(270deg) rotateY(360deg); opacity: 0; }
+}
+
+/* --- About Section --- */
 .about-content {
     display: grid;
     grid-template-columns: 1fr;
@@ -90,22 +177,10 @@ h2 {
     align-items: center;
 }
 
-.about-text p {
-    font-size: 1.1rem;
-    margin-bottom: 20px;
-}
-
-.about-image img {
-    width: 100%;
-    height: auto;
-    border-radius: 12px;
-}
+.about-text p { font-size: 1.1rem; margin-bottom: 20px; }
+.about-image img { width: 100%; height: auto; border-radius: 12px; }
 
 /* --- Dogs Section --- */
-.dogs-section {
-    background-color: var(--primary-pink);
-}
-
 .dogs-container {
     display: flex;
     justify-content: center;
@@ -113,10 +188,7 @@ h2 {
     flex-wrap: wrap;
 }
 
-.dog-profile {
-    text-align: center;
-    max-width: 300px;
-}
+.dog-profile { text-align: center; max-width: 300px; }
 
 .dog-profile img {
     width: 100%;
@@ -133,28 +205,11 @@ h2 {
     box-shadow: 0 15px 30px rgba(0,0,0,0.12);
 }
 
-.dog-profile h3 {
-    font-size: 1.8rem;
-    margin-top: 20px;
-    margin-bottom: 5px;
-}
-
-.dog-title {
-    font-style: italic;
-    color: var(--text-color);
-    opacity: 0.8;
-}
+.dog-profile h3 { font-size: 1.8rem; margin-top: 20px; margin-bottom: 5px; }
+.dog-title { font-style: italic; color: var(--text-color); opacity: 0.8; }
 
 /* --- Lookalike Section --- */
-.lookalike-section {
-    background-color: var(--primary-yellow);
-    text-align: center;
-}
-
-.lookalike-subtitle {
-    font-size: 1.2rem;
-    margin-bottom: 40px;
-}
+.lookalike-subtitle { font-size: 1.2rem; margin-bottom: 40px; text-align: center; }
 
 .lookalike-container {
     position: relative;
@@ -177,23 +232,11 @@ h2 {
     box-shadow: 0 15px 50px rgba(0,0,0,0.15);
 }
 
-.lookalike-container .back-image {
-    opacity: 0;
-}
-
-.lookalike-container:hover .back-image {
-    opacity: 1;
-}
-
-.lookalike-container:hover .front-image {
-    opacity: 0;
-}
+.lookalike-container .back-image { opacity: 0; }
+.lookalike-container:hover .back-image { opacity: 1; }
+.lookalike-container:hover .front-image { opacity: 0; }
 
 /* --- News Section --- */
-.news-section {
-    background-color: white;
-}
-
 .news-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -205,13 +248,15 @@ h2 {
     border: 1px solid #f0f0f0;
     padding: 30px;
     border-radius: 12px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-.news-item h3 {
-    font-size: 1.5rem;
-    color: var(--accent-pink);
-    margin-bottom: 15px;
+.news-item:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.08);
 }
+
+.news-item h3 { font-size: 1.5rem; color: var(--accent-pink); margin-bottom: 15px; }
 
 /* --- Footer --- */
 .site-footer {
