@@ -249,7 +249,11 @@ h2::after { right: -40px; }
 .dog-title { font-style: italic; color: var(--text-color); opacity: 0.8; }
 
 /* --- Lookalike Section --- */
-.lookalike-subtitle { font-size: 1.2rem; margin-bottom: 40px; text-align: center; }
+.lookalike-subtitle {
+    font-size: 1.2rem;
+    margin-bottom: 40px;
+    text-align: center;
+}
 
 .lookalike-container {
     position: relative;
@@ -269,12 +273,64 @@ h2::after { right: -40px; }
     object-fit: cover;
     border-radius: 12px;
     transition: opacity 0.8s cubic-bezier(0.25, 1, 0.5, 1);
-    box-shadow: 0 15px 50px rgba(0,0,0,0.15);
+    box-shadow: 0 15px 50px rgba(0, 0, 0, 0.15);
+    /* This prevents a flash on first click in some browsers */
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
 }
 
-.lookalike-container .back-image { opacity: 0; }
-.lookalike-container:hover .back-image { opacity: 1; }
-.lookalike-container:hover .front-image { opacity: 0; }
+.lookalike-container .back-image {
+    opacity: 0;
+}
+
+/* --- Logic for Desktop (Hover) and Mobile (Tap) --- */
+
+/* For devices that can hover (desktops) */
+@media (hover: hover) {
+    .lookalike-container:hover .back-image {
+        opacity: 1;
+    }
+    .lookalike-container:hover .front-image {
+        opacity: 0;
+    }
+}
+
+/* For devices that support touch (mobile/tablet) */
+.lookalike-container.is-flipped .back-image {
+    opacity: 1;
+}
+
+.lookalike-container.is-flipped .front-image {
+    opacity: 0;
+}
+
+/* --- Visual Cue for Mobile Users --- */
+.lookalike-container::after {
+    content: '👆 Tap to Reveal';
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    padding: 8px 15px;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    pointer-events: none; /* So it doesn't interfere with the click */
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+}
+
+/* Show the tap cue only on devices that DON'T support hover */
+@media (hover: none) {
+    .lookalike-container::after {
+        opacity: 1;
+    }
+    /* Hide the cue once the user has tapped it */
+    .lookalike-container.is-flipped::after {
+        opacity: 0;
+    }
+}
 
 /* --- News Section --- */
 .news-grid {

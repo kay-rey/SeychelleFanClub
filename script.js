@@ -6,7 +6,6 @@ AOS.init({
     easing: 'ease-in-out', // Default easing for AOS animations
 });
 
-
 // --- Hero Headline Letter Animation ---
 document.addEventListener('DOMContentLoaded', () => {
     const headline = document.querySelector('.hero-headline');
@@ -17,7 +16,6 @@ document.addEventListener('DOMContentLoaded', () => {
         headline.innerHTML = ''; // Clear the original text
 
         words.forEach(word => {
-            // Create a container to hold the letters of a word
             const wordContainer = document.createElement('span');
             wordContainer.className = 'word';
 
@@ -26,16 +24,21 @@ document.addEventListener('DOMContentLoaded', () => {
                 const letterSpan = document.createElement('span');
                 letterSpan.className = 'letter';
                 letterSpan.textContent = char;
-                // Stagger the animation delay for each letter
                 letterSpan.style.animationDelay = `${index * 50}ms`;
                 wordContainer.appendChild(letterSpan);
             });
 
-            // Add the complete word (with its letters) to the headline
             headline.appendChild(wordContainer);
-
-            // Add a space after each word
             headline.appendChild(document.createTextNode(' '));
+        });
+    }
+
+    // --- Celebrity Lookalike Mobile Tap Functionality ---
+    const lookalikeContainer = document.querySelector('.lookalike-container');
+    if (lookalikeContainer) {
+        lookalikeContainer.addEventListener('click', () => {
+            // This toggles a class on click
+            lookalikeContainer.classList.toggle('is-flipped');
         });
     }
 });
