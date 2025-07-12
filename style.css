@@ -103,10 +103,19 @@ h2::after { right: -40px; }
     margin-bottom: 30px;
 }
 
+/* NEW: Added floating animation */
+@keyframes float {
+    0% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+    100% { transform: translateY(0); }
+}
+
 .hero-headline {
     font-size: clamp(2.5rem, 6vw, 4.5rem);
     color: var(--text-color);
     margin: 0;
+    /* This line applies the new animation */
+    animation: float 4s ease-in-out infinite;
 }
 
 @keyframes fadeIn {
@@ -271,11 +280,5 @@ h2::after { right: -40px; }
 @media (min-width: 768px) {
     .about-content {
         grid-template-columns: 1fr 1fr;
-    }
-}
-
-@media (max-width: 380px) {
-    .hero-headline {
-        font-size: 2rem; /* Or a slightly smaller size */
     }
 }
