@@ -28,7 +28,8 @@ body {
 }
 
 section {
-    padding: 80px 0; /* Slightly less padding on mobile */
+    /* UPDATED: Increased bottom padding to make space for the wave below the content */
+    padding: 80px 0 120px 0; /* top, right, bottom, left */
     position: relative;
     background-color: transparent;
 }
@@ -200,7 +201,8 @@ h2::before, h2::after {
    ========================================================================== */
 @media (min-width: 768px) {
     section {
-        padding: 100px 0;
+        /* UPDATED: Increased bottom padding for desktop to prevent overlap */
+        padding: 100px 0 160px 0;
     }
 
     h2 {
@@ -260,7 +262,7 @@ h2::before, h2::after {
     @media (hover: hover) {
         .lookalike-container:hover .back-image { opacity: 1; }
         .lookalike-container:hover .front-image { opacity: 0; }
-        .lookalike-container::after { display: none; } /* Hide tap cue on desktop */
+        .lookalike-container::after { display: none; /* Hide tap cue on desktop */ }
     }
 
     /* Mobile-only styles */
