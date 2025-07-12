@@ -103,17 +103,17 @@ h2::after { right: -40px; }
     margin-bottom: 30px;
 }
 
-/* Animation for the whole headline block */
+/* UPDATED: More subtle floating animation */
 @keyframes float {
     0% { transform: translateY(0); }
-    50% { transform: translateY(-10px); }
+    50% { transform: translateY(-6px); } /* Reduced distance */
     100% { transform: translateY(0); }
 }
 
-/* Animation for individual letters */
+/* UPDATED: More subtle letter wave animation */
 @keyframes letterWave {
     0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-8px); }
+    50% { transform: translateY(-4px); } /* Reduced distance */
 }
 
 .hero-headline {
@@ -121,22 +121,19 @@ h2::after { right: -40px; }
     color: var(--text-color);
     margin: 0;
     /* Applies the floating animation to the entire block */
-    animation: float 4s ease-in-out infinite;
+    animation: float 5s ease-in-out infinite; /* Increased duration */
 }
 
-/* NEW: This class keeps words from breaking apart */
 .hero-headline .word {
     display: inline-block;
 }
 
-/* UPDATED: Targets only the letter spans for the wave animation */
 .hero-headline .letter {
-    display: inline-block; /* Required for transforms */
+    display: inline-block;
     position: relative;
     /* Applies the wave animation to each letter */
-    animation: letterWave 2s ease-in-out infinite;
+    animation: letterWave 2.5s ease-in-out infinite; /* Increased duration */
 }
-
 
 @keyframes fadeIn {
     from { opacity: 0; transform: translateY(20px); }
