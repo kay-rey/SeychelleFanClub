@@ -5,6 +5,7 @@
     --accent-pink: #FFB6C1;
     --text-color: #333333;
     --background-color: #fdfdff;
+    --seafoam-blue: #a0d2db;
     --font-heading: 'Playfair Display', serif;
     --font-body: 'Montserrat', sans-serif;
 }
@@ -17,6 +18,7 @@ body {
     line-height: 1.7;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    overflow-x: hidden; /* Prevents horizontal scroll */
 }
 
 .container {
@@ -28,6 +30,7 @@ body {
 section {
     padding: 100px 0;
     position: relative;
+    background-color: transparent;
 }
 
 h1, h2, h3 {
@@ -44,8 +47,9 @@ h2 {
     position: relative; /* For pseudo-elements */
 }
 
+/* UPDATED: Changed the icon back to a star */
 h2::before, h2::after {
-    content: '\2726'; /* Sparkle character */
+    content: '\2726';
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
@@ -54,24 +58,25 @@ h2::before, h2::after {
 }
 
 h2::before { left: -40px; }
-
 h2::after { right: -40px; }
 
-/* --- Section Backgrounds --- */
-.about-section {
-    background: linear-gradient(180deg, var(--background-color) 0%, #fff8fa 100%);
+
+/* --- Wave Section Dividers --- */
+.wave-divider {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    overflow: hidden;
+    line-height: 0;
+    transform: rotate(180deg);
 }
 
-.dogs-section {
-    background: linear-gradient(180deg, #fff8fa 0%, var(--primary-pink) 100%);
-}
-
-.lookalike-section {
-    background: linear-gradient(180deg, var(--primary-pink) 0%, var(--primary-yellow) 100%);
-}
-
-.news-section {
-    background: linear-gradient(180deg, var(--primary-yellow) 0%, var(--background-color) 100%);
+.wave-divider svg {
+    position: relative;
+    display: block;
+    width: calc(100% + 1.3px);
+    height: 150px;
 }
 
 /* --- Hero Section --- */
@@ -104,28 +109,15 @@ h2::after { right: -40px; }
 }
 
 /* --- Animation Keyframes --- */
-
-/* Animation for the whole headline block */
 @keyframes float {
     0% { transform: translateY(0); }
     50% { transform: translateY(-6px); }
     100% { transform: translateY(0); }
 }
 
-/* Animation for individual letters */
 @keyframes letterWave {
     0%, 100% { transform: translateY(0); }
     50% { transform: translateY(-4px); }
-}
-
-/* NEW: Sparkle animation */
-@keyframes sparkle {
-  0%, 100% {
-    text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 15px #fff;
-  }
-  50% {
-    text-shadow: 0 0 10px #fff, 0 0 20px var(--primary-yellow), 0 0 30px var(--accent-pink);
-  }
 }
 
 .hero-headline {
@@ -142,19 +134,15 @@ h2::after { right: -40px; }
 .hero-headline .letter {
     display: inline-block;
     position: relative;
-    /* UPDATED: Added the new 'sparkle' animation alongside the existing 'letterWave' */
-    animation:
-        letterWave 2.5s ease-in-out infinite,
-        sparkle 4s ease-in-out infinite;
+    animation: letterWave 2.5s ease-in-out infinite;
 }
-
 
 @keyframes fadeIn {
     from { opacity: 0; transform: translateY(20px); }
     to { opacity: 1; transform: translateY(0); }
 }
 
-/* --- Floating Hearts Animation --- */
+/* --- Floating Hearts & Bubbles Animation --- */
 .floating-shapes {
     position: absolute;
     top: 0;
@@ -172,11 +160,13 @@ h2::after { right: -40px; }
     background-color: white;
     opacity: 0;
     animation: floatUp 10s infinite linear;
-    transform: rotate(-45deg);
 }
 
-.floating-shapes span::before,
-.floating-shapes span::after {
+.floating-shapes span:nth-child(even) {
+    transform: rotate(-45deg);
+}
+.floating-shapes span:nth-child(even)::before,
+.floating-shapes span:nth-child(even)::after {
     content: '';
     position: absolute;
     width: 20px;
@@ -184,24 +174,30 @@ h2::after { right: -40px; }
     background-color: white;
     border-radius: 50%;
 }
+.floating-shapes span:nth-child(even)::before { top: -10px; left: 0; }
+.floating-shapes span:nth-child(even)::after { top: 0; left: 10px; }
 
-.floating-shapes span::before { top: -10px; left: 0; }
-.floating-shapes span::after { top: 0; left: 10px; }
+.floating-shapes span:nth-child(odd) {
+    border-radius: 50%;
+    border: 2px solid rgba(255, 255, 255, 0.7);
+    background-color: transparent !important; /* Bubbles are clear */
+}
 
-.floating-shapes span:nth-child(odd) { background-color: var(--primary-yellow); }
-.floating-shapes span:nth-child(odd)::before, .floating-shapes span:nth-child(odd)::after { background-color: var(--primary-yellow); }
+
+.floating-shapes span:nth-child(4n+1) { background-color: var(--primary-yellow); }
+.floating-shapes span:nth-child(4n+1)::before, .floating-shapes span:nth-child(4n+1)::after { background-color: var(--primary-yellow); }
 
 /* Staggering animations and positions */
 .floating-shapes span:nth-child(1) { left: 10%; animation-delay: 0s; transform: scale(0.8) rotate(-45deg); }
-.floating-shapes span:nth-child(2) { left: 20%; animation-delay: 2s; animation-duration: 12s; transform: scale(1.2) rotate(-45deg); }
+.floating-shapes span:nth-child(2) { left: 20%; animation-delay: 2s; animation-duration: 12s; transform: scale(1.2); }
 .floating-shapes span:nth-child(3) { left: 30%; animation-delay: 4s; transform: scale(0.6) rotate(-45deg); }
-.floating-shapes span:nth-child(4) { left: 40%; animation-delay: 1s; animation-duration: 15s; transform: scale(1.0) rotate(-45deg); }
+.floating-shapes span:nth-child(4) { left: 40%; animation-delay: 1s; animation-duration: 15s; transform: scale(1.0); }
 .floating-shapes span:nth-child(5) { left: 50%; animation-delay: 3s; transform: scale(0.8) rotate(-45deg); }
-.floating-shapes span:nth-child(6) { left: 60%; animation-delay: 5s; animation-duration: 11s; transform: scale(1.1) rotate(-45deg); }
+.floating-shapes span:nth-child(6) { left: 60%; animation-delay: 5s; animation-duration: 11s; transform: scale(1.1); }
 .floating-shapes span:nth-child(7) { left: 70%; animation-delay: 2.5s; transform: scale(0.7) rotate(-45deg); }
-.floating-shapes span:nth-child(8) { left: 80%; animation-delay: 6s; animation-duration: 13s; transform: scale(1.3) rotate(-45deg); }
+.floating-shapes span:nth-child(8) { left: 80%; animation-delay: 6s; animation-duration: 13s; transform: scale(1.3); }
 .floating-shapes span:nth-child(9) { left: 90%; animation-delay: 3.5s; transform: scale(0.9) rotate(-45deg); }
-.floating-shapes span:nth-child(10) { left: 5%; animation-delay: 7s; animation-duration: 10s; transform: scale(1.0) rotate(-45deg); }
+.floating-shapes span:nth-child(10) { left: 5%; animation-delay: 7s; animation-duration: 10s; transform: scale(1.0); }
 
 @keyframes floatUp {
     0% { transform: translateY(0) rotate(-45deg) rotateY(0deg); opacity: 0; }
@@ -210,6 +206,12 @@ h2::after { right: -40px; }
 }
 
 /* --- About Section --- */
+.about-section {
+    background-color: #fff8fa;
+    background-image: url('https://www.transparenttextures.com/patterns/simple-dashed.png');
+    background-blend-mode: overlay;
+}
+
 .about-content {
     display: grid;
     grid-template-columns: 1fr;
@@ -221,6 +223,8 @@ h2::after { right: -40px; }
 .about-image img { width: 100%; height: auto; border-radius: 12px; }
 
 /* --- Dogs Section --- */
+.dogs-section { background-color: var(--primary-pink); }
+
 .dogs-container {
     display: flex;
     justify-content: center;
@@ -249,11 +253,9 @@ h2::after { right: -40px; }
 .dog-title { font-style: italic; color: var(--text-color); opacity: 0.8; }
 
 /* --- Lookalike Section --- */
-.lookalike-subtitle {
-    font-size: 1.2rem;
-    margin-bottom: 40px;
-    text-align: center;
-}
+.lookalike-section { background-color: var(--primary-yellow); }
+
+.lookalike-subtitle { font-size: 1.2rem; margin-bottom: 40px; text-align: center; }
 
 .lookalike-container {
     position: relative;
@@ -273,8 +275,7 @@ h2::after { right: -40px; }
     object-fit: cover;
     border-radius: 12px;
     transition: opacity 0.8s cubic-bezier(0.25, 1, 0.5, 1);
-    box-shadow: 0 15px 50px rgba(0, 0, 0, 0.15);
-    /* This prevents a flash on first click in some browsers */
+    box-shadow: 0 15px 50px rgba(0,0,0,0.15);
     -webkit-backface-visibility: hidden;
     backface-visibility: hidden;
 }
@@ -283,9 +284,6 @@ h2::after { right: -40px; }
     opacity: 0;
 }
 
-/* --- Logic for Desktop (Hover) and Mobile (Tap) --- */
-
-/* For devices that can hover (desktops) */
 @media (hover: hover) {
     .lookalike-container:hover .back-image {
         opacity: 1;
@@ -295,7 +293,6 @@ h2::after { right: -40px; }
     }
 }
 
-/* For devices that support touch (mobile/tablet) */
 .lookalike-container.is-flipped .back-image {
     opacity: 1;
 }
@@ -304,7 +301,6 @@ h2::after { right: -40px; }
     opacity: 0;
 }
 
-/* --- Visual Cue for Mobile Users --- */
 .lookalike-container::after {
     content: '👆 Tap to Reveal';
     position: absolute;
@@ -316,23 +312,23 @@ h2::after { right: -40px; }
     padding: 8px 15px;
     border-radius: 20px;
     font-size: 0.9rem;
-    pointer-events: none; /* So it doesn't interfere with the click */
+    pointer-events: none;
     opacity: 0;
     transition: opacity 0.3s ease-in-out;
 }
 
-/* Show the tap cue only on devices that DON'T support hover */
 @media (hover: none) {
     .lookalike-container::after {
         opacity: 1;
     }
-    /* Hide the cue once the user has tapped it */
     .lookalike-container.is-flipped::after {
         opacity: 0;
     }
 }
 
 /* --- News Section --- */
+.news-section { background-color: var(--seafoam-blue); }
+
 .news-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -363,9 +359,16 @@ h2::after { right: -40px; }
     font-size: 0.9rem;
 }
 
-/* --- Responsive Design --- */
+/* --- Responsive Fixes --- */
 @media (min-width: 768px) {
     .about-content {
         grid-template-columns: 1fr 1fr;
+    }
+}
+
+/* NEW: This hides the side-icons on smaller screens to prevent overflow */
+@media (max-width: 768px) {
+    h2::before, h2::after {
+        display: none;
     }
 }
