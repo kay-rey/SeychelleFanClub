@@ -103,20 +103,35 @@ h2::after { right: -40px; }
     margin-bottom: 30px;
 }
 
-/* NEW: Added floating animation */
+/* Animation for the whole headline block */
 @keyframes float {
     0% { transform: translateY(0); }
     50% { transform: translateY(-10px); }
     100% { transform: translateY(0); }
 }
 
+/* NEW: Animation for individual letters */
+@keyframes letterWave {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-8px); }
+}
+
 .hero-headline {
     font-size: clamp(2.5rem, 6vw, 4.5rem);
     color: var(--text-color);
     margin: 0;
-    /* This line applies the new animation */
+    /* Applies the floating animation to the entire block */
     animation: float 4s ease-in-out infinite;
 }
+
+/* NEW: Styling for the individual letter spans */
+.hero-headline span {
+    display: inline-block; /* Required for transforms */
+    position: relative;
+    /* Applies the wave animation to each letter */
+    animation: letterWave 2s ease-in-out infinite;
+}
+
 
 @keyframes fadeIn {
     from { opacity: 0; transform: translateY(20px); }
