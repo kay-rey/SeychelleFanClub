@@ -6,14 +6,16 @@ AOS.init({
     easing: 'ease-in-out', // Default easing for AOS animations
 });
 
-// --- Hero Headline Letter Animation ---
+
+// --- Animate ALL Headings with the .animated-heading class ---
 document.addEventListener('DOMContentLoaded', () => {
-    const headline = document.querySelector('.hero-headline');
-    if (headline) {
-        const text = headline.textContent.trim();
+    const animatedHeadings = document.querySelectorAll('.animated-heading');
+
+    animatedHeadings.forEach(heading => {
+        const text = heading.textContent.trim();
         const words = text.split(' ');
 
-        headline.innerHTML = ''; // Clear the original text
+        heading.innerHTML = ''; // Clear the original text
 
         words.forEach(word => {
             const wordContainer = document.createElement('span');
@@ -28,16 +30,15 @@ document.addEventListener('DOMContentLoaded', () => {
                 wordContainer.appendChild(letterSpan);
             });
 
-            headline.appendChild(wordContainer);
-            headline.appendChild(document.createTextNode(' '));
+            heading.appendChild(wordContainer);
+            heading.appendChild(document.createTextNode(' '));
         });
-    }
+    });
 
     // --- Celebrity Lookalike Mobile Tap Functionality ---
     const lookalikeContainer = document.querySelector('.lookalike-container');
     if (lookalikeContainer) {
         lookalikeContainer.addEventListener('click', () => {
-            // This toggles a class on click
             lookalikeContainer.classList.toggle('is-flipped');
         });
     }

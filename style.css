@@ -18,7 +18,7 @@ body {
     line-height: 1.7;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    overflow-x: hidden; /* Prevents horizontal scroll */
+    overflow-x: hidden;
 }
 
 .container {
@@ -28,7 +28,7 @@ body {
 }
 
 section {
-    padding: 80px 0 120px 0; /* top, right, bottom, left */
+    padding: 80px 0 120px 0;
     position: relative;
     background-color: transparent;
 }
@@ -149,14 +149,17 @@ h2::before, h2::after {
   50% { text-shadow: 0 0 10px #fff, 0 0 20px var(--accent-pink); }
 }
 
+/* --- Animated Heading Styles --- */
 .hero-headline {
     font-size: clamp(2rem, 8vw, 3rem);
     color: var(--text-color);
     margin: 0;
     animation: float 5s ease-in-out infinite;
 }
-.hero-headline .word { display: inline-block; }
-.hero-headline .letter {
+.animated-heading .word {
+    display: inline-block;
+}
+.animated-heading .letter {
     display: inline-block;
     position: relative;
     animation:
