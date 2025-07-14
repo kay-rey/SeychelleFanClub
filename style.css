@@ -355,6 +355,9 @@ h2::after {
 .about-section {
 	background-color: #fff8fa;
 }
+.gallery-section {
+	background-color: var(--primary-yellow);
+}
 .dogs-section {
 	background-color: var(--primary-pink);
 }
@@ -603,10 +606,103 @@ h2::after {
 	font-size: 0.9rem;
 }
 
+/* --- Photo Gallery Section --- */
+.gallery-section {
+	padding-top: 60px;
+	position: relative;
+}
+.photo-gallery {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	gap: 16px;
+	margin-top: 32px;
+}
+.gallery-photo {
+	width: 100%;
+	aspect-ratio: 1/1;
+	object-fit: cover;
+	border-radius: 16px;
+	box-shadow: 0 4px 16px rgba(255, 182, 193, 0.15);
+	cursor: pointer;
+	transition: transform 0.2s, box-shadow 0.2s;
+	background: #fff;
+}
+.gallery-photo:hover,
+.gallery-photo:focus {
+	transform: scale(1.05) rotate(-2deg);
+	box-shadow: 0 8px 32px rgba(255, 182, 193, 0.25);
+	outline: 2px solid var(--accent-pink);
+}
+.lightbox-overlay {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background: rgba(255, 209, 220, 0.95);
+	z-index: 1000;
+	flex-direction: column;
+	animation: fadeIn 0.3s;
+}
+.lightbox-img {
+	max-width: 90vw;
+	max-height: 70vh;
+	border-radius: 20px;
+	box-shadow: 0 8px 32px rgba(255, 182, 193, 0.35);
+	margin-bottom: 16px;
+	background: #fff;
+}
+.lightbox-close {
+	position: absolute;
+	top: 24px;
+	right: 32px;
+	font-size: 2.5rem;
+	color: var(--accent-pink);
+	cursor: pointer;
+	z-index: 1010;
+	transition: color 0.2s;
+}
+.lightbox-close:hover {
+	color: var(--primary-pink);
+}
+.lightbox-prev,
+.lightbox-next {
+	position: absolute;
+	top: 50%;
+	font-size: 2.5rem;
+	color: var(--accent-pink);
+	background: rgba(255, 255, 255, 0.7);
+	border-radius: 50%;
+	width: 48px;
+	height: 48px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	cursor: pointer;
+	user-select: none;
+	z-index: 1010;
+	transform: translateY(-50%);
+	transition: background 0.2s, color 0.2s;
+}
+.lightbox-prev:hover,
+.lightbox-next:hover {
+	background: var(--primary-pink);
+	color: #fff;
+}
+.lightbox-prev {
+	left: 32px;
+}
+.lightbox-next {
+	right: 32px;
+}
+
 /* ==========================================================================
    Desktop and Tablet Styles (Progressive Enhancement)
    ========================================================================== */
-@media (min-width: 768px) {
+@media (min-width: 600px) {
 	section {
 		padding: 100px 0 160px 0;
 	}
@@ -668,6 +764,30 @@ h2::after {
 		gap: 30px;
 	}
 
+	.lightbox-img {
+		max-width: 98vw;
+		max-height: 60vh;
+	}
+	.lightbox-prev {
+		left: 8px;
+		right: auto;
+	}
+	.lightbox-next {
+		right: 8px;
+		left: auto;
+	}
+	.lightbox-prev,
+	.lightbox-next {
+		width: 40px;
+		height: 40px;
+		font-size: 2rem;
+	}
+	.lightbox-close {
+		top: 12px;
+		right: 16px;
+		font-size: 2rem;
+	}
+
 	@media (hover: hover) {
 		.lookalike-container:hover .back-image {
 			opacity: 1;
@@ -687,5 +807,13 @@ h2::after {
 		.lookalike-container.is-flipped::after {
 			opacity: 0;
 		}
+	}
+}
+
+/* --- Photo Gallery Responsive --- */
+@media (min-width: 900px) {
+	.photo-gallery {
+		grid-template-columns: repeat(3, 1fr);
+		gap: 32px;
 	}
 }
