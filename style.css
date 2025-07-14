@@ -338,6 +338,18 @@ h2::after {
 	animation-duration: 10s;
 	transform: scale(1);
 }
+.floating-shapes span:nth-child(11) {
+	left: 25%;
+	animation-delay: 8s;
+	animation-duration: 14s;
+	transform: scale(1.15);
+}
+.floating-shapes span:nth-child(12) {
+	left: 75%;
+	animation-delay: 9s;
+	animation-duration: 12s;
+	transform: scale(0.95);
+}
 
 /* --- Section Backgrounds --- */
 .about-section {
