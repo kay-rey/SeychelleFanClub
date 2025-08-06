@@ -114,3 +114,91 @@ document.addEventListener("DOMContentLoaded", () => {
 		startX = null;
 	});
 });
+
+// --- Poem Creator Functionality ---
+document.addEventListener("DOMContentLoaded", () => {
+	const poemButton = document.getElementById("poem-button");
+	const poemContainer = document.getElementById("poem-container");
+	const poemOutput = document.getElementById("poem-output");
+	const loader = document.getElementById("loader");
+
+	// Generate poem
+	poemButton.addEventListener("click", generatePoem);
+
+	async function generatePoem() {
+		// 1. Disable button and show loading state
+		poemButton.disabled = true;
+		poemButton.textContent = "✨ Thinking...";
+		poemOutput.innerHTML =
+			'<div style="display: flex; align-items: center; justify-content: center;"><p>Creating your poem...</p><div class="spinner"></div></div>';
+
+		// 2. Use a premade prompt for the Gemini API
+		const prompt = `Write a short, heartfelt, and romantic poem for my wife Seychelle. The poem must be exactly 4 lines long and express love, admiration, and appreciation. Make it sweet and personal.`;
+
+		// 3. Call the Gemini API
+		try {
+			const generatedText = await callGemini(prompt);
+			poemOutput.textContent = generatedText;
+		} catch (error) {
+			console.error("Error calling Gemini API:", error);
+			poemOutput.textContent =
+				"Sorry, my poetic inspiration failed me. Please try again.";
+		} finally {
+			// 4. Reset the button
+			resetButton();
+		}
+	}
+
+	function resetButton() {
+		poemButton.disabled = false;
+		poemButton.textContent = "✨ Write Another Poem for Seychelle";
+	}
+
+	// --- Gemini API Call with Exponential Backoff ---
+	async function callGemini(prompt, maxRetries = 3) {
+		const apiKey = ""; // API key will be injected by the environment
+		const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
+
+		const payload = {
+			contents: [
+				{
+					role: "user",
+					parts: [{ text: prompt }],
+				},
+			],
+		};
+
+		for (let i = 0; i < maxRetries; i++) {
+			try {
+				const response = await fetch(apiUrl, {
+					method: "POST",
+					headers: { "Content-Type": "application/json" },
+					body: JSON.stringify(payload),
+				});
+
+				if (!response.ok) {
+					throw new Error(`API request failed with status ${response.status}`);
+				}
+
+				const result = await response.json();
+
+				if (
+					result.candidates &&
+					result.candidates.length > 0 &&
+					result.candidates[0].content &&
+					result.candidates[0].content.parts &&
+					result.candidates[0].content.parts.length > 0
+				) {
+					return result.candidates[0].content.parts[0].text;
+				} else {
+					throw new Error("Invalid response structure from API.");
+				}
+			} catch (error) {
+				console.error(`Attempt ${i + 1} failed:`, error);
+				if (i === maxRetries - 1) throw error; // Rethrow last error
+				const delay = Math.pow(2, i) * 1000; // 1s, 2s, 4s
+				await new Promise((res) => setTimeout(res, delay));
+			}
+		}
+	}
+});
