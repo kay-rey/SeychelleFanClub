@@ -361,7 +361,7 @@ h2::after {
 	background-color: var(--primary-yellow);
 }
 .dogs-section {
-	background-color: var(--primary-pink);
+	background-color: var(--background-color);
 }
 .lookalike-section {
 	background-color: var(--primary-yellow);
@@ -370,7 +370,7 @@ h2::after {
 	background-color: var(--seafoam-blue);
 }
 .poem-section {
-	background-color: var(--background-color);
+	background-color: var(--primary-pink);
 }
 
 /* --- About Section --- */
