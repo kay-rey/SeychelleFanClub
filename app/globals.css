@@ -179,6 +179,15 @@
 	}
 }
 
+/* Cohesive Site-Wide Gradient System */
+.bg-gradient-radial {
+	background: radial-gradient(circle, var(--tw-gradient-stops));
+}
+
+.bg-pink-25 {
+	background-color: rgb(254 242 242 / 0.25);
+}
+
 /* Hero image styling */
 .hero-image-clip {
 	clip-path: shape(

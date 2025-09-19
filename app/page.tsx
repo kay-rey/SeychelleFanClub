@@ -13,7 +13,21 @@ export default function BirthdayPage() {
 	}, []);
 
 	return (
-		<div className="min-h-screen bg-gradient-to-br from-pink-50 via-yellow-50 to-pink-50">
+		<div className="min-h-screen relative">
+			{/* Cohesive Site-Wide Background System */}
+			<div className="fixed inset-0 z-0">
+				{/* Main gradient base */}
+				<div className="absolute inset-0 bg-gradient-to-br from-pink-50 via-pink-25 to-yellow-50" />
+
+				{/* Layered atmospheric gradients */}
+				<div className="absolute inset-0 bg-gradient-to-tr from-pink-100/20 via-transparent to-yellow-100/20" />
+				<div className="absolute inset-0 bg-gradient-to-bl from-yellow-100/15 via-transparent to-pink-100/15" />
+
+				{/* Soft light orbs for depth */}
+				<div className="absolute -top-1/2 -left-1/2 w-full h-full bg-gradient-radial from-pink-200/10 via-transparent to-transparent" />
+				<div className="absolute -bottom-1/2 -right-1/2 w-full h-full bg-gradient-radial from-yellow-200/10 via-transparent to-transparent" />
+			</div>
+
 			{/* Floating Sparkles */}
 			<div className="fixed inset-0 pointer-events-none overflow-hidden z-0">
 				{[...Array(20)].map((_, i) => (
@@ -221,7 +235,7 @@ export default function BirthdayPage() {
 			</section>
 
 			{/* Her Favorites Section */}
-			<section className="py-20 px-4 bg-gradient-to-r from-pink-50/80 to-yellow-50/80 relative z-10">
+			<section className="py-20 px-4 relative z-10">
 				<div className="container mx-auto">
 					<h2 className="font-serif text-4xl md:text-5xl text-center text-primary mb-16 text-balance">
 						Her Favorites
@@ -300,7 +314,7 @@ export default function BirthdayPage() {
 			</section>
 
 			{/* Final Message Section */}
-			<section className="py-20 px-4 bg-gradient-to-r from-primary/5 to-secondary/5 relative z-10">
+			<section className="py-20 px-4 relative z-10">
 				<div className="container mx-auto max-w-4xl text-center">
 					<div className="space-y-8">
 						<blockquote className="font-serif text-2xl md:text-3xl lg:text-4xl text-primary leading-relaxed text-balance">
