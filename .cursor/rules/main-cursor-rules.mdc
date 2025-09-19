@@ -1,0 +1,332 @@
+---
+description: "Comprehensive coding conventions and architectural guidelines for 'A Dedication to Seychelle' - a personal tribute website built with Next.js, TypeScript, and Tailwind CSS"
+globs:
+alwaysApply: true
+---
+
+# A Dedication to Seychelle - Development Rules
+
+## Project Overview
+
+This is a personal, visually-driven, static tribute website for Seychelle. The aesthetic is paramount: feminine, soft, and elegant with a pastel color palette (especially pink and yellow) featuring beach and seashell themes. The site features image galleries, heartfelt text sections, and embedded media as a static, informational site.
+
+## Technical Stack
+
+- **Framework:** Next.js (App Router)
+- **Language:** TypeScript (strict mode)
+- **Styling:** Tailwind CSS
+- **UI Components:** Shadcn UI
+- **Package Manager:** pnpm
+
+## File Structure & Organization
+
+### Directory Structure
+
+```
+/app/                    # Next.js App Router pages and layouts
+/components/
+  /ui/                   # Shadcn UI primitive components
+  /shared/               # Reusable custom components
+  /sections/             # Page-specific section components
+/lib/                    # Utility functions and types
+/public/                 # Static assets (images, fonts, etc.)
+```
+
+### File Naming Conventions
+
+- **Components:** `PascalCase` for all `.tsx` files and folders
+  - Example: `/components/PhotoGallery/PhotoGallery.tsx`
+- **Variables & Functions:** `camelCase`
+- **Types & Interfaces:** `PascalCase`
+  - Example: `type PhotoProps = { ... }`
+- **Constants:** `UPPER_SNAKE_CASE`
+
+## Component Design Principles
+
+### Atomicity & Reusability
+
+- Components must be small, focused, and have a single responsibility
+- Break down complex UI into smaller, composable components
+- Create reusable components in `/components/shared`
+- Page-specific components go in `/components/sections`
+
+### Props & TypeScript
+
+- ALL component props must be explicitly typed using TypeScript interfaces
+- Use interfaces for object shapes (component props)
+- Use types for unions and primitives
+- NEVER use `any` type
+- Define return types for all functions
+
+```typescript
+// ✅ Good
+interface PhotoGalleryProps {
+  photos: Photo[];
+  onPhotoSelect: (photo: Photo) => void;
+}
+
+// ❌ Bad
+const PhotoGallery = (props: any) => { ... }
+```
+
+### Styling Guidelines
+
+- Use `clsx` and `tailwind-merge` for constructing class names
+- This is the standard pattern for Shadcn UI components
+- Handle conditional and merged styles correctly
+
+```typescript
+import { cn } from "@/lib/utils";
+
+const className = cn(
+	"base-styles",
+	isActive && "active-styles",
+	variant === "primary" && "primary-styles"
+);
+```
+
+### Image Handling
+
+- ALWAYS use `next/image` component for performance and optimization
+- NEVER use standard `<img>` tags
+- Provide meaningful `alt` text for accessibility
+
+```typescript
+import Image from "next/image";
+
+// ✅ Good
+<Image
+  src="/images/seychelle-beach.jpg"
+  alt="Seychelle on the beach at sunset"
+  width={800}
+  height={600}
+  className="rounded-lg shadow-lg"
+/>
+
+// ❌ Bad
+<img src="/images/seychelle-beach.jpg" />
+```
+
+## TypeScript Standards
+
+### Strict Typing
+
+- Enable strict mode in TypeScript configuration
+- Use explicit return types for all functions
+- Define interfaces for all object shapes
+- Use type guards and type assertions appropriately
+
+```typescript
+// ✅ Good
+interface GalleryImage {
+	id: string;
+	src: string;
+	alt: string;
+	caption?: string;
+}
+
+const processImage = (image: GalleryImage): ProcessedImage => {
+	// implementation
+	return processedImage;
+};
+
+// ❌ Bad
+const processImage = (image) => {
+	return image;
+};
+```
+
+### Type Organization
+
+- Place shared types in `/lib/types.ts`
+- Component-specific types can be defined in the same file
+- Use discriminated unions for complex state management
+
+## Import Organization
+
+### Import Order
+
+1. React / Next.js imports
+2. External library imports
+3. Internal component/module imports
+4. Type imports
+5. Style imports
+
+```typescript
+// ✅ Correct import order
+import React from "react";
+import Image from "next/image";
+import { cn } from "clsx";
+
+import { Button } from "@/components/ui/button";
+import { PhotoGallery } from "@/components/shared/PhotoGallery";
+
+import type { Photo, GalleryProps } from "@/lib/types";
+import "./GallerySection.css";
+```
+
+### Import Paths
+
+- Use absolute paths with `@/` prefix
+- NEVER use relative paths like `../../components/...`
+
+```typescript
+// ✅ Good
+import { Card } from "@/components/ui/card";
+import { formatDate } from "@/lib/utils";
+
+// ❌ Bad
+import { Card } from "../../../components/ui/card";
+import { formatDate } from "../../lib/utils";
+```
+
+## Accessibility (a11y) Requirements
+
+### Semantic HTML
+
+- Use semantic HTML5 tags: `<main>`, `<section>`, `<nav>`, `<article>`, `<aside>`
+- Structure content logically with proper heading hierarchy
+- Use `<button>` for interactive elements, not `<div>`
+
+### ARIA Attributes
+
+- Interactive elements must have appropriate ARIA attributes
+- Use `aria-label`, `aria-describedby`, `aria-expanded` as needed
+- Ensure proper focus management
+
+### Image Accessibility
+
+- ALL images must have meaningful `alt` text
+- Decorative images should have empty `alt=""` attribute
+- Complex images should have detailed descriptions
+
+```typescript
+// ✅ Good
+<Image
+  src="/images/seychelle-portrait.jpg"
+  alt="Portrait of Seychelle smiling on the beach with seashells in her hair"
+  width={400}
+  height={600}
+/>
+
+// ✅ Decorative image
+<Image
+  src="/images/decoration-pattern.png"
+  alt=""
+  width={100}
+  height={100}
+  className="opacity-50"
+/>
+```
+
+## Styling & Design System
+
+### Color Palette
+
+- Primary: Soft pinks and yellows
+- Secondary: Beach-inspired blues and whites
+- Accent: Seashell and pearl tones
+- Use Tailwind's color system with custom values
+
+### Component Styling
+
+- Use Tailwind utility classes
+- Create reusable style patterns in `/lib/styles.ts`
+- Maintain consistent spacing and typography scales
+- Ensure responsive design for all screen sizes
+
+### Design Tokens
+
+```typescript
+// Example design tokens
+export const colors = {
+	primary: {
+		50: "#fdf2f8",
+		500: "#ec4899",
+		900: "#831843",
+	},
+	beach: {
+		sand: "#fef3c7",
+		ocean: "#0ea5e9",
+		shell: "#fce7f3",
+	},
+} as const;
+```
+
+## Performance & Optimization
+
+### Next.js Best Practices
+
+- Use dynamic imports for code splitting
+- Implement proper loading states
+- Optimize images with Next.js Image component
+- Use static generation where possible
+
+### Bundle Optimization
+
+- Avoid importing entire libraries when only specific functions are needed
+- Use tree-shaking friendly imports
+- Implement proper error boundaries
+
+## Code Quality Standards
+
+### Error Handling
+
+- Implement proper error boundaries
+- Use try-catch blocks for async operations
+- Provide meaningful error messages
+- Handle loading and error states gracefully
+
+### Code Documentation
+
+- Add JSDoc comments for complex functions
+- Document component props with clear descriptions
+- Include usage examples for reusable components
+
+### Testing Considerations
+
+- Write testable components
+- Avoid side effects in render functions
+- Use proper dependency injection patterns
+
+## Project-Specific Guidelines
+
+### Content Management
+
+- Keep content easily maintainable
+- Use structured data for galleries and sections
+- Implement proper image optimization for tribute content
+
+### Emotional Design
+
+- Prioritize visual hierarchy that guides the eye
+- Use whitespace effectively for breathing room
+- Ensure typography choices enhance readability and emotion
+- Create smooth, gentle animations that feel personal
+
+### Static Site Optimization
+
+- Leverage Next.js static generation
+- Optimize for Core Web Vitals
+- Ensure fast loading times for emotional impact
+- Use proper meta tags for social sharing
+
+## Development Workflow
+
+### Git Conventions
+
+- Use conventional commit messages
+- Create feature branches for new sections
+- Keep commits focused and atomic
+- Always make the commit message a seperate title and description
+
+### Code Review Checklist
+
+- [ ] TypeScript types are properly defined
+- [ ] Components are accessible
+- [ ] Images use Next.js Image component
+- [ ] Styling follows design system
+- [ ] Imports are properly organized
+- [ ] Code is properly documented
+
+Remember: This website is a personal tribute, so every line of code should reflect care, attention to detail, and the love it represents. The technical excellence should match the emotional significance of the project.
