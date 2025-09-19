@@ -280,33 +280,23 @@ export default function BirthdayPage() {
 						Seychelle&apos;s Birthday Mix
 					</h2>
 					<p className="text-center text-xl text-muted-foreground mb-12">
-						A few of your favorite tracks to celebrate your day.
+						Your favorite jams to celebrate your special day.
 					</p>
-					<Card className="p-8 border-pink-200">
-						<CardContent className="space-y-6">
-							<div className="bg-gradient-to-r from-primary/10 to-secondary/10 rounded-2xl p-8 text-center">
-								<Music className="w-16 h-16 mx-auto text-primary mb-4" />
-								<h3 className="font-serif text-2xl text-primary mb-4">
-									Your Playlist Awaits
-								</h3>
-								<p className="text-muted-foreground mb-6">
-									Connect your Spotify or Apple Music to play your favorite
-									birthday songs
-								</p>
-								<div className="flex flex-col sm:flex-row gap-4 justify-center">
-									<Button className="bg-green-600 hover:bg-green-700 text-white">
-										Open in Spotify
-									</Button>
-									<Button
-										variant="outline"
-										className="border-pink-300 text-primary hover:bg-pink-50 bg-transparent"
-									>
-										Open in Apple Music
-									</Button>
-								</div>
-							</div>
-						</CardContent>
-					</Card>
+
+					{/* Spotify Embed */}
+					<div className="w-full">
+						<iframe
+							data-testid="embed-iframe"
+							style={{ borderRadius: "12px" }}
+							src="https://open.spotify.com/embed/playlist/5IrFirNl36ko5uZjHEfd5z?utm_source=generator"
+							width="100%"
+							height="500"
+							frameBorder="0"
+							allowFullScreen={true}
+							allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+							loading="lazy"
+						></iframe>
+					</div>
 				</div>
 			</section>
 
