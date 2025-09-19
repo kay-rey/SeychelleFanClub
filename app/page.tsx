@@ -96,8 +96,19 @@ export default function BirthdayPage() {
 
 			{/* Hero Section */}
 			<section className="min-h-screen flex items-center justify-center px-4 relative overflow-hidden z-10">
-				{/* Enhanced Gradient Overlay */}
-				<div className="absolute inset-0 bg-gradient-to-br from-pink-100/40 via-yellow-50/30 to-pink-100/40" />
+				{/* Hero Enhancement - Overlay on main background */}
+				<div className="absolute inset-0 bg-gradient-to-b from-pink-200/30 via-pink-100/20 to-transparent" />
+				<div className="absolute inset-0 bg-gradient-to-b from-yellow-200/20 via-yellow-100/10 to-transparent" />
+
+				{/* Hero-Specific Decorative Elements */}
+				<div className="absolute inset-0 overflow-hidden pointer-events-none">
+					{/* Large soft orbs for hero depth */}
+					<div className="absolute -top-32 -left-32 w-64 h-64 bg-gradient-to-br from-pink-300/40 to-yellow-300/40 rounded-full blur-3xl" />
+					<div className="absolute -top-32 -right-32 w-56 h-56 bg-gradient-to-br from-yellow-300/40 to-pink-300/40 rounded-full blur-3xl" />
+					<div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-48 h-48 bg-gradient-to-br from-pink-200/50 to-yellow-200/50 rounded-full blur-2xl" />
+					<div className="absolute bottom-1/4 left-1/4 w-32 h-32 bg-gradient-to-br from-pink-300/35 to-transparent rounded-full blur-xl" />
+					<div className="absolute bottom-1/4 right-1/4 w-28 h-28 bg-gradient-to-br from-yellow-300/35 to-transparent rounded-full blur-xl" />
+				</div>
 
 				<div className="container mx-auto flex flex-col lg:grid lg:grid-cols-2 gap-1 lg:gap-8 items-center relative z-10">
 					<div
