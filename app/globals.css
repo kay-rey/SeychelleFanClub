@@ -122,8 +122,11 @@
 	* {
 		@apply border-border outline-ring/50;
 	}
+	html {
+		@apply bg-gradient-to-br from-pink-50 via-pink-25 to-yellow-50;
+	}
 	body {
-		@apply bg-background text-foreground font-sans;
+		@apply bg-gradient-to-br from-pink-50 via-pink-25 to-yellow-50 text-foreground font-sans;
 	}
 }
 
