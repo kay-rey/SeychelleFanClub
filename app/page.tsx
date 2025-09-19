@@ -35,7 +35,7 @@ export default function BirthdayPage() {
 			{/* Hero Section */}
 			<section className="min-h-screen flex items-center justify-center px-4 relative overflow-hidden">
 				<div className="gradient-bg absolute inset-0 opacity-30" />
-				<div className="container mx-auto flex flex-col lg:grid lg:grid-cols-2 gap-12 items-center relative z-10">
+				<div className="container mx-auto flex flex-col lg:grid lg:grid-cols-2 gap-1 lg:gap-12 items-center relative z-10">
 					<div
 						className={`relative order-1 lg:order-2 transition-all duration-1000 delay-300 ${
 							isVisible
@@ -43,15 +43,36 @@ export default function BirthdayPage() {
 								: "opacity-0 translate-x-10"
 						}`}
 					>
-						<div className="relative rounded-3xl overflow-hidden shadow-2xl">
+						<div className="relative py-8 lg:py-12">
 							<Image
 								src="/images/hero.jpg"
 								alt="Seychelle Reyes"
 								width={600}
 								height={600}
-								className="w-full h-[400px] md:h-[600px] object-cover"
+								className="w-full max-w-[400px] md:max-w-[500px] lg:max-w-[600px] mx-auto object-cover"
+								style={{
+									aspectRatio: 1,
+									clipPath: `shape(
+										from 50% 91%,
+										line to 90% 50%,
+										arc to 50% 9% of 1%,
+										arc to 10% 50% of 1%
+									)`,
+									filter: "drop-shadow(0 25px 50px -12px rgba(0, 0, 0, 0.25))",
+								}}
 							/>
-							<div className="absolute inset-0 bg-gradient-to-t from-pink-100/20 to-transparent" />
+							<div
+								className="absolute inset-0 bg-gradient-to-t from-pink-100/20 to-transparent"
+								style={{
+									aspectRatio: 1,
+									clipPath: `shape(
+									from 50% 91%,
+									line to 90% 50%,
+									arc to 50% 9% of 1%,
+									arc to 10% 50% of 1%
+								)`,
+								}}
+							/>
 						</div>
 					</div>
 
