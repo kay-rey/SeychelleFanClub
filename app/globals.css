@@ -75,6 +75,28 @@
 	--sidebar-ring: oklch(0.439 0 0);
 }
 
+.dark html {
+	/* Dark mode gradient for Safari */
+	background: linear-gradient(
+		135deg,
+		oklch(0.145 0 0) 0%,
+		oklch(0.2 0.02 320) 50%,
+		oklch(0.145 0 0) 100%
+	);
+	background-color: oklch(0.145 0 0);
+}
+
+.dark body {
+	/* Dark mode gradient for Safari */
+	background: linear-gradient(
+		135deg,
+		oklch(0.145 0 0) 0%,
+		oklch(0.2 0.02 320) 50%,
+		oklch(0.145 0 0) 100%
+	);
+	background-color: oklch(0.145 0 0);
+}
+
 @theme inline {
 	/* Added custom font variables for Playfair and Poppins */
 	--font-serif: var(--font-playfair);
@@ -123,10 +145,27 @@
 		@apply border-border outline-ring/50;
 	}
 	html {
-		@apply bg-gradient-to-br from-pink-50 via-pink-25 to-yellow-50;
+		/* Safari-compatible gradient with theme support */
+		background: linear-gradient(
+			135deg,
+			oklch(0.98 0.01 320) 0%,
+			oklch(0.97 0.06 60) 50%,
+			oklch(0.98 0.01 320) 100%
+		);
+		/* Fallback for older browsers */
+		background-color: oklch(0.98 0.01 320);
 	}
 	body {
-		@apply bg-gradient-to-br from-pink-50 via-pink-25 to-yellow-50 text-foreground font-sans;
+		/* Safari-compatible gradient with theme support */
+		background: linear-gradient(
+			135deg,
+			oklch(0.98 0.01 320) 0%,
+			oklch(0.97 0.06 60) 50%,
+			oklch(0.98 0.01 320) 100%
+		);
+		/* Fallback for older browsers */
+		background-color: oklch(0.98 0.01 320);
+		@apply text-foreground font-sans;
 	}
 }
 
