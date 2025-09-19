@@ -83,7 +83,7 @@ export default function BirthdayPage() {
 								: "opacity-0 translate-y-10"
 						}`}
 					>
-						<h1 className="font-serif text-4xl md:text-6xl lg:text-8xl text-primary leading-tight text-balance">
+						<h1 className="font-serif text-5xl md:text-7xl lg:text-9xl text-primary leading-tight text-balance">
 							Happy Birthday,
 							<span className="block text-secondary">Seychelle</span>
 						</h1>
@@ -114,20 +114,29 @@ export default function BirthdayPage() {
 					<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
 						{[
 							{
-								src: "/placeholder-f5v0v.png",
-								caption: "Beach sunset together",
+								src: "/images/gallery/beach.JPG",
+								caption: "Beach adventures together",
 							},
 							{
-								src: "/placeholder-dheyd.png",
-								caption: "Your beautiful laugh",
+								src: "/images/gallery/firstdate.jpg",
+								caption: "Our first date memories",
 							},
-							{ src: "/placeholder-txb2r.png", caption: "Paradise found" },
 							{
-								src: "/placeholder-9o1vo.png",
-								caption: "Dancing the night away",
+								src: "/images/gallery/aquarium.jpeg",
+								caption: "Exploring the aquarium",
 							},
-							{ src: "/placeholder-l90gm.png", caption: "Collecting memories" },
-							{ src: "/placeholder-6z0fl.png", caption: "Pure happiness" },
+							{
+								src: "/images/gallery/dodgers.jpg",
+								caption: "Dodgers game fun",
+							},
+							{
+								src: "/images/gallery/christmas.jpeg",
+								caption: "Christmas celebrations",
+							},
+							{
+								src: "/images/gallery/pikachu.jpg",
+								caption: "Adventures with Pikachu",
+							},
 						].map((photo, index) => (
 							<Card
 								key={index}
