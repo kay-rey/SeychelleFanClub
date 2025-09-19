@@ -34,7 +34,44 @@ export default function BirthdayPage() {
 
 			{/* Hero Section */}
 			<section className="min-h-screen flex items-center justify-center px-4 relative overflow-hidden">
-				<div className="gradient-bg absolute inset-0 opacity-30" />
+				{/* Animated Background Elements */}
+				<div className="absolute inset-0">
+					{/* Floating Hearts */}
+					{[...Array(8)].map((_, i) => (
+						<div
+							key={`heart-${i}`}
+							className="absolute animate-float"
+							style={{
+								left: `${Math.random() * 100}%`,
+								top: `${Math.random() * 100}%`,
+								animationDelay: `${Math.random() * 3}s`,
+								animationDuration: `${3 + Math.random() * 2}s`,
+							}}
+						>
+							<Heart className="w-4 h-4 text-pink-300/60" />
+						</div>
+					))}
+
+					{/* Floating Shells */}
+					{[...Array(6)].map((_, i) => (
+						<div
+							key={`shell-${i}`}
+							className="absolute animate-float"
+							style={{
+								left: `${Math.random() * 100}%`,
+								top: `${Math.random() * 100}%`,
+								animationDelay: `${Math.random() * 4}s`,
+								animationDuration: `${4 + Math.random() * 2}s`,
+							}}
+						>
+							<Shell className="w-5 h-5 text-yellow-300/50" />
+						</div>
+					))}
+				</div>
+
+				{/* Enhanced Gradient Overlay */}
+				<div className="absolute inset-0 bg-gradient-to-br from-pink-100/40 via-yellow-50/30 to-pink-100/40" />
+
 				<div className="container mx-auto flex flex-col lg:grid lg:grid-cols-2 gap-1 lg:gap-12 items-center relative z-10">
 					<div
 						className={`relative order-1 lg:order-2 transition-all duration-1000 delay-300 ${
@@ -62,7 +99,7 @@ export default function BirthdayPage() {
 								}}
 							/>
 							<div
-								className="absolute inset-0 bg-gradient-to-t from-pink-100/20 to-transparent"
+								className="absolute inset-0 bg-gradient-to-t from-pink-100/30 to-transparent"
 								style={{
 									aspectRatio: 1,
 									clipPath: `shape(
@@ -83,23 +120,53 @@ export default function BirthdayPage() {
 								: "opacity-0 translate-y-10"
 						}`}
 					>
-						<h1 className="font-serif text-5xl md:text-7xl lg:text-9xl text-primary leading-tight text-balance">
-							Happy Birthday,
-							<span className="block text-secondary">Seychelle</span>
-						</h1>
+						{/* Decorative Text Background */}
+						<div className="relative">
+							<div className="absolute -inset-6 bg-gradient-to-r from-pink-100/20 to-yellow-100/20 rounded-3xl blur-xl" />
+							<div className="relative">
+								<h1 className="font-serif text-5xl md:text-7xl lg:text-9xl leading-tight text-balance">
+									<span className="bg-gradient-to-r from-pink-600 via-pink-500 to-yellow-500 bg-clip-text text-transparent">
+										Happy Birthday,
+									</span>
+									<span className="block bg-gradient-to-r from-yellow-500 via-pink-500 to-pink-600 bg-clip-text text-transparent">
+										Seychelle
+									</span>
+								</h1>
+							</div>
+						</div>
+
 						<p className="text-lg md:text-xl lg:text-2xl text-muted-foreground font-light leading-relaxed text-pretty">
 							A celebration of my amazing wife, from the shores of the
 							Philippines to here.
 						</p>
-						<div className="flex items-center justify-center lg:justify-start gap-4 pt-4">
-							<Heart
-								className="w-6 h-6 text-pink-400 float"
-								style={{ animationDelay: "0.5s" }}
-							/>
-							<Waves
-								className="w-8 h-8 text-blue-300 float"
-								style={{ animationDelay: "1s" }}
-							/>
+
+						{/* Enhanced Icon Row with Labels */}
+						<div className="flex flex-wrap items-center justify-center lg:justify-start gap-4 pt-4">
+							<div className="flex items-center gap-2 bg-pink-100/40 px-4 py-2 rounded-full backdrop-blur-sm border border-pink-200/30">
+								<Heart
+									className="w-5 h-5 text-pink-500 float"
+									style={{ animationDelay: "0.5s" }}
+								/>
+								<span className="text-pink-600 font-medium text-sm">Love</span>
+							</div>
+							<div className="flex items-center gap-2 bg-blue-100/40 px-4 py-2 rounded-full backdrop-blur-sm border border-blue-200/30">
+								<Waves
+									className="w-5 h-5 text-blue-500 float"
+									style={{ animationDelay: "1s" }}
+								/>
+								<span className="text-blue-600 font-medium text-sm">
+									Adventure
+								</span>
+							</div>
+							<div className="flex items-center gap-2 bg-yellow-100/40 px-4 py-2 rounded-full backdrop-blur-sm border border-yellow-200/30">
+								<Shell
+									className="w-5 h-5 text-yellow-600 float"
+									style={{ animationDelay: "1.5s" }}
+								/>
+								<span className="text-yellow-600 font-medium text-sm">
+									Memories
+								</span>
+							</div>
 						</div>
 					</div>
 				</div>
@@ -283,7 +350,9 @@ export default function BirthdayPage() {
 			<footer className="py-12 px-4 bg-white/50">
 				<div className="container mx-auto text-center">
 					<p className="text-muted-foreground">
-						<a href="https://github.com/kay-rey">Made with love for 🐚 by 🐨.</a>
+						<a href="https://github.com/kay-rey">
+							Made with love for 🐚 by 🐨.
+						</a>
 					</p>
 					<div className="flex justify-center gap-2 mt-4">
 						<Sparkles className="w-4 h-4 text-pink-300" />
