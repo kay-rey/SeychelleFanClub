@@ -86,7 +86,7 @@ export default function BirthdayPage() {
 				{/* Enhanced Gradient Overlay */}
 				<div className="absolute inset-0 bg-gradient-to-br from-pink-100/40 via-yellow-50/30 to-pink-100/40" />
 
-				<div className="container mx-auto flex flex-col lg:grid lg:grid-cols-2 gap-1 lg:gap-12 items-center relative z-10">
+				<div className="container mx-auto flex flex-col lg:grid lg:grid-cols-2 gap-1 lg:gap-8 items-center relative z-10">
 					<div
 						className={`relative order-1 lg:order-2 transition-all duration-1000 delay-300 ${
 							isVisible
