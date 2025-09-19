@@ -145,10 +145,14 @@
 		@apply border-border outline-ring/50;
 	}
 	html {
-		background-color: #fef3c7;
+		background: linear-gradient(135deg, #fce7f3 0%, #fef3c7 50%, #fce7f3 100%);
+		background-color: #fce7f3;
+		min-height: 100vh;
 	}
 	body {
-		background-color: #fef3c7;
+		background: linear-gradient(135deg, #fce7f3 0%, #fef3c7 50%, #fce7f3 100%);
+		background-color: #fce7f3;
+		min-height: 100vh;
 		@apply text-foreground font-sans;
 	}
 }

@@ -17,7 +17,7 @@ export default function BirthdayPage() {
 			{/* Cohesive Site-Wide Background System */}
 			<div className="fixed inset-0 z-0">
 				{/* Main gradient base */}
-				<div className="absolute inset-0 bg-gradient-to-br from-pink-50 via-pink-25 to-yellow-50" />
+				<div className="absolute inset-0 bg-gradient-to-br from-pink-50 via-pink-100/30 to-yellow-50" />
 
 				{/* Layered atmospheric gradients */}
 				<div className="absolute inset-0 bg-gradient-to-tr from-pink-100/20 via-transparent to-yellow-100/20" />
