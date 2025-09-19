@@ -145,26 +145,10 @@
 		@apply border-border outline-ring/50;
 	}
 	html {
-		/* Safari-compatible gradient with theme support */
-		background: linear-gradient(
-			135deg,
-			oklch(0.98 0.01 320) 0%,
-			oklch(0.97 0.06 60) 50%,
-			oklch(0.98 0.01 320) 100%
-		);
-		/* Fallback for older browsers */
-		background-color: oklch(0.98 0.01 320);
+		background-color: #ad0e66 !important;
 	}
 	body {
-		/* Safari-compatible gradient with theme support */
-		background: linear-gradient(
-			135deg,
-			oklch(0.98 0.01 320) 0%,
-			oklch(0.97 0.06 60) 50%,
-			oklch(0.98 0.01 320) 100%
-		);
-		/* Fallback for older browsers */
-		background-color: oklch(0.98 0.01 320);
+		background-color: #40d00c !important;
 		@apply text-foreground font-sans;
 	}
 }
