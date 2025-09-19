@@ -145,10 +145,22 @@
 		@apply border-border outline-ring/50;
 	}
 	html {
-		background-color: #ad0e66 !important;
+		background: linear-gradient(
+			135deg,
+			#fce7f3 0%,
+			#fef3c7 50%,
+			#fce7f3 100%
+		) !important;
+		background-color: #fce7f3 !important;
 	}
 	body {
-		background-color: #40d00c !important;
+		background: linear-gradient(
+			135deg,
+			#fce7f3 0%,
+			#fef3c7 50%,
+			#fce7f3 100%
+		) !important;
+		background-color: #fce7f3 !important;
 		@apply text-foreground font-sans;
 	}
 }
