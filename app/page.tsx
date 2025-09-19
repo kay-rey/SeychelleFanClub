@@ -45,7 +45,7 @@ export default function BirthdayPage() {
 					>
 						<div className="relative rounded-3xl overflow-hidden shadow-2xl">
 							<Image
-								src="/placeholder-78wir.png"
+								src="/images/hero.jpg"
 								alt="Seychelle Reyes"
 								width={600}
 								height={600}
