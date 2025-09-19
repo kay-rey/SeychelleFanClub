@@ -283,7 +283,7 @@ export default function BirthdayPage() {
 			<footer className="py-12 px-4 bg-white/50">
 				<div className="container mx-auto text-center">
 					<p className="text-muted-foreground">
-						Made with love for Seychelle Reyes on her birthday.
+						<a href="https://github.com/kay-rey">Made with love for 🐚 by 🐨.</a>
 					</p>
 					<div className="flex justify-center gap-2 mt-4">
 						<Sparkles className="w-4 h-4 text-pink-300" />
