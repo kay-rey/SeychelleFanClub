@@ -153,8 +153,8 @@ export default function BirthdayPage() {
 						</div>
 
 						<p className="text-lg md:text-xl lg:text-2xl text-muted-foreground font-light leading-relaxed text-pretty">
-							A celebration of my amazing wife, from the shores of the
-							Philippines to here.
+							Celebrating my amazing wife, from the Philippines to the center of
+							my world.
 						</p>
 
 						{/* Enhanced Icon Row with Labels */}
@@ -255,14 +255,14 @@ export default function BirthdayPage() {
 						<Card className="text-center p-8 border-pink-200 hover:shadow-lg transition-all duration-300 hover:-translate-y-1">
 							<CardContent className="space-y-4">
 								<div className="w-16 h-16 mx-auto bg-primary/10 rounded-full flex items-center justify-center">
-									<Shell className="w-8 h-8 text-primary" />
+									<Heart className="w-8 h-8 text-primary" />
 								</div>
 								<h3 className="font-serif text-2xl text-primary">
-									Endless Summer
+									A Heart of Gold
 								</h3>
 								<p className="text-muted-foreground leading-relaxed">
-									For her love of the beach, the sun, and the sound of the
-									waves.
+									She has a way of making everyone around her feel special. Her
+									kindness is a quiet strength that makes the world better.
 								</p>
 							</CardContent>
 						</Card>
@@ -274,8 +274,8 @@ export default function BirthdayPage() {
 								</div>
 								<h3 className="font-serif text-2xl text-primary">Pop Queen</h3>
 								<p className="text-muted-foreground leading-relaxed">
-									From Sabrina Carpenter to the Backstreet Boys, she&apos;s
-									always got the best playlist.
+									From Sabrina Carpenter to the Backstreet Boys, she always
+									loves to sing in my ear.
 								</p>
 							</CardContent>
 						</Card>
@@ -286,10 +286,11 @@ export default function BirthdayPage() {
 									<Sun className="w-8 h-8 text-yellow-600" />
 								</div>
 								<h3 className="font-serif text-2xl text-primary">
-									Proudly Filipina
+									Endless Summer
 								</h3>
 								<p className="text-muted-foreground leading-relaxed">
-									Celebrating her beautiful heritage and home.
+									She&apos;s a true sun-seeker, happiest with her toes in the
+									sand and the sound of the waves.
 								</p>
 							</CardContent>
 						</Card>
@@ -329,11 +330,11 @@ export default function BirthdayPage() {
 				<div className="container mx-auto max-w-4xl text-center">
 					<div className="space-y-8">
 						<blockquote className="font-serif text-2xl md:text-3xl lg:text-4xl text-primary leading-relaxed text-balance">
-							&ldquo;Every day with you feels like a celebration, but today we
-							get to make it official. Your smile lights up every room, your
-							laugh is my favorite song, and your heart is the most beautiful
-							thing I&apos;ve ever known. Here&apos;s to another year of
-							adventures, beach days, and endless love.&rdquo;
+							For Seychelle, the light of my life. Just like a perfect day at
+							the beach, you bring warmth and sunshine to my world. Of all the
+							treasures in the world, I was lucky enough to find you. You are
+							the melody to my favorite song and the calm in my ocean. My love
+							for you is deeper than any sea in the universe.
 						</blockquote>
 						<p className="font-serif text-xl text-primary">
 							- With all my love
