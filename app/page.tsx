@@ -37,36 +37,50 @@ export default function BirthdayPage() {
 				{/* Animated Background Elements */}
 				<div className="absolute inset-0">
 					{/* Floating Hearts */}
-					{[...Array(8)].map((_, i) => (
-						<div
-							key={`heart-${i}`}
-							className="absolute animate-float"
-							style={{
-								left: `${Math.random() * 100}%`,
-								top: `${Math.random() * 100}%`,
-								animationDelay: `${Math.random() * 3}s`,
-								animationDuration: `${3 + Math.random() * 2}s`,
-							}}
-						>
-							<Heart className="w-4 h-4 text-pink-300/60" />
-						</div>
-					))}
+					<div className="floating-heart-1">
+						<Heart className="w-4 h-4 text-pink-300/60" />
+					</div>
+					<div className="floating-heart-2">
+						<Heart className="w-4 h-4 text-pink-300/60" />
+					</div>
+					<div className="floating-heart-3">
+						<Heart className="w-4 h-4 text-pink-300/60" />
+					</div>
+					<div className="floating-heart-4">
+						<Heart className="w-4 h-4 text-pink-300/60" />
+					</div>
+					<div className="floating-heart-5">
+						<Heart className="w-4 h-4 text-pink-300/60" />
+					</div>
+					<div className="floating-heart-6">
+						<Heart className="w-4 h-4 text-pink-300/60" />
+					</div>
+					<div className="floating-heart-7">
+						<Heart className="w-4 h-4 text-pink-300/60" />
+					</div>
+					<div className="floating-heart-8">
+						<Heart className="w-4 h-4 text-pink-300/60" />
+					</div>
 
 					{/* Floating Shells */}
-					{[...Array(6)].map((_, i) => (
-						<div
-							key={`shell-${i}`}
-							className="absolute animate-float"
-							style={{
-								left: `${Math.random() * 100}%`,
-								top: `${Math.random() * 100}%`,
-								animationDelay: `${Math.random() * 4}s`,
-								animationDuration: `${4 + Math.random() * 2}s`,
-							}}
-						>
-							<Shell className="w-5 h-5 text-yellow-300/50" />
-						</div>
-					))}
+					<div className="floating-shell-1">
+						<Shell className="w-5 h-5 text-yellow-300/50" />
+					</div>
+					<div className="floating-shell-2">
+						<Shell className="w-5 h-5 text-yellow-300/50" />
+					</div>
+					<div className="floating-shell-3">
+						<Shell className="w-5 h-5 text-yellow-300/50" />
+					</div>
+					<div className="floating-shell-4">
+						<Shell className="w-5 h-5 text-yellow-300/50" />
+					</div>
+					<div className="floating-shell-5">
+						<Shell className="w-5 h-5 text-yellow-300/50" />
+					</div>
+					<div className="floating-shell-6">
+						<Shell className="w-5 h-5 text-yellow-300/50" />
+					</div>
 				</div>
 
 				{/* Enhanced Gradient Overlay */}
@@ -86,30 +100,9 @@ export default function BirthdayPage() {
 								alt="Seychelle Reyes"
 								width={600}
 								height={600}
-								className="w-full max-w-[400px] md:max-w-[500px] lg:max-w-[600px] mx-auto object-cover"
-								style={{
-									aspectRatio: 1,
-									clipPath: `shape(
-										from 50% 91%,
-										line to 90% 50%,
-										arc to 50% 9% of 1%,
-										arc to 10% 50% of 1%
-									)`,
-									filter: "drop-shadow(0 25px 50px -12px rgba(0, 0, 0, 0.25))",
-								}}
+								className="w-full max-w-[400px] md:max-w-[500px] lg:max-w-[600px] mx-auto object-cover aspect-square hero-image-shadow hero-image-clip"
 							/>
-							<div
-								className="absolute inset-0 bg-gradient-to-t from-pink-100/30 to-transparent"
-								style={{
-									aspectRatio: 1,
-									clipPath: `shape(
-									from 50% 91%,
-									line to 90% 50%,
-									arc to 50% 9% of 1%,
-									arc to 10% 50% of 1%
-								)`,
-								}}
-							/>
+							<div className="absolute inset-0 bg-gradient-to-t from-pink-100/30 to-transparent aspect-square hero-image-clip" />
 						</div>
 					</div>
 
