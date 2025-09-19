@@ -354,18 +354,13 @@ export default function BirthdayPage() {
 			</section>
 
 			{/* Footer */}
-			<footer className="py-12 px-4 bg-white/50 relative z-10">
+			<footer className="py-8 px-4 bg-white/50 relative z-10">
 				<div className="container mx-auto text-center">
 					<p className="text-muted-foreground">
 						<a href="https://github.com/kay-rey">
 							Made with love for 🐚 by 🐨.
 						</a>
 					</p>
-					<div className="flex justify-center gap-2 mt-4">
-						<Sparkles className="w-4 h-4 text-pink-300" />
-						<Heart className="w-4 h-4 text-pink-400" />
-						<Sparkles className="w-4 h-4 text-pink-300" />
-					</div>
 				</div>
 			</footer>
 		</div>
