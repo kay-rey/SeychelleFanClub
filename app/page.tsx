@@ -3,7 +3,6 @@
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import { Card, CardContent } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
 import { Heart, Shell, Music, Sun, Sparkles, Waves } from "lucide-react";
 
 export default function BirthdayPage() {
@@ -16,7 +15,7 @@ export default function BirthdayPage() {
 	return (
 		<div className="min-h-screen bg-gradient-to-br from-pink-50 via-yellow-50 to-pink-50">
 			{/* Floating Sparkles */}
-			<div className="fixed inset-0 pointer-events-none overflow-hidden">
+			<div className="fixed inset-0 pointer-events-none overflow-hidden z-0">
 				{[...Array(20)].map((_, i) => (
 					<div
 						key={i}
@@ -32,57 +31,57 @@ export default function BirthdayPage() {
 				))}
 			</div>
 
-			{/* Hero Section */}
-			<section className="min-h-screen flex items-center justify-center px-4 relative overflow-hidden">
-				{/* Animated Background Elements */}
-				<div className="absolute inset-0">
-					{/* Floating Hearts */}
-					<div className="floating-heart-1">
-						<Heart className="w-4 h-4 text-pink-300/60" />
-					</div>
-					<div className="floating-heart-2">
-						<Heart className="w-4 h-4 text-pink-300/60" />
-					</div>
-					<div className="floating-heart-3">
-						<Heart className="w-4 h-4 text-pink-300/60" />
-					</div>
-					<div className="floating-heart-4">
-						<Heart className="w-4 h-4 text-pink-300/60" />
-					</div>
-					<div className="floating-heart-5">
-						<Heart className="w-4 h-4 text-pink-300/60" />
-					</div>
-					<div className="floating-heart-6">
-						<Heart className="w-4 h-4 text-pink-300/60" />
-					</div>
-					<div className="floating-heart-7">
-						<Heart className="w-4 h-4 text-pink-300/60" />
-					</div>
-					<div className="floating-heart-8">
-						<Heart className="w-4 h-4 text-pink-300/60" />
-					</div>
-
-					{/* Floating Shells */}
-					<div className="floating-shell-1">
-						<Shell className="w-5 h-5 text-yellow-300/50" />
-					</div>
-					<div className="floating-shell-2">
-						<Shell className="w-5 h-5 text-yellow-300/50" />
-					</div>
-					<div className="floating-shell-3">
-						<Shell className="w-5 h-5 text-yellow-300/50" />
-					</div>
-					<div className="floating-shell-4">
-						<Shell className="w-5 h-5 text-yellow-300/50" />
-					</div>
-					<div className="floating-shell-5">
-						<Shell className="w-5 h-5 text-yellow-300/50" />
-					</div>
-					<div className="floating-shell-6">
-						<Shell className="w-5 h-5 text-yellow-300/50" />
-					</div>
+			{/* Floating Background Elements - Page Wide */}
+			<div className="fixed inset-0 pointer-events-none overflow-hidden z-0">
+				{/* Floating Hearts */}
+				<div className="floating-heart-1">
+					<Heart className="w-4 h-4 text-pink-300/60" />
+				</div>
+				<div className="floating-heart-2">
+					<Heart className="w-4 h-4 text-pink-300/60" />
+				</div>
+				<div className="floating-heart-3">
+					<Heart className="w-4 h-4 text-pink-300/60" />
+				</div>
+				<div className="floating-heart-4">
+					<Heart className="w-4 h-4 text-pink-300/60" />
+				</div>
+				<div className="floating-heart-5">
+					<Heart className="w-4 h-4 text-pink-300/60" />
+				</div>
+				<div className="floating-heart-6">
+					<Heart className="w-4 h-4 text-pink-300/60" />
+				</div>
+				<div className="floating-heart-7">
+					<Heart className="w-4 h-4 text-pink-300/60" />
+				</div>
+				<div className="floating-heart-8">
+					<Heart className="w-4 h-4 text-pink-300/60" />
 				</div>
 
+				{/* Floating Shells */}
+				<div className="floating-shell-1">
+					<Shell className="w-5 h-5 text-yellow-300/50" />
+				</div>
+				<div className="floating-shell-2">
+					<Shell className="w-5 h-5 text-yellow-300/50" />
+				</div>
+				<div className="floating-shell-3">
+					<Shell className="w-5 h-5 text-yellow-300/50" />
+				</div>
+				<div className="floating-shell-4">
+					<Shell className="w-5 h-5 text-yellow-300/50" />
+				</div>
+				<div className="floating-shell-5">
+					<Shell className="w-5 h-5 text-yellow-300/50" />
+				</div>
+				<div className="floating-shell-6">
+					<Shell className="w-5 h-5 text-yellow-300/50" />
+				</div>
+			</div>
+
+			{/* Hero Section */}
+			<section className="min-h-screen flex items-center justify-center px-4 relative overflow-hidden z-10">
 				{/* Enhanced Gradient Overlay */}
 				<div className="absolute inset-0 bg-gradient-to-br from-pink-100/40 via-yellow-50/30 to-pink-100/40" />
 
@@ -166,7 +165,7 @@ export default function BirthdayPage() {
 			</section>
 
 			{/* Photo Gallery Section */}
-			<section className="py-20 px-4">
+			<section className="py-20 px-4 relative z-10">
 				<div className="container mx-auto">
 					<h2 className="font-serif text-4xl md:text-5xl text-center text-primary mb-16 text-balance">
 						Our Favorite Moments
@@ -222,7 +221,7 @@ export default function BirthdayPage() {
 			</section>
 
 			{/* Her Favorites Section */}
-			<section className="py-20 px-4 bg-gradient-to-r from-pink-50 to-yellow-50">
+			<section className="py-20 px-4 bg-gradient-to-r from-pink-50/80 to-yellow-50/80 relative z-10">
 				<div className="container mx-auto">
 					<h2 className="font-serif text-4xl md:text-5xl text-center text-primary mb-16 text-balance">
 						Her Favorites
@@ -274,7 +273,7 @@ export default function BirthdayPage() {
 			</section>
 
 			{/* Music Playlist Section */}
-			<section className="py-20 px-4">
+			<section className="py-20 px-4 relative z-10">
 				<div className="container mx-auto max-w-4xl">
 					<h2 className="font-serif text-4xl md:text-5xl text-center text-primary mb-8 text-balance">
 						Seychelle&apos;s Birthday Mix
@@ -301,7 +300,7 @@ export default function BirthdayPage() {
 			</section>
 
 			{/* Final Message Section */}
-			<section className="py-20 px-4 bg-gradient-to-r from-primary/5 to-secondary/5">
+			<section className="py-20 px-4 bg-gradient-to-r from-primary/5 to-secondary/5 relative z-10">
 				<div className="container mx-auto max-w-4xl text-center">
 					<div className="space-y-8">
 						<blockquote className="font-serif text-2xl md:text-3xl lg:text-4xl text-primary leading-relaxed text-balance">
@@ -330,7 +329,7 @@ export default function BirthdayPage() {
 			</section>
 
 			{/* Footer */}
-			<footer className="py-12 px-4 bg-white/50">
+			<footer className="py-12 px-4 bg-white/50 relative z-10">
 				<div className="container mx-auto text-center">
 					<p className="text-muted-foreground">
 						<a href="https://github.com/kay-rey">
