@@ -13,6 +13,16 @@ const NO_BUTTON_POSITIONS = [
 	{ x: -32, y: 28 },
 ] as const;
 
+/** Each No click: Yes gets bigger, No gets smaller. Same size at step 0. */
+const BUTTON_SIZE_STEPS = [
+	{ yes: "size-20 min-w-20 min-h-20 text-lg", no: "size-20 min-w-20 min-h-20 text-lg" },
+	{ yes: "size-24 min-w-24 min-h-24 text-xl", no: "size-16 min-w-16 min-h-16 text-base" },
+	{ yes: "size-28 min-w-28 min-h-28 text-2xl", no: "size-14 min-w-14 min-h-14 text-sm" },
+	{ yes: "size-32 min-w-32 min-h-32 text-2xl", no: "size-12 min-w-12 min-h-12 text-xs" },
+	{ yes: "size-36 min-w-36 min-h-36 text-3xl", no: "size-10 min-w-10 min-h-10 text-xs" },
+] as const;
+const MAX_NO_CLICKS = BUTTON_SIZE_STEPS.length - 1;
+
 const CONFETTI_HEART_COUNT = 14;
 const CONFETTI_RADIUS = 180;
 
@@ -35,6 +45,7 @@ export default function BirthdayPage() {
 	const [isShaking, setIsShaking] = useState(false);
 	const [accepted, setAccepted] = useState(false);
 	const [noButtonIndex, setNoButtonIndex] = useState(0);
+	const [noClickCount, setNoClickCount] = useState(0);
 	const [muted, setMuted] = useState(false);
 	const [showConfetti, setShowConfetti] = useState(false);
 	const contentRef = useRef<HTMLDivElement>(null);
@@ -87,12 +98,12 @@ export default function BirthdayPage() {
 	};
 
 	const handleNoClick = (): void => {
+		// Move button first so it "runs away" as soon as they try to press it
+		setNoButtonIndex((i) => (i + 1) % NO_BUTTON_POSITIONS.length);
+		setNoClickCount((c) => Math.min(c + 1, MAX_NO_CLICKS));
 		setShowWrongAnswer(true);
 		setIsShaking(true);
 		playNope();
-		setTimeout(() => {
-			setNoButtonIndex((i) => (i + 1) % NO_BUTTON_POSITIONS.length);
-		}, 500);
 		setTimeout(() => {
 			setShowWrongAnswer(false);
 			setIsShaking(false);
@@ -226,32 +237,50 @@ export default function BirthdayPage() {
 						)}
 					</div>
 
-					{/* Buttons: square, side by side; No can move within its slot */}
-					<div className="flex flex-row items-center justify-center gap-4">
-						<Button
-							size="lg"
-							onClick={handleYesClick}
-							className="aspect-square size-20 min-w-20 min-h-20 font-serif text-lg rounded-lg"
-						>
-							Yes
-						</Button>
-						<div
-							className="relative aspect-square size-20 min-w-20 min-h-20"
-							aria-hidden
-						>
-							<Button
-								size="lg"
-								variant="outline"
-								onClick={handleNoClick}
-								className="absolute inset-0 aspect-square size-20 min-w-20 min-h-20 font-serif text-lg rounded-lg transition-all duration-300 ease-out"
-								style={{
-									transform: `translate(${NO_BUTTON_POSITIONS[noButtonIndex].x}px, ${NO_BUTTON_POSITIONS[noButtonIndex].y}px)`,
-								}}
-							>
-								No
-							</Button>
-						</div>
-					</div>
+					{/* Buttons: square, side by side; Yes grows / No shrinks on each No click */}
+					{(() => {
+						const step = BUTTON_SIZE_STEPS[Math.min(noClickCount, MAX_NO_CLICKS)];
+						return (
+							<div className="flex flex-row items-center justify-center gap-4">
+								<Button
+									size="lg"
+									onClick={handleYesClick}
+									className={cn(
+										"aspect-square font-serif rounded-lg transition-all duration-300",
+										step.yes
+									)}
+								>
+									Yes
+								</Button>
+								<div
+									className={cn(
+										"relative aspect-square transition-all duration-300",
+										"size-20 min-w-20 min-h-20",
+										noClickCount >= 1 && "size-16 min-w-16 min-h-16",
+										noClickCount >= 2 && "size-14 min-w-14 min-h-14",
+										noClickCount >= 3 && "size-12 min-w-12 min-h-12",
+										noClickCount >= 4 && "size-10 min-w-10 min-h-10"
+									)}
+									aria-hidden
+								>
+									<Button
+										size="lg"
+										variant="outline"
+										onClick={handleNoClick}
+										className={cn(
+											"absolute inset-0 aspect-square font-serif rounded-lg transition-all duration-300 ease-out",
+											step.no
+										)}
+										style={{
+											transform: `translate(${NO_BUTTON_POSITIONS[noButtonIndex].x}px, ${NO_BUTTON_POSITIONS[noButtonIndex].y}px)`,
+										}}
+									>
+										No
+									</Button>
+								</div>
+							</div>
+						);
+					})()}
 
 					{accepted && (
 						<p className="font-serif text-xl text-pink-600">Yay! Best valentine ever.</p>
