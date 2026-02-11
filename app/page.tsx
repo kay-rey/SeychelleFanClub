@@ -300,18 +300,10 @@ export default function BirthdayPage() {
 				</div>
 			</section>
 
-			{/* Overlay to block access until Yes is clicked - covers everything except hero */}
-			{!accepted && (
-				<div className="fixed inset-0 z-50 bg-gradient-to-br from-pink-50 via-pink-100/30 to-yellow-50 pointer-events-auto" />
-			)}
-
-			{/* Content below hero - scroll target */}
-			<div
-				ref={contentRef}
-				className={cn(
-					!accepted && "invisible pointer-events-none"
-				)}
-			>
+			{/* Content below hero - only in DOM after Yes (no overlay needed, no z-index issues) */}
+			{accepted && (
+			<>
+			<div ref={contentRef}>
 				{/* Photo Gallery Section */}
 				<section className="py-20 px-4 relative z-10">
 					<div className="container mx-auto">
@@ -479,9 +471,8 @@ export default function BirthdayPage() {
 
 			</div>
 
-			{/* Footer */}
+			{/* Footer - same as content, only after Yes */}
 			<footer className="py-8 px-4 relative z-10">
-				{/* Footer Background - Fade from main background */}
 				<div className="absolute inset-0 bg-gradient-to-b from-transparent via-pink-50/20 to-pink-50/40" />
 				<div className="container mx-auto text-center">
 					<p className="text-muted-foreground">
@@ -491,6 +482,8 @@ export default function BirthdayPage() {
 					</p>
 				</div>
 			</footer>
+			</>
+			)}
 		</div>
 	);
 }
