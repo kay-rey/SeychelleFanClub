@@ -1,29 +1,152 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { Card, CardContent } from "@/components/ui/card";
-import { Heart, Shell, Music, Sun, Sparkles, Waves } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Heart, Shell, Music, Sun, Sparkles, Waves, Volume2, VolumeX } from "lucide-react";
+import { cn } from "@/lib/utils";
+
+const NO_BUTTON_POSITIONS = [
+	{ x: 0, y: 0 },
+	{ x: 40, y: -24 },
+	{ x: -32, y: 28 },
+] as const;
+
+const CONFETTI_HEART_COUNT = 14;
+const CONFETTI_RADIUS = 180;
+
+function getConfettiHearts(): { id: number; tx: number; ty: number }[] {
+	return Array.from({ length: CONFETTI_HEART_COUNT }, (_, i) => {
+		const angle = (i / CONFETTI_HEART_COUNT) * 2 * Math.PI - Math.PI / 2;
+		return {
+			id: i,
+			tx: CONFETTI_RADIUS * Math.cos(angle),
+			ty: CONFETTI_RADIUS * Math.sin(angle),
+		};
+	});
+}
+
+const CONFETTI_HEARTS = getConfettiHearts();
 
 export default function BirthdayPage() {
 	const [isVisible, setIsVisible] = useState(false);
+	const [showWrongAnswer, setShowWrongAnswer] = useState(false);
+	const [isShaking, setIsShaking] = useState(false);
+	const [accepted, setAccepted] = useState(false);
+	const [noButtonIndex, setNoButtonIndex] = useState(0);
+	const [muted, setMuted] = useState(false);
+	const [showConfetti, setShowConfetti] = useState(false);
+	const contentRef = useRef<HTMLDivElement>(null);
+	const nopeAudioRef = useRef<HTMLAudioElement | null>(null);
+	const yayAudioRef = useRef<HTMLAudioElement | null>(null);
 
 	useEffect(() => {
 		setIsVisible(true);
 	}, []);
 
+	useEffect(() => {
+		if (typeof window === "undefined") return;
+		const stored = localStorage.getItem("valentine-muted");
+		if (stored === "true") setMuted(true);
+	}, []);
+
+	useEffect(() => {
+		nopeAudioRef.current = new Audio("/sounds/nope.mp3");
+		yayAudioRef.current = new Audio("/sounds/yay.mp3");
+		return () => {
+			nopeAudioRef.current = null;
+			yayAudioRef.current = null;
+		};
+	}, []);
+
+	const playNope = (): void => {
+		if (muted) return;
+		try {
+			nopeAudioRef.current?.play?.();
+		} catch {
+			// ignore when files are missing
+		}
+	};
+
+	const playYay = (): void => {
+		if (muted) return;
+		try {
+			yayAudioRef.current?.play?.();
+		} catch {
+			// ignore when files are missing
+		}
+	};
+
+	const toggleMuted = (): void => {
+		setMuted((m) => {
+			const next = !m;
+			localStorage.setItem("valentine-muted", String(next));
+			return next;
+		});
+	};
+
+	const handleNoClick = (): void => {
+		setShowWrongAnswer(true);
+		setIsShaking(true);
+		playNope();
+		setTimeout(() => {
+			setNoButtonIndex((i) => (i + 1) % NO_BUTTON_POSITIONS.length);
+		}, 500);
+		setTimeout(() => {
+			setShowWrongAnswer(false);
+			setIsShaking(false);
+		}, 1500);
+	};
+
+	const handleYesClick = (): void => {
+		setShowConfetti(true);
+		playYay();
+		setAccepted(true);
+		setTimeout(() => setShowConfetti(false), 1600);
+		setTimeout(() => {
+			contentRef.current?.scrollIntoView({ behavior: "smooth" });
+		}, 400);
+	};
+
 	return (
-		<div className="min-h-screen relative">
+		<div className={cn("min-h-screen relative", isShaking && "animate-shake")}>
+			{/* Wrong-answer red overlay */}
+			{showWrongAnswer && (
+				<div
+					className="fixed inset-0 z-20 bg-red-500/40 pointer-events-none"
+					aria-hidden
+				/>
+			)}
+
+			{/* CSS-only heart confetti burst on Yes */}
+			{showConfetti && (
+				<div
+					className="fixed inset-0 z-30 pointer-events-none flex items-center justify-center"
+					aria-hidden
+				>
+					{CONFETTI_HEARTS.map(({ id, tx, ty }) => (
+						<div
+							key={`confetti-${id}`}
+							className="confetti-heart absolute"
+							style={
+								{
+									"--tx": `${tx}px`,
+									"--ty": `${ty}px`,
+								} as React.CSSProperties
+							}
+						>
+							<Heart className="w-8 h-8 text-pink-400 fill-pink-400" />
+						</div>
+					))}
+				</div>
+			)}
+
 			{/* Cohesive Site-Wide Background System */}
 			<div className="fixed inset-0 z-0">
-				{/* Main gradient base */}
 				<div className="absolute inset-0 bg-gradient-to-br from-pink-50 via-pink-100/30 to-yellow-50" />
-
-				{/* Layered atmospheric gradients */}
 				<div className="absolute inset-0 bg-gradient-to-tr from-pink-100/20 via-transparent to-yellow-100/20" />
 				<div className="absolute inset-0 bg-gradient-to-bl from-yellow-100/15 via-transparent to-pink-100/15" />
-
-				{/* Soft light orbs for depth */}
 				<div className="absolute -top-1/2 -left-1/2 w-full h-full bg-gradient-radial from-pink-200/10 via-transparent to-transparent" />
 				<div className="absolute -bottom-1/2 -right-1/2 w-full h-full bg-gradient-radial from-yellow-200/10 via-transparent to-transparent" />
 			</div>
@@ -45,150 +168,99 @@ export default function BirthdayPage() {
 				))}
 			</div>
 
-			{/* Floating Background Elements - Page Wide */}
+			{/* Floating Background Elements */}
 			<div className="fixed inset-0 pointer-events-none overflow-hidden z-0">
-				{/* Floating Hearts */}
-				<div className="floating-heart-1">
-					<Heart className="w-4 h-4 text-pink-300/60" />
-				</div>
-				<div className="floating-heart-2">
-					<Heart className="w-4 h-4 text-pink-300/60" />
-				</div>
-				<div className="floating-heart-3">
-					<Heart className="w-4 h-4 text-pink-300/60" />
-				</div>
-				<div className="floating-heart-4">
-					<Heart className="w-4 h-4 text-pink-300/60" />
-				</div>
-				<div className="floating-heart-5">
-					<Heart className="w-4 h-4 text-pink-300/60" />
-				</div>
-				<div className="floating-heart-6">
-					<Heart className="w-4 h-4 text-pink-300/60" />
-				</div>
-				<div className="floating-heart-7">
-					<Heart className="w-4 h-4 text-pink-300/60" />
-				</div>
-				<div className="floating-heart-8">
-					<Heart className="w-4 h-4 text-pink-300/60" />
-				</div>
-
-				{/* Floating Shells */}
-				<div className="floating-shell-1">
-					<Shell className="w-5 h-5 text-yellow-300/50" />
-				</div>
-				<div className="floating-shell-2">
-					<Shell className="w-5 h-5 text-yellow-300/50" />
-				</div>
-				<div className="floating-shell-3">
-					<Shell className="w-5 h-5 text-yellow-300/50" />
-				</div>
-				<div className="floating-shell-4">
-					<Shell className="w-5 h-5 text-yellow-300/50" />
-				</div>
-				<div className="floating-shell-5">
-					<Shell className="w-5 h-5 text-yellow-300/50" />
-				</div>
-				<div className="floating-shell-6">
-					<Shell className="w-5 h-5 text-yellow-300/50" />
-				</div>
+				{[1, 2, 3, 4, 5, 6, 7, 8].map((n) => (
+					<div key={`heart-${n}`} className={`floating-heart-${n}`}>
+						<Heart className="w-4 h-4 text-pink-300/60" />
+					</div>
+				))}
+				{[1, 2, 3, 4, 5, 6].map((n) => (
+					<div key={`shell-${n}`} className={`floating-shell-${n}`}>
+						<Shell className="w-5 h-5 text-yellow-300/50" />
+					</div>
+				))}
 			</div>
 
-			{/* Hero Section */}
-			<section className="min-h-screen flex items-center justify-center px-4 relative overflow-hidden z-10">
-				{/* Hero Enhancement - Overlay on main background */}
+			{/* Valentine Hero Section */}
+			<section className="min-h-screen flex flex-col items-center justify-center px-4 relative overflow-hidden z-10">
 				<div className="absolute inset-0 bg-gradient-to-b from-pink-200/30 via-pink-100/20 to-transparent" />
 				<div className="absolute inset-0 bg-gradient-to-b from-yellow-200/20 via-yellow-100/10 to-transparent" />
-
-				{/* Hero-Specific Decorative Elements */}
 				<div className="absolute inset-0 overflow-hidden pointer-events-none">
-					{/* Large soft orbs for hero depth */}
 					<div className="absolute -top-32 -left-32 w-64 h-64 bg-gradient-to-br from-pink-300/40 to-yellow-300/40 rounded-full blur-3xl" />
 					<div className="absolute -top-32 -right-32 w-56 h-56 bg-gradient-to-br from-yellow-300/40 to-pink-300/40 rounded-full blur-3xl" />
-					<div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-48 h-48 bg-gradient-to-br from-pink-200/50 to-yellow-200/50 rounded-full blur-2xl" />
-					<div className="absolute bottom-1/4 left-1/4 w-32 h-32 bg-gradient-to-br from-pink-300/35 to-transparent rounded-full blur-xl" />
-					<div className="absolute bottom-1/4 right-1/4 w-28 h-28 bg-gradient-to-br from-yellow-300/35 to-transparent rounded-full blur-xl" />
+					<div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-48 h-48 bg-gradient-to-br from-pink-200/50 to-yellow-200/50 rounded-full blur-2xl" />
 				</div>
 
-				<div className="container mx-auto flex flex-col lg:grid lg:grid-cols-2 gap-1 lg:gap-8 items-center relative z-10">
-					<div
-						className={`relative order-1 lg:order-2 transition-all duration-1000 delay-300 ${
-							isVisible
-								? "opacity-100 translate-x-0"
-								: "opacity-0 translate-x-10"
-						}`}
-					>
-						<div className="relative py-8 lg:py-12">
-							<Image
-								src="/images/hero.jpg"
-								alt="Seychelle Reyes"
-								width={600}
-								height={600}
-								className="w-full max-w-[400px] md:max-w-[500px] lg:max-w-[600px] mx-auto object-cover aspect-square hero-image-shadow hero-image-clip"
-							/>
-							<div className="absolute inset-0 bg-gradient-to-t from-pink-100/30 to-transparent aspect-square hero-image-clip" />
+				{/* Mute button - mobile-first 44px touch target */}
+				<button
+					type="button"
+					onClick={toggleMuted}
+					className="absolute top-4 right-4 z-30 flex items-center justify-center w-11 h-11 rounded-full bg-white/80 backdrop-blur-sm border border-pink-200/50 text-pink-600 hover:bg-white/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-pink-400"
+					aria-label={muted ? "Unmute sounds" : "Mute sounds"}
+				>
+					{muted ? <VolumeX className="w-5 h-5" /> : <Volume2 className="w-5 h-5" />}
+				</button>
+
+				<div
+					className={cn(
+						"relative z-10 text-center space-y-8 transition-all duration-1000",
+						isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
+					)}
+				>
+					<div className="relative">
+						<div className="absolute -inset-4 bg-gradient-to-r from-pink-100/20 to-yellow-100/20 rounded-3xl blur-xl" />
+						<h1 className="relative font-serif text-4xl sm:text-5xl md:text-6xl leading-tight text-balance px-2">
+							<span className="block bg-gradient-to-r from-pink-600 via-pink-500 to-yellow-500 bg-clip-text text-transparent">
+								Seychelle, will you be my valentine?
+							</span>
+						</h1>
+					</div>
+
+					{/* Fixed-height slot so error message doesn't shift buttons */}
+					<div className="min-h-10 flex items-center justify-center">
+						{showWrongAnswer && (
+							<p className="text-lg font-semibold text-red-600 animate-pulse">
+								Wrong answer! Try the other one.
+							</p>
+						)}
+					</div>
+
+					{/* Buttons: square, side by side; No can move within its slot */}
+					<div className="flex flex-row items-center justify-center gap-4">
+						<Button
+							size="lg"
+							onClick={handleYesClick}
+							className="aspect-square size-20 min-w-20 min-h-20 font-serif text-lg rounded-lg"
+						>
+							Yes
+						</Button>
+						<div
+							className="relative aspect-square size-20 min-w-20 min-h-20"
+							aria-hidden
+						>
+							<Button
+								size="lg"
+								variant="outline"
+								onClick={handleNoClick}
+								className="absolute inset-0 aspect-square size-20 min-w-20 min-h-20 font-serif text-lg rounded-lg transition-all duration-300 ease-out"
+								style={{
+									transform: `translate(${NO_BUTTON_POSITIONS[noButtonIndex].x}px, ${NO_BUTTON_POSITIONS[noButtonIndex].y}px)`,
+								}}
+							>
+								No
+							</Button>
 						</div>
 					</div>
 
-					<div
-						className={`space-y-6 text-center lg:text-left order-2 lg:order-1 transition-all duration-1000 ${
-							isVisible
-								? "opacity-100 translate-y-0"
-								: "opacity-0 translate-y-10"
-						}`}
-					>
-						{/* Decorative Text Background */}
-						<div className="relative">
-							<div className="absolute -inset-6 bg-gradient-to-r from-pink-100/20 to-yellow-100/20 rounded-3xl blur-xl" />
-							<div className="relative">
-								<h1 className="font-serif text-5xl md:text-7xl lg:text-9xl leading-tight text-balance">
-									<span className="bg-gradient-to-r from-pink-600 via-pink-500 to-yellow-500 bg-clip-text text-transparent">
-										Happy Birthday,
-									</span>
-									<span className="block bg-gradient-to-r from-yellow-500 via-pink-500 to-pink-600 bg-clip-text text-transparent">
-										Seychelle
-									</span>
-								</h1>
-							</div>
-						</div>
-
-						<p className="text-lg md:text-xl lg:text-2xl text-muted-foreground font-light leading-relaxed text-pretty">
-							Celebrating my amazing wife, from the Philippines to the center of
-							my world.
-						</p>
-
-						{/* Enhanced Icon Row with Labels */}
-						<div className="flex flex-wrap items-center justify-center lg:justify-start gap-4 pt-4">
-							<div className="flex items-center gap-2 bg-pink-100/40 px-4 py-2 rounded-full backdrop-blur-sm border border-pink-200/30">
-								<Heart
-									className="w-5 h-5 text-pink-500 float"
-									style={{ animationDelay: "0.5s" }}
-								/>
-								<span className="text-pink-600 font-medium text-sm">Love</span>
-							</div>
-							<div className="flex items-center gap-2 bg-blue-100/40 px-4 py-2 rounded-full backdrop-blur-sm border border-blue-200/30">
-								<Waves
-									className="w-5 h-5 text-blue-500 float"
-									style={{ animationDelay: "1s" }}
-								/>
-								<span className="text-blue-600 font-medium text-sm">
-									Adventure
-								</span>
-							</div>
-							<div className="flex items-center gap-2 bg-yellow-100/40 px-4 py-2 rounded-full backdrop-blur-sm border border-yellow-200/30">
-								<Shell
-									className="w-5 h-5 text-yellow-600 float"
-									style={{ animationDelay: "1.5s" }}
-								/>
-								<span className="text-yellow-600 font-medium text-sm">
-									Memories
-								</span>
-							</div>
-						</div>
-					</div>
+					{accepted && (
+						<p className="font-serif text-xl text-pink-600">Yay! Best valentine ever.</p>
+					)}
 				</div>
 			</section>
 
+			{/* Content below hero - scroll target */}
+			<div ref={contentRef}>
 			{/* Photo Gallery Section */}
 			<section className="py-20 px-4 relative z-10">
 				<div className="container mx-auto">
@@ -353,6 +425,8 @@ export default function BirthdayPage() {
 					</div>
 				</div>
 			</section>
+
+			</div>
 
 			{/* Footer */}
 			<footer className="py-8 px-4 relative z-10">
