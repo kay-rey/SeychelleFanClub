@@ -102,7 +102,7 @@ export default function BirthdayPage() {
 	};
 
 	const toggleMuted = (): void => {
-		setMuted((m) => {
+		setMuted((m: boolean) => {
 			const next = !m;
 			localStorage.setItem("valentine-muted", String(next));
 			return next;
@@ -111,8 +111,8 @@ export default function BirthdayPage() {
 
 	const handleNoClick = (): void => {
 		// Move button first so it "runs away" as soon as they try to press it
-		setNoButtonIndex((i) => (i + 1) % NO_BUTTON_POSITIONS.length);
-		setNoClickCount((c) => Math.min(c + 1, MAX_NO_CLICKS));
+		setNoButtonIndex((i: number) => (i + 1) % NO_BUTTON_POSITIONS.length);
+		setNoClickCount((c: number) => Math.min(c + 1, MAX_NO_CLICKS));
 		setShowWrongAnswer(true);
 		setIsShaking(true);
 		playNope();
