@@ -62,6 +62,18 @@ export default function BirthdayPage() {
 		if (stored === "true") setMuted(true);
 	}, []);
 
+	// Prevent scrolling when overlay is active
+	useEffect(() => {
+		if (!accepted) {
+			document.body.style.overflow = "hidden";
+		} else {
+			document.body.style.overflow = "";
+		}
+		return () => {
+			document.body.style.overflow = "";
+		};
+	}, [accepted]);
+
 	useEffect(() => {
 		nopeAudioRef.current = new Audio("/sounds/nope.mp3");
 		yayAudioRef.current = new Audio("/sounds/yay.mp3");
@@ -122,10 +134,10 @@ export default function BirthdayPage() {
 
 	return (
 		<div className={cn("min-h-screen relative", isShaking && "animate-shake")}>
-			{/* Wrong-answer red overlay */}
+			{/* Wrong-answer red overlay - above hero and block overlay so it shows when No is clicked */}
 			{showWrongAnswer && (
 				<div
-					className="fixed inset-0 z-20 bg-red-500/40 pointer-events-none"
+					className="fixed inset-0 z-[70] bg-red-500/40 pointer-events-none"
 					aria-hidden
 				/>
 			)}
@@ -194,7 +206,7 @@ export default function BirthdayPage() {
 			</div>
 
 			{/* Valentine Hero Section */}
-			<section className="min-h-screen flex flex-col items-center justify-center px-4 relative overflow-hidden z-10">
+			<section className="min-h-screen flex flex-col items-center justify-center px-4 relative overflow-hidden z-[60]">
 				<div className="absolute inset-0 bg-gradient-to-b from-pink-200/30 via-pink-100/20 to-transparent" />
 				<div className="absolute inset-0 bg-gradient-to-b from-yellow-200/20 via-yellow-100/10 to-transparent" />
 				<div className="absolute inset-0 overflow-hidden pointer-events-none">
@@ -215,7 +227,7 @@ export default function BirthdayPage() {
 
 				<div
 					className={cn(
-						"relative z-10 text-center space-y-8 transition-all duration-1000",
+						"relative z-10 text-center space-y-8 transition-all duration-1000 w-full max-w-2xl mx-auto",
 						isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
 					)}
 				>
@@ -288,172 +300,182 @@ export default function BirthdayPage() {
 				</div>
 			</section>
 
+			{/* Overlay to block access until Yes is clicked - covers everything except hero */}
+			{!accepted && (
+				<div className="fixed inset-0 z-50 bg-gradient-to-br from-pink-50 via-pink-100/30 to-yellow-50 pointer-events-auto" />
+			)}
+
 			{/* Content below hero - scroll target */}
-			<div ref={contentRef}>
-			{/* Photo Gallery Section */}
-			<section className="py-20 px-4 relative z-10">
-				<div className="container mx-auto">
-					<h2 className="font-serif text-4xl md:text-5xl text-center text-primary mb-16 text-balance">
-						Our Favorite Moments
-					</h2>
-					<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-						{[
-							{
-								src: "/images/gallery/beach.JPG",
-								caption: "Beach adventures together",
-							},
-							{
-								src: "/images/gallery/firstdate.jpg",
-								caption: "Our first date memories",
-							},
-							{
-								src: "/images/gallery/aquarium.jpeg",
-								caption: "Exploring the aquarium",
-							},
-							{
-								src: "/images/gallery/dodgers.jpg",
-								caption: "Dodgers game fun",
-							},
-							{
-								src: "/images/gallery/christmas.jpeg",
-								caption: "Christmas celebrations",
-							},
-							{
-								src: "/images/gallery/pikachu.jpg",
-								caption: "Adventures with Pikachu",
-							},
-						].map((photo, index) => (
-							<Card
-								key={index}
-								className="group overflow-hidden border-pink-200 hover:shadow-xl transition-all duration-300 hover:-translate-y-2"
-							>
-								<CardContent className="p-0 relative">
-									<Image
-										src={photo.src || "/placeholder.svg"}
-										alt={photo.caption}
-										width={400}
-										height={400}
-										className="w-full aspect-square object-cover transition-transform duration-300 group-hover:scale-105"
-									/>
-									<div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-									<div className="absolute bottom-4 left-4 right-4 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-										<p className="font-medium text-sm">{photo.caption}</p>
-									</div>
-								</CardContent>
-							</Card>
-						))}
-					</div>
-				</div>
-			</section>
-
-			{/* Her Favorites Section */}
-			<section className="py-20 px-4 relative z-10">
-				<div className="container mx-auto">
-					<h2 className="font-serif text-4xl md:text-5xl text-center text-primary mb-16 text-balance">
-						Her Favorites
-					</h2>
-					<div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-						<Card className="text-center p-8 border-pink-200 hover:shadow-lg transition-all duration-300 hover:-translate-y-1">
-							<CardContent className="space-y-4">
-								<div className="w-16 h-16 mx-auto bg-primary/10 rounded-full flex items-center justify-center">
-									<Heart className="w-8 h-8 text-primary" />
-								</div>
-								<h3 className="font-serif text-2xl text-primary">
-									A Heart of Gold
-								</h3>
-								<p className="text-muted-foreground leading-relaxed">
-									She has a way of making everyone around her feel special. Her
-									kindness is a quiet strength that makes the world better.
-								</p>
-							</CardContent>
-						</Card>
-
-						<Card className="text-center p-8 border-pink-200 hover:shadow-lg transition-all duration-300 hover:-translate-y-1">
-							<CardContent className="space-y-4">
-								<div className="w-16 h-16 mx-auto bg-secondary/10 rounded-full flex items-center justify-center">
-									<Music className="w-8 h-8 text-secondary" />
-								</div>
-								<h3 className="font-serif text-2xl text-primary">Pop Queen</h3>
-								<p className="text-muted-foreground leading-relaxed">
-									From Sabrina Carpenter to the Backstreet Boys, she always
-									loves to sing in my ear.
-								</p>
-							</CardContent>
-						</Card>
-
-						<Card className="text-center p-8 border-pink-200 hover:shadow-lg transition-all duration-300 hover:-translate-y-1">
-							<CardContent className="space-y-4">
-								<div className="w-16 h-16 mx-auto bg-yellow-200/50 rounded-full flex items-center justify-center">
-									<Sun className="w-8 h-8 text-yellow-600" />
-								</div>
-								<h3 className="font-serif text-2xl text-primary">
-									Endless Summer
-								</h3>
-								<p className="text-muted-foreground leading-relaxed">
-									She&apos;s a true sun-seeker, happiest with her toes in the
-									sand and the sound of the waves.
-								</p>
-							</CardContent>
-						</Card>
-					</div>
-				</div>
-			</section>
-
-			{/* Music Playlist Section */}
-			<section className="py-20 px-4 relative z-10">
-				<div className="container mx-auto max-w-4xl">
-					<h2 className="font-serif text-4xl md:text-5xl text-center text-primary mb-8 text-balance">
-						Seychelle&apos;s Birthday Mix
-					</h2>
-					<p className="text-center text-xl text-muted-foreground mb-12">
-						Your favorite jams to celebrate your special day.
-					</p>
-
-					{/* Spotify Embed */}
-					<div className="w-full">
-						<iframe
-							data-testid="embed-iframe"
-							style={{ borderRadius: "12px" }}
-							src="https://open.spotify.com/embed/playlist/5IrFirNl36ko5uZjHEfd5z?utm_source=generator"
-							width="100%"
-							height="500"
-							frameBorder="0"
-							allowFullScreen={true}
-							allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
-							loading="lazy"
-						></iframe>
-					</div>
-				</div>
-			</section>
-
-			{/* Final Message Section */}
-			<section className="py-20 px-4 relative z-10">
-				<div className="container mx-auto max-w-4xl text-center">
-					<div className="space-y-8">
-						<blockquote className="font-serif text-2xl md:text-3xl lg:text-4xl text-primary leading-relaxed text-balance">
-							For Seychelle, the light of my life. Just like a perfect day at
-							the beach, you bring warmth and sunshine to my world. Of all the
-							treasures in the world, I was lucky enough to find you. You are
-							the melody to my favorite song and the calm in my ocean. My love
-							for you is deeper than any sea in the universe.
-						</blockquote>
-						<p className="font-serif text-xl text-primary">
-							- With all my love
-						</p>
-						<div className="flex justify-center gap-4 pt-8">
-							<Heart className="w-8 h-8 text-pink-400 float" />
-							<Shell
-								className="w-8 h-8 text-primary float"
-								style={{ animationDelay: "0.5s" }}
-							/>
-							<Heart
-								className="w-8 h-8 text-pink-400 float"
-								style={{ animationDelay: "1s" }}
-							/>
+			<div
+				ref={contentRef}
+				className={cn(
+					!accepted && "invisible pointer-events-none"
+				)}
+			>
+				{/* Photo Gallery Section */}
+				<section className="py-20 px-4 relative z-10">
+					<div className="container mx-auto">
+						<h2 className="font-serif text-4xl md:text-5xl text-center text-primary mb-16 text-balance">
+							Our Favorite Moments
+						</h2>
+						<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+							{[
+								{
+									src: "/images/gallery/beach.JPG",
+									caption: "Beach adventures together",
+								},
+								{
+									src: "/images/gallery/firstdate.jpg",
+									caption: "Our first date memories",
+								},
+								{
+									src: "/images/gallery/aquarium.jpeg",
+									caption: "Exploring the aquarium",
+								},
+								{
+									src: "/images/gallery/dodgers.jpg",
+									caption: "Dodgers game fun",
+								},
+								{
+									src: "/images/gallery/christmas.jpeg",
+									caption: "Christmas celebrations",
+								},
+								{
+									src: "/images/gallery/pikachu.jpg",
+									caption: "Adventures with Pikachu",
+								},
+							].map((photo, index) => (
+								<Card
+									key={index}
+									className="group overflow-hidden border-pink-200 hover:shadow-xl transition-all duration-300 hover:-translate-y-2"
+								>
+									<CardContent className="p-0 relative">
+										<Image
+											src={photo.src || "/placeholder.svg"}
+											alt={photo.caption}
+											width={400}
+											height={400}
+											className="w-full aspect-square object-cover transition-transform duration-300 group-hover:scale-105"
+										/>
+										<div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+										<div className="absolute bottom-4 left-4 right-4 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+											<p className="font-medium text-sm">{photo.caption}</p>
+										</div>
+									</CardContent>
+								</Card>
+							))}
 						</div>
 					</div>
-				</div>
-			</section>
+				</section>
+
+				{/* Her Favorites Section */}
+				<section className="py-20 px-4 relative z-10">
+					<div className="container mx-auto">
+						<h2 className="font-serif text-4xl md:text-5xl text-center text-primary mb-16 text-balance">
+							Her Favorites
+						</h2>
+						<div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+							<Card className="text-center p-8 border-pink-200 hover:shadow-lg transition-all duration-300 hover:-translate-y-1">
+								<CardContent className="space-y-4">
+									<div className="w-16 h-16 mx-auto bg-primary/10 rounded-full flex items-center justify-center">
+										<Heart className="w-8 h-8 text-primary" />
+									</div>
+									<h3 className="font-serif text-2xl text-primary">
+										A Heart of Gold
+									</h3>
+									<p className="text-muted-foreground leading-relaxed">
+										She has a way of making everyone around her feel special. Her
+										kindness is a quiet strength that makes the world better.
+									</p>
+								</CardContent>
+							</Card>
+
+							<Card className="text-center p-8 border-pink-200 hover:shadow-lg transition-all duration-300 hover:-translate-y-1">
+								<CardContent className="space-y-4">
+									<div className="w-16 h-16 mx-auto bg-secondary/10 rounded-full flex items-center justify-center">
+										<Music className="w-8 h-8 text-secondary" />
+									</div>
+									<h3 className="font-serif text-2xl text-primary">Pop Queen</h3>
+									<p className="text-muted-foreground leading-relaxed">
+										From Sabrina Carpenter to the Backstreet Boys, she always
+										loves to sing in my ear.
+									</p>
+								</CardContent>
+							</Card>
+
+							<Card className="text-center p-8 border-pink-200 hover:shadow-lg transition-all duration-300 hover:-translate-y-1">
+								<CardContent className="space-y-4">
+									<div className="w-16 h-16 mx-auto bg-yellow-200/50 rounded-full flex items-center justify-center">
+										<Sun className="w-8 h-8 text-yellow-600" />
+									</div>
+									<h3 className="font-serif text-2xl text-primary">
+										Endless Summer
+									</h3>
+									<p className="text-muted-foreground leading-relaxed">
+										She&apos;s a true sun-seeker, happiest with her toes in the
+										sand and the sound of the waves.
+									</p>
+								</CardContent>
+							</Card>
+						</div>
+					</div>
+				</section>
+
+				{/* Music Playlist Section */}
+				<section className="py-20 px-4 relative z-10">
+					<div className="container mx-auto max-w-4xl">
+						<h2 className="font-serif text-4xl md:text-5xl text-center text-primary mb-8 text-balance">
+							Seychelle&apos;s Birthday Mix
+						</h2>
+						<p className="text-center text-xl text-muted-foreground mb-12">
+							Your favorite jams to celebrate your special day.
+						</p>
+
+						{/* Spotify Embed */}
+						<div className="w-full">
+							<iframe
+								data-testid="embed-iframe"
+								style={{ borderRadius: "12px" }}
+								src="https://open.spotify.com/embed/playlist/5IrFirNl36ko5uZjHEfd5z?utm_source=generator"
+								width="100%"
+								height="500"
+								frameBorder="0"
+								allowFullScreen={true}
+								allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+								loading="lazy"
+							></iframe>
+						</div>
+					</div>
+				</section>
+
+				{/* Final Message Section */}
+				<section className="py-20 px-4 relative z-10">
+					<div className="container mx-auto max-w-4xl text-center">
+						<div className="space-y-8">
+							<blockquote className="font-serif text-2xl md:text-3xl lg:text-4xl text-primary leading-relaxed text-balance">
+								For Seychelle, the light of my life. Just like a perfect day at
+								the beach, you bring warmth and sunshine to my world. Of all the
+								treasures in the world, I was lucky enough to find you. You are
+								the melody to my favorite song and the calm in my ocean. My love
+								for you is deeper than any sea in the universe.
+							</blockquote>
+							<p className="font-serif text-xl text-primary">
+								- With all my love
+							</p>
+							<div className="flex justify-center gap-4 pt-8">
+								<Heart className="w-8 h-8 text-pink-400 float" />
+								<Shell
+									className="w-8 h-8 text-primary float"
+									style={{ animationDelay: "0.5s" }}
+								/>
+								<Heart
+									className="w-8 h-8 text-pink-400 float"
+									style={{ animationDelay: "1s" }}
+								/>
+							</div>
+						</div>
+					</div>
+				</section>
 
 			</div>
 
