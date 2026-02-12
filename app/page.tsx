@@ -7,10 +7,11 @@ import { Button } from "@/components/ui/button";
 import { Heart, Shell, Music, Sun, Sparkles, Waves, Volume2, VolumeX } from "lucide-react";
 import { cn } from "@/lib/utils";
 
+/** No button "runs away" to these positions; x >= 0 so it never overlaps the Yes button (which is to the left). */
 const NO_BUTTON_POSITIONS = [
 	{ x: 0, y: 0 },
-	{ x: 40, y: -24 },
-	{ x: -32, y: 28 },
+	{ x: 36, y: -20 },
+	{ x: 24, y: 28 },
 ] as const;
 
 /** Each No click: Yes gets bigger, No gets smaller. Same size at step 0. */
