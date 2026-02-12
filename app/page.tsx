@@ -213,12 +213,14 @@ export default function BirthdayPage() {
 
 			{/* Valentine Hero Section */}
 			<section className="min-h-screen flex flex-col items-center justify-center px-4 relative overflow-hidden z-[60]">
-				<div className="absolute inset-0 bg-gradient-to-b from-pink-200/30 via-pink-100/20 to-transparent" />
-				<div className="absolute inset-0 bg-gradient-to-b from-yellow-200/20 via-yellow-100/10 to-transparent" />
+				<div className="absolute inset-0 bg-gradient-to-b from-pink-200/40 via-pink-100/25 to-transparent" />
+				<div className="absolute inset-0 bg-gradient-to-b from-yellow-200/25 via-yellow-100/15 to-transparent" />
 				<div className="absolute inset-0 overflow-hidden pointer-events-none">
-					<div className="absolute -top-32 -left-32 w-64 h-64 bg-gradient-to-br from-pink-300/40 to-yellow-300/40 rounded-full blur-3xl" />
-					<div className="absolute -top-32 -right-32 w-56 h-56 bg-gradient-to-br from-yellow-300/40 to-pink-300/40 rounded-full blur-3xl" />
-					<div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-48 h-48 bg-gradient-to-br from-pink-200/50 to-yellow-200/50 rounded-full blur-2xl" />
+					<div className="absolute -top-32 -left-32 w-80 h-80 bg-gradient-to-br from-pink-300/50 to-yellow-300/50 rounded-full blur-3xl" />
+					<div className="absolute -top-32 -right-32 w-72 h-72 bg-gradient-to-br from-yellow-300/50 to-pink-300/50 rounded-full blur-3xl" />
+					<div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-gradient-to-br from-pink-200/60 to-yellow-200/60 rounded-full blur-3xl" />
+					<div className="absolute top-1/3 left-1/4 w-32 h-32 bg-pink-200/30 rounded-full blur-2xl" />
+					<div className="absolute top-2/3 right-1/4 w-28 h-28 bg-yellow-200/30 rounded-full blur-2xl" />
 				</div>
 
 				{/* Mute button - mobile-first 44px touch target */}
@@ -237,13 +239,26 @@ export default function BirthdayPage() {
 						isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
 					)}
 				>
-					<div className="relative">
-						<div className="absolute -inset-4 bg-gradient-to-r from-pink-100/20 to-yellow-100/20 rounded-3xl blur-xl" />
-						<h1 className="relative font-serif text-4xl sm:text-5xl md:text-6xl leading-tight text-balance px-2">
-							<span className="block bg-gradient-to-r from-pink-600 via-pink-500 to-yellow-500 bg-clip-text text-transparent">
-								Seychelle, will you be my valentine?
-							</span>
-						</h1>
+					{/* Title with bigger type, glow, and decorative hearts */}
+					<div className="relative px-2">
+						<div className="absolute -inset-8 bg-gradient-to-r from-pink-200/30 via-yellow-100/20 to-pink-200/30 rounded-3xl blur-2xl" />
+						<div className="relative flex flex-col items-center gap-3">
+							<div className="flex items-center justify-center gap-2">
+								<Heart className="w-6 h-6 sm:w-8 sm:h-8 text-pink-400 fill-pink-400/80 float" style={{ animationDelay: "0s" }} />
+								<Heart className="w-5 h-5 sm:w-6 sm:h-6 text-yellow-400/90 fill-yellow-400/60 float" style={{ animationDelay: "0.3s" }} />
+								<Heart className="w-6 h-6 sm:w-8 sm:h-8 text-pink-400 fill-pink-400/80 float" style={{ animationDelay: "0.6s" }} />
+							</div>
+							<h1 className="font-serif text-5xl sm:text-6xl md:text-7xl lg:text-8xl leading-[1.1] text-balance drop-shadow-[0_2px_8px_rgba(236,72,153,0.2)]">
+								<span className="block bg-gradient-to-r from-pink-600 via-pink-500 to-amber-500 bg-clip-text text-transparent [text-shadow:0_0_40px_rgba(236,72,153,0.15)]">
+									Seychelle, will you be my valentine?
+								</span>
+							</h1>
+							<div className="flex items-center justify-center gap-2">
+								<Heart className="w-5 h-5 sm:w-6 sm:h-6 text-yellow-400/90 fill-yellow-400/60 float" style={{ animationDelay: "0.2s" }} />
+								<Heart className="w-6 h-6 sm:w-8 sm:h-8 text-pink-400 fill-pink-400/80 float" style={{ animationDelay: "0.5s" }} />
+								<Heart className="w-5 h-5 sm:w-6 sm:h-6 text-yellow-400/90 fill-yellow-400/60 float" style={{ animationDelay: "0.8s" }} />
+							</div>
+						</div>
 					</div>
 
 					{/* Fixed-height slot so error message doesn't shift buttons */}
