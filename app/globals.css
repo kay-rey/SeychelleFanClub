@@ -148,12 +148,23 @@
 		background: linear-gradient(135deg, #fce7f3 0%, #fef3c7 50%, #fce7f3 100%);
 		background-color: #fce7f3;
 		min-height: 100vh;
+		overflow-y: scroll;
+		scrollbar-width: none;
+		-ms-overflow-style: none;
+	}
+	html::-webkit-scrollbar {
+		display: none;
 	}
 	body {
 		background: linear-gradient(135deg, #fce7f3 0%, #fef3c7 50%, #fce7f3 100%);
 		background-color: #fce7f3;
 		min-height: 100vh;
+		scrollbar-width: none;
+		-ms-overflow-style: none;
 		@apply text-foreground font-sans;
+	}
+	body::-webkit-scrollbar {
+		display: none;
 	}
 }
 

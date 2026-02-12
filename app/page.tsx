@@ -128,9 +128,14 @@ export default function BirthdayPage() {
 		playYay();
 		setAccepted(true);
 		setTimeout(() => setShowConfetti(false), 1600);
-		setTimeout(() => {
-			contentRef.current?.scrollIntoView({ behavior: "smooth" });
-		}, 400);
+		// Scroll after layout has settled to avoid visible shift
+		requestAnimationFrame(() => {
+			requestAnimationFrame(() => {
+				setTimeout(() => {
+					contentRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+				}, 50);
+			});
+		});
 	};
 
 	return (
@@ -295,9 +300,12 @@ export default function BirthdayPage() {
 						);
 					})()}
 
-					{accepted && (
-						<p className="font-serif text-xl text-pink-600">Yay! Best valentine ever.</p>
-					)}
+					{/* Reserve space so "Yay!" doesn't shift layout when it appears */}
+					<div className="min-h-[2.5rem] flex items-center justify-center">
+						{accepted && (
+							<p className="font-serif text-xl text-pink-600">Yay! Best valentine ever.</p>
+						)}
+					</div>
 				</div>
 			</section>
 
