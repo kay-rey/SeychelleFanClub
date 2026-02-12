@@ -347,7 +347,7 @@ export default function BirthdayPage() {
 						<section className="py-20 px-4 relative z-10">
 							<div className="container mx-auto">
 								<h2 className="font-serif text-4xl md:text-5xl text-center text-primary mb-16 text-balance">
-									Our Favorite Moments
+									Us 💞
 								</h2>
 								<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
 									{[
@@ -403,7 +403,7 @@ export default function BirthdayPage() {
 						<section className="py-20 px-4 relative z-10">
 							<div className="container mx-auto">
 								<h2 className="font-serif text-4xl md:text-5xl text-center text-primary mb-16 text-balance">
-									Her Favorites
+									A few reasons you&apos;re my valentine
 								</h2>
 								<div className="grid grid-cols-1 md:grid-cols-3 gap-8">
 									<Card className="text-center p-8 border-pink-200 hover:shadow-lg transition-all duration-300 hover:-translate-y-1">
@@ -456,10 +456,10 @@ export default function BirthdayPage() {
 						<section className="py-20 px-4 relative z-10">
 							<div className="container mx-auto max-w-4xl">
 								<h2 className="font-serif text-4xl md:text-5xl text-center text-primary mb-8 text-balance">
-									Seychelle&apos;s Birthday Mix
+									Your Valentine&apos;s mix
 								</h2>
 								<p className="text-center text-xl text-muted-foreground mb-12">
-									Your favorite jams to celebrate your special day.
+									Songs that remind me of you.
 								</p>
 
 								{/* Spotify Embed */}
@@ -467,9 +467,9 @@ export default function BirthdayPage() {
 									<iframe
 										data-testid="embed-iframe"
 										style={{ borderRadius: "12px" }}
-										src="https://open.spotify.com/embed/playlist/5IrFirNl36ko5uZjHEfd5z?utm_source=generator"
+										src="https://open.spotify.com/embed/playlist/4Pz6z80H9oZHUj50W9GX6C?utm_source=generator"
 										width="100%"
-										height="500"
+										height="352"
 										frameBorder="0"
 										allowFullScreen={true}
 										allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
@@ -483,6 +483,9 @@ export default function BirthdayPage() {
 						<section className="py-20 px-4 relative z-10">
 							<div className="container mx-auto max-w-4xl text-center">
 								<div className="space-y-8">
+									<p className="font-serif text-xl text-primary">
+										Happy Valentine&apos;s, Seychelle.
+									</p>
 									<blockquote className="font-serif text-2xl md:text-3xl lg:text-4xl text-primary leading-relaxed text-balance">
 										For Seychelle, the light of my life. Just like a perfect day at
 										the beach, you bring warmth and sunshine to my world. Of all the
@@ -513,7 +516,10 @@ export default function BirthdayPage() {
 					{/* Footer - same as content, only after Yes */}
 					<footer className="py-8 px-4 relative z-10">
 						<div className="absolute inset-0 bg-gradient-to-b from-transparent via-pink-50/20 to-pink-50/40" />
-						<div className="container mx-auto text-center">
+						<div className="container mx-auto text-center space-y-2">
+							<p className="text-muted-foreground font-medium">
+								Happy Valentine&apos;s.
+							</p>
 							<p className="text-muted-foreground">
 								<a href="https://github.com/kay-rey">
 									Made with love for 🐚 by 🐨.
