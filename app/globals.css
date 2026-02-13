@@ -406,3 +406,32 @@
 	animation: float 5.1s ease-in-out infinite;
 	animation-delay: 0.1s;
 }
+
+/* Respect prefers-reduced-motion: disable or simplify animations */
+@media (prefers-reduced-motion: reduce) {
+	.sparkle,
+	.float,
+	.animate-shake,
+	.confetti-heart,
+	.animate-pulse-subtle,
+	.floating-heart-1,
+	.floating-heart-2,
+	.floating-heart-3,
+	.floating-heart-4,
+	.floating-heart-5,
+	.floating-heart-6,
+	.floating-heart-7,
+	.floating-heart-8,
+	.floating-shell-1,
+	.floating-shell-2,
+	.floating-shell-3,
+	.floating-shell-4,
+	.floating-shell-5,
+	.floating-shell-6 {
+		animation: none !important;
+	}
+
+	.gradient-bg {
+		animation: none !important;
+	}
+}

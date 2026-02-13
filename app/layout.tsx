@@ -1,10 +1,17 @@
 import type React from "react";
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Playfair_Display, Poppins } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
 import { Suspense } from "react";
 import { AudioPreload } from "@/components/shared/AudioPreload";
 import "./globals.css";
+
+export const viewport: Viewport = {
+	width: "device-width",
+	initialScale: 1,
+	viewportFit: "cover",
+	themeColor: "#fce7f3",
+};
 
 const playfair = Playfair_Display({
 	subsets: ["latin"],
