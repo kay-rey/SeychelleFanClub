@@ -73,14 +73,17 @@ export default function BirthdayPage() {
 		if (stored === "true") setMuted(true);
 	}, []);
 
-	// Prevent scrolling when overlay is active
+	// Prevent scrolling when overlay is active - set both html and body to prevent mobile scroll
 	useEffect(() => {
 		if (!accepted) {
+			document.documentElement.style.overflow = "hidden";
 			document.body.style.overflow = "hidden";
 		} else {
+			document.documentElement.style.overflow = "";
 			document.body.style.overflow = "";
 		}
 		return () => {
+			document.documentElement.style.overflow = "";
 			document.body.style.overflow = "";
 		};
 	}, [accepted]);
@@ -102,7 +105,7 @@ export default function BirthdayPage() {
 			const index = noSoundIndexRef.current % NO_SOUNDS.length;
 			audio.src = NO_SOUNDS[index];
 			noSoundIndexRef.current += 1;
-			audio.play().catch(() => {});
+			audio.play().catch(() => { });
 		} catch {
 			// ignore when files are missing
 		}
@@ -111,7 +114,7 @@ export default function BirthdayPage() {
 	const playYay = (): void => {
 		if (muted) return;
 		try {
-			yayAudioRef.current?.play?.().catch(() => {});
+			yayAudioRef.current?.play?.().catch(() => { });
 		} catch {
 			// ignore when files are missing
 		}
