@@ -14,6 +14,22 @@ const nextConfig = {
 	compiler: {
 		removeConsole: process.env.NODE_ENV === "production",
 	},
+	// Cache control headers with stale-while-revalidate for optimal performance
+	// Content is fresh for 1 hour, then serves stale content while revalidating in background for up to 24 hours
+	// Next.js automatically handles ETags for version checking
+	async headers() {
+		return [
+			{
+				source: "/",
+				headers: [
+					{
+						key: "Cache-Control",
+						value: "public, max-age=3600, stale-while-revalidate=86400",
+					},
+				],
+			},
+		];
+	},
 };
 
 export default nextConfig;

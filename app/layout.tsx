@@ -20,8 +20,8 @@ const poppins = Poppins({
 });
 
 export const metadata: Metadata = {
-	title: "Happy Birthday, Seychelle!",
-	description: "A beautiful birthday celebration for Seychelle Reyes",
+	title: "Will you be my valentine?",
+	description: "A special Valentine's Day surprise for Seychelle",
 	generator: "v0.app",
 	icons: {
 		icon: "/favicon.ico",
