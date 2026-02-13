@@ -4,7 +4,7 @@
 @custom-variant dark (&:is(.dark *));
 
 :root {
-	/* Updated color palette to pastel pink and yellow theme */
+	/* Updated color palette to pink and red Valentine's theme with subtle yellow accents */
 	--background: oklch(0.98 0.01 320);
 	--foreground: oklch(0.2 0.02 320);
 	--card: oklch(1 0 0);
@@ -13,11 +13,11 @@
 	--popover-foreground: oklch(0.2 0.02 320);
 	--primary: oklch(0.75 0.15 340);
 	--primary-foreground: oklch(0.98 0.01 320);
-	--secondary: oklch(0.85 0.12 60);
+	--secondary: oklch(0.8 0.1 25);
 	--secondary-foreground: oklch(0.2 0.02 320);
 	--muted: oklch(0.95 0.02 320);
 	--muted-foreground: oklch(0.5 0.02 320);
-	--accent: oklch(0.85 0.12 60);
+	--accent: oklch(0.75 0.15 15);
 	--accent-foreground: oklch(0.2 0.02 320);
 	--destructive: oklch(0.577 0.245 27.325);
 	--destructive-foreground: oklch(0.577 0.245 27.325);
@@ -25,7 +25,7 @@
 	--input: oklch(0.9 0.02 320);
 	--ring: oklch(0.75 0.15 340);
 	--chart-1: oklch(0.75 0.15 340);
-	--chart-2: oklch(0.85 0.12 60);
+	--chart-2: oklch(0.8 0.1 25);
 	--chart-3: oklch(0.7 0.1 200);
 	--chart-4: oklch(0.8 0.1 120);
 	--chart-5: oklch(0.65 0.12 280);
@@ -145,7 +145,7 @@
 		@apply border-border outline-ring/50;
 	}
 	html {
-		background: linear-gradient(135deg, #fce7f3 0%, #fef3c7 50%, #fce7f3 100%);
+		background: linear-gradient(135deg, #fce7f3 0%, #fef2f2 50%, #fce7f3 100%);
 		background-color: #fce7f3;
 		min-height: 100vh;
 		overflow-y: scroll;
@@ -156,7 +156,7 @@
 		display: none;
 	}
 	body {
-		background: linear-gradient(135deg, #fce7f3 0%, #fef3c7 50%, #fce7f3 100%);
+		background: linear-gradient(135deg, #fce7f3 0%, #fef2f2 50%, #fce7f3 100%);
 		background-color: #fce7f3;
 		min-height: 100vh;
 		scrollbar-width: none;
@@ -254,7 +254,7 @@
 	background: linear-gradient(
 		135deg,
 		oklch(0.95 0.08 340) 0%,
-		oklch(0.97 0.06 60) 50%,
+		oklch(0.97 0.06 15) 50%,
 		oklch(0.95 0.08 340) 100%
 	);
 	background-size: 200% 200%;
