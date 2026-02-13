@@ -460,11 +460,11 @@ export default function BirthdayPage() {
 							</div>
 						</section>
 
-						{/* Her Favorites Section */}
+						{/* Why you're my valentine Section */}
 						<section className="py-20 px-4 relative z-10">
 							<div className="container mx-auto">
 								<h2 className="font-serif text-4xl md:text-5xl text-center text-primary mb-16 text-balance">
-									A few reasons you&apos;re my valentine
+									Why you&apos;re my valentine
 								</h2>
 								<div className="grid grid-cols-1 md:grid-cols-3 gap-8">
 									<Card className="text-center p-8 border-pink-200 hover:shadow-lg transition-all duration-300 hover:-translate-y-1">
@@ -473,11 +473,11 @@ export default function BirthdayPage() {
 												<Heart className="w-8 h-8 text-primary" />
 											</div>
 											<h3 className="font-serif text-2xl text-primary">
-												A Heart of Gold
+												Your heart
 											</h3>
 											<p className="text-muted-foreground leading-relaxed">
-												She has a way of making everyone around her feel special. Her
-												kindness is a quiet strength that makes the world better.
+												You have a way of making everyone around you feel special.
+												Your kindness is a quiet strength that makes my world better.
 											</p>
 										</CardContent>
 									</Card>
@@ -487,10 +487,12 @@ export default function BirthdayPage() {
 											<div className="w-16 h-16 mx-auto bg-secondary/10 rounded-full flex items-center justify-center">
 												<Music className="w-8 h-8 text-secondary" />
 											</div>
-											<h3 className="font-serif text-2xl text-primary">Pop Queen</h3>
+											<h3 className="font-serif text-2xl text-primary">
+												Every song with you
+											</h3>
 											<p className="text-muted-foreground leading-relaxed">
-												From Sabrina Carpenter to the Backstreet Boys, she always
-												loves to sing in my ear.
+												From car karaoke to kitchen dance parties, you&apos;re the
+												melody to my favorite moments. I love every song we share.
 											</p>
 										</CardContent>
 									</Card>
@@ -501,11 +503,11 @@ export default function BirthdayPage() {
 												<Sun className="w-8 h-8 text-yellow-600/80" />
 											</div>
 											<h3 className="font-serif text-2xl text-primary">
-												Endless Summer
+												Your light
 											</h3>
 											<p className="text-muted-foreground leading-relaxed">
-												She&apos;s a true sun-seeker, happiest with her toes in the
-												sand and the sound of the waves.
+												You&apos;re my sunshine—happiest with your toes in the sand
+												and the sound of the waves. Being with you feels like endless summer.
 											</p>
 										</CardContent>
 									</Card>
