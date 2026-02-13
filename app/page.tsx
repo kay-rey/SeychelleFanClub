@@ -544,7 +544,7 @@ export default function BirthdayPage() {
 						<section className="py-20 px-4 relative z-10">
 							<div className="container mx-auto max-w-4xl text-center">
 								<div className="space-y-8">
-									<p className="font-serif text-xl text-primary">
+									<p className="font-serif text-4xl md:text-5xl lg:text-6xl text-pink-600 font-bold">
 										Happy Valentine&apos;s, Seychelle.
 									</p>
 									<blockquote className="font-serif text-2xl md:text-3xl lg:text-4xl text-primary leading-relaxed text-balance">
