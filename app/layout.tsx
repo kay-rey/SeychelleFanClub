@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import { Playfair_Display, Poppins } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
 import { Suspense } from "react";
+import { AudioPreload } from "@/components/shared/AudioPreload";
 import "./globals.css";
 
 const playfair = Playfair_Display({
@@ -37,6 +38,7 @@ export default function RootLayout({
 	return (
 		<html lang="en">
 			<body className={`font-sans ${playfair.variable} ${poppins.variable}`}>
+				<AudioPreload />
 				<Suspense fallback={null}>{children}</Suspense>
 				<Analytics />
 			</body>

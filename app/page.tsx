@@ -59,7 +59,7 @@ export default function BirthdayPage() {
 	const [muted, setMuted] = useState(false);
 	const [showConfetti, setShowConfetti] = useState(false);
 	const contentRef = useRef<HTMLDivElement>(null);
-	const nopeAudioRef = useRef<HTMLAudioElement | null>(null);
+	const nopeAudioRefs = useRef<HTMLAudioElement[]>([]);
 	const yayAudioRef = useRef<HTMLAudioElement | null>(null);
 	const noSoundIndexRef = useRef(0);
 
@@ -89,23 +89,36 @@ export default function BirthdayPage() {
 	}, [accepted]);
 
 	useEffect(() => {
-		nopeAudioRef.current = new Audio();
-		yayAudioRef.current = new Audio(YES_SOUND);
+		// Preload all nope sounds - create one Audio instance per file
+		nopeAudioRefs.current = NO_SOUNDS.map((src) => {
+			const audio = new Audio(src);
+			audio.preload = "auto";
+			audio.load();
+			return audio;
+		});
+
+		// Preload yay sound
+		const yayAudio = new Audio(YES_SOUND);
+		yayAudio.preload = "auto";
+		yayAudio.load();
+		yayAudioRef.current = yayAudio;
+
 		return () => {
-			nopeAudioRef.current = null;
+			nopeAudioRefs.current = [];
 			yayAudioRef.current = null;
 		};
 	}, []);
 
 	const playNope = (): void => {
 		if (muted) return;
-		const audio = nopeAudioRef.current;
-		if (!audio) return;
 		try {
 			const index = noSoundIndexRef.current % NO_SOUNDS.length;
-			audio.src = NO_SOUNDS[index];
+			const audio = nopeAudioRefs.current[index];
+			if (audio) {
+				audio.currentTime = 0; // Reset to start for instant replay
+				audio.play().catch(() => {});
+			}
 			noSoundIndexRef.current += 1;
-			audio.play().catch(() => { });
 		} catch {
 			// ignore when files are missing
 		}
@@ -114,7 +127,11 @@ export default function BirthdayPage() {
 	const playYay = (): void => {
 		if (muted) return;
 		try {
-			yayAudioRef.current?.play?.().catch(() => { });
+			const audio = yayAudioRef.current;
+			if (audio) {
+				audio.currentTime = 0; // Reset to start for instant replay
+				audio.play().catch(() => {});
+			}
 		} catch {
 			// ignore when files are missing
 		}
@@ -198,36 +215,40 @@ export default function BirthdayPage() {
 				<div className="absolute -bottom-1/2 -right-1/2 w-full h-full bg-gradient-radial from-yellow-200/10 via-transparent to-transparent" />
 			</div>
 
-			{/* Floating Sparkles */}
-			<div className="fixed inset-0 pointer-events-none overflow-hidden z-0">
-				{[...Array(20)].map((_, i) => (
-					<div
-						key={i}
-						className="absolute sparkle"
-						style={{
-							left: `${Math.random() * 100}%`,
-							top: `${Math.random() * 100}%`,
-							animationDelay: `${Math.random() * 2}s`,
-						}}
-					>
-						<Sparkles className="w-4 h-4 text-pink-300" />
-					</div>
-				))}
-			</div>
+			{/* Floating Sparkles - lazy loaded until hero is visible */}
+			{isVisible && (
+				<div className="fixed inset-0 pointer-events-none overflow-hidden z-0">
+					{[...Array(20)].map((_, i) => (
+						<div
+							key={i}
+							className="absolute sparkle"
+							style={{
+								left: `${Math.random() * 100}%`,
+								top: `${Math.random() * 100}%`,
+								animationDelay: `${Math.random() * 2}s`,
+							}}
+						>
+							<Sparkles className="w-4 h-4 text-pink-300" />
+						</div>
+					))}
+				</div>
+			)}
 
-			{/* Floating Background Elements */}
-			<div className="fixed inset-0 pointer-events-none overflow-hidden z-0">
-				{[1, 2, 3, 4, 5, 6, 7, 8].map((n) => (
-					<div key={`heart-${n}`} className={`floating-heart-${n}`}>
-						<Heart className="w-4 h-4 text-pink-300/60" />
-					</div>
-				))}
-				{[1, 2, 3, 4, 5, 6].map((n) => (
-					<div key={`shell-${n}`} className={`floating-shell-${n}`}>
-						<Shell className="w-5 h-5 text-yellow-300/50" />
-					</div>
-				))}
-			</div>
+			{/* Floating Background Elements - lazy loaded until hero is visible */}
+			{isVisible && (
+				<div className="fixed inset-0 pointer-events-none overflow-hidden z-0">
+					{[1, 2, 3, 4, 5, 6, 7, 8].map((n) => (
+						<div key={`heart-${n}`} className={`floating-heart-${n}`}>
+							<Heart className="w-4 h-4 text-pink-300/60" />
+						</div>
+					))}
+					{[1, 2, 3, 4, 5, 6].map((n) => (
+						<div key={`shell-${n}`} className={`floating-shell-${n}`}>
+							<Shell className="w-5 h-5 text-yellow-300/50" />
+						</div>
+					))}
+				</div>
+			)}
 
 			{/* Valentine Hero Section */}
 			<section className="min-h-screen flex flex-col items-center justify-center px-4 relative overflow-hidden z-[60]">
