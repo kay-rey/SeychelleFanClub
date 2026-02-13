@@ -6,6 +6,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Heart, Shell, Music, Sun, Sparkles, Waves, Volume2, VolumeX } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { GALLERY_PHOTOS } from "@/lib/constants";
 
 /** No button "runs away" to these positions; x >= 0 so it never overlaps the Yes button (which is to the left). */
 const NO_BUTTON_POSITIONS = [
@@ -36,6 +37,26 @@ const MAX_NO_CLICKS = BUTTON_SIZE_STEPS.length - 1;
 const CONFETTI_HEART_COUNT = 14;
 const CONFETTI_RADIUS = 180;
 
+// Animation and timing constants
+const WRONG_ANSWER_DURATION = 1500; // ms
+const CONFETTI_DURATION = 1600; // ms
+const SCROLL_DELAY = 50; // ms
+const HERO_FADE_DURATION = 1000; // ms
+
+// Visual element counts
+const SPARKLE_COUNT = 20;
+const FLOATING_HEART_COUNT = 8;
+const FLOATING_SHELL_COUNT = 6;
+
+// Local storage keys
+const LOCAL_STORAGE_MUTED_KEY = "valentine-muted";
+
+/**
+ * Generates confetti heart positions in a circular pattern around the center.
+ * Uses trigonometry to distribute hearts evenly in a circle, starting from the top.
+ *
+ * @returns Array of confetti heart positions with translation values
+ */
 function getConfettiHearts(): { id: number; tx: number; ty: number }[] {
 	return Array.from({ length: CONFETTI_HEART_COUNT }, (_, i) => {
 		const angle = (i / CONFETTI_HEART_COUNT) * 2 * Math.PI - Math.PI / 2;
@@ -69,7 +90,7 @@ export default function BirthdayPage() {
 
 	useEffect(() => {
 		if (typeof window === "undefined") return;
-		const stored = localStorage.getItem("valentine-muted");
+		const stored = localStorage.getItem(LOCAL_STORAGE_MUTED_KEY);
 		if (stored === "true") setMuted(true);
 	}, []);
 
@@ -109,6 +130,10 @@ export default function BirthdayPage() {
 		};
 	}, []);
 
+	/**
+	 * Plays a "nope" sound effect, cycling through available sounds.
+	 * Respects muted state and handles missing audio files gracefully.
+	 */
 	const playNope = (): void => {
 		if (muted) return;
 		try {
@@ -124,6 +149,10 @@ export default function BirthdayPage() {
 		}
 	};
 
+	/**
+	 * Plays the "yay" success sound effect when Yes is clicked.
+	 * Respects muted state and handles missing audio files gracefully.
+	 */
 	const playYay = (): void => {
 		if (muted) return;
 		try {
@@ -137,14 +166,40 @@ export default function BirthdayPage() {
 		}
 	};
 
+	/**
+	 * Triggers haptic feedback on mobile devices using the Vibration API.
+	 * Uses different patterns for success (Yes) vs error (No) feedback.
+	 *
+	 * @param type - "success" for Yes button, "error" for No button
+	 */
+	const triggerHapticFeedback = (type: "success" | "error"): void => {
+		if (typeof window === "undefined" || !navigator.vibrate) return;
+		try {
+			if (type === "success") {
+				// Single short vibration for success
+				navigator.vibrate(50);
+			} else {
+				// Triple vibration pattern for error: vibrate, pause, vibrate, pause, vibrate
+				navigator.vibrate([30, 50, 30]);
+			}
+		} catch {
+			// Silently fail if vibration is not supported or blocked
+		}
+	};
+
 	const toggleMuted = (): void => {
 		setMuted((m: boolean) => {
 			const next = !m;
-			localStorage.setItem("valentine-muted", String(next));
+			localStorage.setItem(LOCAL_STORAGE_MUTED_KEY, String(next));
 			return next;
 		});
 	};
 
+	/**
+	 * Handles No button click: moves button, plays sound, shows error feedback.
+	 * Button moves immediately to "run away", then error overlay and shake animation trigger.
+	 * Button sizes change progressively with each click (Yes grows, No shrinks).
+	 */
 	const handleNoClick = (): void => {
 		// Move button first so it "runs away" as soon as they try to press it
 		setNoButtonIndex((i: number) => (i + 1) % NO_BUTTON_POSITIONS.length);
@@ -152,23 +207,29 @@ export default function BirthdayPage() {
 		setShowWrongAnswer(true);
 		setIsShaking(true);
 		playNope();
+		triggerHapticFeedback("error");
 		setTimeout(() => {
 			setShowWrongAnswer(false);
 			setIsShaking(false);
-		}, 1500);
+		}, WRONG_ANSWER_DURATION);
 	};
 
+	/**
+	 * Handles Yes button click: triggers confetti, plays success sound, accepts proposal.
+	 * After acceptance, scrolls to content section with delayed animation to prevent layout shift.
+	 */
 	const handleYesClick = (): void => {
 		setShowConfetti(true);
 		playYay();
 		setAccepted(true);
-		setTimeout(() => setShowConfetti(false), 1600);
+		triggerHapticFeedback("success");
+		setTimeout(() => setShowConfetti(false), CONFETTI_DURATION);
 		// Scroll after layout has settled to avoid visible shift
 		requestAnimationFrame(() => {
 			requestAnimationFrame(() => {
 				setTimeout(() => {
 					contentRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
-				}, 50);
+				}, SCROLL_DELAY);
 			});
 		});
 	};
@@ -218,7 +279,7 @@ export default function BirthdayPage() {
 			{/* Floating Sparkles - lazy loaded until hero is visible */}
 			{isVisible && (
 				<div className="fixed inset-0 pointer-events-none overflow-hidden z-0">
-					{[...Array(20)].map((_, i) => (
+					{[...Array(SPARKLE_COUNT)].map((_, i) => (
 						<div
 							key={i}
 							className="absolute sparkle"
@@ -237,12 +298,12 @@ export default function BirthdayPage() {
 			{/* Floating Background Elements - lazy loaded until hero is visible */}
 			{isVisible && (
 				<div className="fixed inset-0 pointer-events-none overflow-hidden z-0">
-					{[1, 2, 3, 4, 5, 6, 7, 8].map((n) => (
+					{Array.from({ length: FLOATING_HEART_COUNT }, (_, i) => i + 1).map((n) => (
 						<div key={`heart-${n}`} className={`floating-heart-${n}`}>
 							<Heart className="w-4 h-4 text-pink-300/60" />
 						</div>
 					))}
-					{[1, 2, 3, 4, 5, 6].map((n) => (
+					{Array.from({ length: FLOATING_SHELL_COUNT }, (_, i) => i + 1).map((n) => (
 						<div key={`shell-${n}`} className={`floating-shell-${n}`}>
 							<Shell className="w-5 h-5 text-yellow-300/50" />
 						</div>
@@ -274,9 +335,10 @@ export default function BirthdayPage() {
 
 				<div
 					className={cn(
-						"relative z-10 text-center space-y-8 transition-all duration-1000 w-full max-w-2xl mx-auto",
+						"relative z-10 text-center space-y-8 transition-all w-full max-w-2xl mx-auto",
 						isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
 					)}
+					style={{ transitionDuration: `${HERO_FADE_DURATION}ms` }}
 				>
 					{/* Title with bigger type, glow, and decorative hearts */}
 					<div className="relative px-2">
@@ -318,7 +380,7 @@ export default function BirthdayPage() {
 									size="lg"
 									onClick={handleYesClick}
 									className={cn(
-										"aspect-square font-serif rounded-lg transition-all duration-300",
+										"aspect-square font-serif rounded-lg transition-all duration-300 animate-pulse-subtle",
 										step.yes
 									)}
 								>
@@ -374,32 +436,7 @@ export default function BirthdayPage() {
 									Us 💞
 								</h2>
 								<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-									{[
-										{
-											src: "/images/gallery/beach.JPG",
-											caption: "Beach adventures together",
-										},
-										{
-											src: "/images/gallery/firstdate.jpg",
-											caption: "Our first date memories",
-										},
-										{
-											src: "/images/gallery/aquarium.jpeg",
-											caption: "Exploring the aquarium",
-										},
-										{
-											src: "/images/gallery/dodgers.jpg",
-											caption: "Dodgers game fun",
-										},
-										{
-											src: "/images/gallery/christmas.jpeg",
-											caption: "Christmas celebrations",
-										},
-										{
-											src: "/images/gallery/pikachu.jpg",
-											caption: "Adventures with Pikachu",
-										},
-									].map((photo, index) => (
+									{GALLERY_PHOTOS.map((photo, index) => (
 										<Card
 											key={index}
 											className="group overflow-hidden border-pink-200 hover:shadow-xl transition-all duration-300 hover:-translate-y-2"
