@@ -26,14 +26,29 @@ const poppins = Poppins({
 	display: "swap",
 });
 
+const siteUrl =
+	process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.seychellereyes.com";
+
 export const metadata: Metadata = {
+	metadataBase: new URL(siteUrl),
 	title: "Will you be my valentine?",
 	description: "A special Valentine's Day surprise for Seychelle",
-	generator: "v0.app",
 	icons: {
 		icon: "/favicon.ico",
 		shortcut: "/favicon.ico",
 		apple: "/favicon.ico",
+	},
+	openGraph: {
+		title: "Will you be my valentine?",
+		description: "A special Valentine's Day surprise for Seychelle",
+		type: "website",
+		images: [{ url: "/images/hero.jpg", width: 1200, height: 630, alt: "Valentine's Day surprise" }],
+	},
+	twitter: {
+		card: "summary_large_image",
+		title: "Will you be my valentine?",
+		description: "A special Valentine's Day surprise for Seychelle",
+		images: ["/images/hero.jpg"],
 	},
 };
 
