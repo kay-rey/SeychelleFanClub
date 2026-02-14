@@ -11,27 +11,27 @@ export interface GalleryPhoto {
  */
 export const GALLERY_PHOTOS: GalleryPhoto[] = [
 	{
-		src: "/images/gallery/beach.JPG",
-		caption: "Beach adventures together",
+		src: "/images/valentines/weddingsquare.jpg",
+		caption: "Our wedding",
 	},
 	{
-		src: "/images/gallery/firstdate.jpg",
+		src: "/images/valentines/firstdate.jpg",
 		caption: "Our first date memories",
 	},
 	{
-		src: "/images/gallery/aquarium.jpeg",
-		caption: "Exploring the aquarium",
+		src: "/images/valentines/game.jpg",
+		caption: "Galaxy game day together",
 	},
 	{
-		src: "/images/gallery/dodgers.jpg",
-		caption: "Dodgers game fun",
+		src: "/images/valentines/ramsgame.jpg",
+		caption: "Rams game with Tito and Tita",
 	},
 	{
-		src: "/images/gallery/christmas.jpeg",
-		caption: "Christmas celebrations",
+		src: "/images/valentines/santamonica.jpg",
+		caption: "A day in Santa Monica",
 	},
 	{
-		src: "/images/gallery/pikachu.jpg",
-		caption: "Adventures with Pikachu",
+		src: "/images/valentines/nightmarebeforexmasshow.jpg",
+		caption: "Nightmare Before Christmas show",
 	},
 ];
