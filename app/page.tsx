@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import Image from "next/image";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -83,6 +83,17 @@ export default function BirthdayPage() {
 	const nopeAudioRefs = useRef<HTMLAudioElement[]>([]);
 	const yayAudioRef = useRef<HTMLAudioElement | null>(null);
 	const noSoundIndexRef = useRef(0);
+
+	/** Sparkle positions/delays fixed at mount so they don't teleport on re-render when state changes (e.g. No button). */
+	const sparkleStyles = useMemo(
+		() =>
+			Array.from({ length: SPARKLE_COUNT }, () => ({
+				left: `${Math.random() * 100}%`,
+				top: `${Math.random() * 100}%`,
+				animationDelay: `${Math.random() * 2}s`,
+			})),
+		[]
+	);
 
 	useEffect(() => {
 		setIsVisible(true);
@@ -276,19 +287,11 @@ export default function BirthdayPage() {
 				<div className="absolute -bottom-1/2 -right-1/2 w-full h-full bg-gradient-radial from-rose-200/10 via-transparent to-transparent" />
 			</div>
 
-			{/* Floating Sparkles - lazy loaded until hero is visible */}
+			{/* Floating Sparkles - lazy loaded until hero is visible; positions fixed at mount so they don't teleport on re-render */}
 			{isVisible && (
 				<div className="fixed inset-0 pointer-events-none overflow-hidden z-0">
-					{[...Array(SPARKLE_COUNT)].map((_, i) => (
-						<div
-							key={i}
-							className="absolute sparkle"
-							style={{
-								left: `${Math.random() * 100}%`,
-								top: `${Math.random() * 100}%`,
-								animationDelay: `${Math.random() * 2}s`,
-							}}
-						>
+					{sparkleStyles.map((style, i) => (
+						<div key={i} className="absolute sparkle" style={style}>
 							<Sparkles className="w-4 h-4 text-pink-300" />
 						</div>
 					))}
