@@ -2,6 +2,8 @@
 
 > _A heartfelt digital tribute celebrating the beauty, joy, and precious moments of Seychelle_
 
+**Note:** This site is for my wife and is always changing—birthdays, Valentine’s, anniversaries, or whatever feels right. Content and theme evolve with the occasion.
+
 [![Next.js](https://img.shields.io/badge/Next.js-14.2.25-black?style=for-the-badge&logo=next.js)](https://nextjs.org/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.0-blue?style=for-the-badge&logo=typescript)](https://www.typescriptlang.org/)
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-4.1.9-38B2AC?style=for-the-badge&logo=tailwind-css)](https://tailwindcss.com/)
@@ -11,7 +13,7 @@
 
 ## ✨ About This Project
 
-This is a lovingly crafted, static tribute website that captures the essence of Seychelle through beautiful imagery, heartfelt memories, and elegant design. Built with modern web technologies and a focus on performance, accessibility, and emotional impact.
+This is a lovingly crafted tribute website for my wife, Seychelle. It captures our moments through imagery, memories, and design—and it **keeps evolving**: it might be a Valentine’s surprise one month and a birthday page the next. Built with modern web technologies and a focus on performance, accessibility, and emotional impact.
 
 ### 🎨 Design Philosophy
 
@@ -136,9 +138,9 @@ The easiest way to deploy is using [Vercel](https://vercel.com/):
 
 ### Adding New Images
 
-1. Place images in `/public/images/gallery/`
-2. Update the gallery data in your components
-3. Ensure images are optimized for web (WebP format recommended)
+1. Place images in `/public/images/gallery/` or `/public/images/valentines/` (or add a new folder for the current theme).
+2. Update the gallery data in `lib/constants.ts` (`GALLERY_PHOTOS`).
+3. Use square images (e.g. 800×800 or 1000×1000) for the gallery; use 1200×630 for the share preview image.
 
 ### Styling
 
