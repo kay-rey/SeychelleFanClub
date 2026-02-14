@@ -4,7 +4,7 @@
 @custom-variant dark (&:is(.dark *));
 
 :root {
-	/* Updated color palette to pastel pink and yellow theme */
+	/* Updated color palette to pink and red Valentine's theme with subtle yellow accents */
 	--background: oklch(0.98 0.01 320);
 	--foreground: oklch(0.2 0.02 320);
 	--card: oklch(1 0 0);
@@ -13,11 +13,11 @@
 	--popover-foreground: oklch(0.2 0.02 320);
 	--primary: oklch(0.75 0.15 340);
 	--primary-foreground: oklch(0.98 0.01 320);
-	--secondary: oklch(0.85 0.12 60);
+	--secondary: oklch(0.8 0.1 25);
 	--secondary-foreground: oklch(0.2 0.02 320);
 	--muted: oklch(0.95 0.02 320);
 	--muted-foreground: oklch(0.5 0.02 320);
-	--accent: oklch(0.85 0.12 60);
+	--accent: oklch(0.75 0.15 15);
 	--accent-foreground: oklch(0.2 0.02 320);
 	--destructive: oklch(0.577 0.245 27.325);
 	--destructive-foreground: oklch(0.577 0.245 27.325);
@@ -25,7 +25,7 @@
 	--input: oklch(0.9 0.02 320);
 	--ring: oklch(0.75 0.15 340);
 	--chart-1: oklch(0.75 0.15 340);
-	--chart-2: oklch(0.85 0.12 60);
+	--chart-2: oklch(0.8 0.1 25);
 	--chart-3: oklch(0.7 0.1 200);
 	--chart-4: oklch(0.8 0.1 120);
 	--chart-5: oklch(0.65 0.12 280);
@@ -145,27 +145,26 @@
 		@apply border-border outline-ring/50;
 	}
 	html {
-		/* Safari-compatible gradient with theme support */
-		background: linear-gradient(
-			135deg,
-			oklch(0.98 0.01 320) 0%,
-			oklch(0.97 0.06 60) 50%,
-			oklch(0.98 0.01 320) 100%
-		);
-		/* Fallback for older browsers */
-		background-color: oklch(0.98 0.01 320);
+		background: linear-gradient(135deg, #fce7f3 0%, #fef2f2 50%, #fce7f3 100%);
+		background-color: #fce7f3;
+		min-height: 100vh;
+		overflow-y: scroll;
+		scrollbar-width: none;
+		-ms-overflow-style: none;
+	}
+	html::-webkit-scrollbar {
+		display: none;
 	}
 	body {
-		/* Safari-compatible gradient with theme support */
-		background: linear-gradient(
-			135deg,
-			oklch(0.98 0.01 320) 0%,
-			oklch(0.97 0.06 60) 50%,
-			oklch(0.98 0.01 320) 100%
-		);
-		/* Fallback for older browsers */
-		background-color: oklch(0.98 0.01 320);
+		background: linear-gradient(135deg, #fce7f3 0%, #fef2f2 50%, #fce7f3 100%);
+		background-color: #fce7f3;
+		min-height: 100vh;
+		scrollbar-width: none;
+		-ms-overflow-style: none;
 		@apply text-foreground font-sans;
+	}
+	body::-webkit-scrollbar {
+		display: none;
 	}
 }
 
@@ -200,11 +199,62 @@
 	animation: float 3s ease-in-out infinite;
 }
 
+/* Valentine wrong-answer shake */
+@keyframes shake {
+	0%,
+	100% {
+		transform: translateX(0);
+	}
+	25% {
+		transform: translateX(-6px);
+	}
+	75% {
+		transform: translateX(6px);
+	}
+}
+
+.animate-shake {
+	animation: shake 0.5s ease-in-out;
+}
+
+/* Valentine heart confetti burst */
+@keyframes confetti-burst {
+	0% {
+		transform: translate(0, 0) scale(0.4);
+		opacity: 1;
+	}
+	100% {
+		transform: translate(var(--tx), var(--ty)) scale(1);
+		opacity: 0;
+	}
+}
+
+.confetti-heart {
+	animation: confetti-burst 1.4s ease-out forwards;
+}
+
+/* Subtle pulse animation for Yes button */
+@keyframes pulse-subtle {
+	0%,
+	100% {
+		transform: scale(1);
+		opacity: 1;
+	}
+	50% {
+		transform: scale(1.05);
+		opacity: 0.95;
+	}
+}
+
+.animate-pulse-subtle {
+	animation: pulse-subtle 2s ease-in-out infinite;
+}
+
 .gradient-bg {
 	background: linear-gradient(
 		135deg,
 		oklch(0.95 0.08 340) 0%,
-		oklch(0.97 0.06 60) 50%,
+		oklch(0.97 0.06 15) 50%,
 		oklch(0.95 0.08 340) 100%
 	);
 	background-size: 200% 200%;
@@ -355,4 +405,33 @@
 	top: 90%;
 	animation: float 5.1s ease-in-out infinite;
 	animation-delay: 0.1s;
+}
+
+/* Respect prefers-reduced-motion: disable or simplify animations */
+@media (prefers-reduced-motion: reduce) {
+	.sparkle,
+	.float,
+	.animate-shake,
+	.confetti-heart,
+	.animate-pulse-subtle,
+	.floating-heart-1,
+	.floating-heart-2,
+	.floating-heart-3,
+	.floating-heart-4,
+	.floating-heart-5,
+	.floating-heart-6,
+	.floating-heart-7,
+	.floating-heart-8,
+	.floating-shell-1,
+	.floating-shell-2,
+	.floating-shell-3,
+	.floating-shell-4,
+	.floating-shell-5,
+	.floating-shell-6 {
+		animation: none !important;
+	}
+
+	.gradient-bg {
+		animation: none !important;
+	}
 }
