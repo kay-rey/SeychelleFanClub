@@ -189,7 +189,7 @@ export function GiftGate({ opened, onOpen, onShakeChange }: GiftGateProps): JSX.
 						sizes="100vw"
 						className="object-cover cover-image-motion"
 					/>
-					<div className="absolute inset-0 bg-gradient-to-t from-[#2c2418]/75 via-[#2c2418]/35 to-[#2c2418]/20" />
+					<div className="absolute inset-0 bg-gradient-to-b from-[#2c2418]/70 via-[#2c2418]/25 to-transparent" />
 				</div>
 
 				<button
@@ -203,7 +203,7 @@ export function GiftGate({ opened, onOpen, onShakeChange }: GiftGateProps): JSX.
 
 				<div
 					className={cn(
-						"relative z-10 min-h-screen flex flex-col items-center justify-end sm:justify-center px-6 pb-16 sm:pb-0 pt-24",
+						"relative z-10 min-h-screen flex flex-col items-center justify-start px-6 pt-20 sm:pt-24 md:pt-28",
 						isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
 					)}
 					style={{ transitionDuration: `${HERO_FADE_DURATION}ms`, transitionProperty: "opacity, transform" }}
