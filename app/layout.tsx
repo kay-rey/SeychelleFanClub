@@ -31,23 +31,23 @@ const siteUrl =
 
 export const metadata: Metadata = {
 	metadataBase: new URL(siteUrl),
-	title: "Will you be my valentine?",
-	description: "A special Valentine's Day surprise for Seychelle",
+	title: "Happy birthday, Seychelle",
+	description: "A birthday surprise for Seychelle",
 	icons: {
 		icon: "/favicon.ico",
 		shortcut: "/favicon.ico",
 		apple: "/favicon.ico",
 	},
 	openGraph: {
-		title: "Will you be my valentine?",
-		description: "A special Valentine's Day surprise for Seychelle",
+		title: "Happy birthday, Seychelle",
+		description: "A birthday surprise for Seychelle",
 		type: "website",
-		images: [{ url: "/images/hero.jpg", width: 1200, height: 630, alt: "Valentine's Day surprise" }],
+		images: [{ url: "/images/hero.jpg", width: 1200, height: 630, alt: "Birthday surprise for Seychelle" }],
 	},
 	twitter: {
 		card: "summary_large_image",
-		title: "Will you be my valentine?",
-		description: "A special Valentine's Day surprise for Seychelle",
+		title: "Happy birthday, Seychelle",
+		description: "A birthday surprise for Seychelle",
 		images: ["/images/hero.jpg"],
 	},
 };
