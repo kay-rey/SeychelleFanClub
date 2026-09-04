@@ -1,9 +1,10 @@
 "use client";
 
 import { useEffect, useRef, useState, type CSSProperties, type JSX } from "react";
-import { Cake, Gift, Heart, PartyPopper, Volume2, VolumeX } from "lucide-react";
+import Image from "next/image";
+import { Volume2, VolumeX } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { NO_SOUNDS, YES_SOUND } from "@/lib/constants";
+import { COVER_IMAGE, NO_SOUNDS, YES_SOUND } from "@/lib/constants";
 import {
 	CONFETTI_DURATION,
 	HERO_FADE_DURATION,
@@ -13,21 +14,11 @@ import {
 	getCountdownToUnlock,
 	getHeroCopy,
 } from "@/lib/birthday";
-import { GiftBox } from "@/components/sections/GiftGate/GiftBox";
 import { BirthdayCountdown } from "@/components/sections/GiftGate/BirthdayCountdown";
 
 import type { HeroCopy } from "@/lib/types";
 
-const CONFETTI_PIECES = getConfettiPieces();
-
-const CONFETTI_ICONS = [Heart, Cake, Gift, PartyPopper] as const;
-
-const CONFETTI_ICON_CLASS = [
-	"w-8 h-8 text-pink-400 fill-pink-400",
-	"w-8 h-8 text-amber-400",
-	"w-8 h-8 text-pink-500",
-	"w-8 h-8 text-yellow-500",
-] as const;
+const SOFT_MARKS = getConfettiPieces();
 
 interface GiftGateProps {
 	opened: boolean;
@@ -36,14 +27,13 @@ interface GiftGateProps {
 }
 
 /**
- * Birthday hero: a closed gift until September 18, then unwrap.
+ * Photography-first editorial cover. Locked until September 18 Pacific midnight.
  */
 export function GiftGate({ opened, onOpen, onShakeChange }: GiftGateProps): JSX.Element {
 	const [isVisible, setIsVisible] = useState(false);
 	const [showLockedHint, setShowLockedHint] = useState(false);
-	const [wiggling, setWiggling] = useState(false);
 	const [muted, setMuted] = useState(false);
-	const [showConfetti, setShowConfetti] = useState(false);
+	const [showMarks, setShowMarks] = useState(false);
 	const [now, setNow] = useState<Date>(() => new Date());
 	const nopeAudioRefs = useRef<HTMLAudioElement[]>([]);
 	const yayAudioRef = useRef<HTMLAudioElement | null>(null);
@@ -139,68 +129,72 @@ export function GiftGate({ opened, onOpen, onShakeChange }: GiftGateProps): JSX.
 
 	const handleLockedTap = (): void => {
 		setShowLockedHint(true);
-		setWiggling(true);
 		onShakeChange(true);
 		playNope();
 		triggerHapticFeedback("error");
 		setTimeout(() => {
 			setShowLockedHint(false);
-			setWiggling(false);
 			onShakeChange(false);
 		}, WRONG_ANSWER_DURATION);
 	};
 
-	const handleGiftOpen = (): void => {
+	const handleOpen = (): void => {
 		if (opened) return;
-		setShowConfetti(true);
+		setShowMarks(true);
 		playYay();
 		onOpen();
 		triggerHapticFeedback("success");
-		setTimeout(() => setShowConfetti(false), CONFETTI_DURATION);
+		setTimeout(() => setShowMarks(false), CONFETTI_DURATION);
 	};
 
-	const handleGiftActivate = (): void => {
+	const handleActivate = (): void => {
 		if (opened) return;
 		if (!heroCopy.canOpen) {
 			handleLockedTap();
 			return;
 		}
-		handleGiftOpen();
+		handleOpen();
 	};
 
 	return (
 		<>
-			{showConfetti && (
+			{showMarks && (
 				<div
 					className="fixed inset-0 z-30 pointer-events-none flex items-center justify-center"
 					aria-hidden
 				>
-					{CONFETTI_PIECES.map(({ id, tx, ty }) => {
-						const Icon = CONFETTI_ICONS[id % CONFETTI_ICONS.length];
-						const iconClass = CONFETTI_ICON_CLASS[id % CONFETTI_ICON_CLASS.length];
-						return (
-							<div
-								key={`confetti-${id}`}
-								className="confetti-piece absolute"
-								style={
-									{
-										"--tx": `${tx}px`,
-										"--ty": `${ty}px`,
-									} as CSSProperties
-								}
-							>
-								<Icon className={iconClass} />
-							</div>
-						);
-					})}
+					{SOFT_MARKS.map(({ id, tx, ty }) => (
+						<div
+							key={`mark-${id}`}
+							className="soft-mark absolute"
+							style={
+								{
+									"--tx": `${tx}px`,
+									"--ty": `${ty}px`,
+								} as CSSProperties
+							}
+						/>
+					))}
 				</div>
 			)}
 
-			<section className="min-h-screen flex flex-col items-center justify-center px-4 relative overflow-hidden z-[60]">
+			<section className="relative min-h-screen z-[60] overflow-hidden">
+				<div className="absolute inset-0">
+					<Image
+						src={COVER_IMAGE.src}
+						alt={COVER_IMAGE.alt}
+						fill
+						priority
+						sizes="100vw"
+						className="object-cover cover-image-motion"
+					/>
+					<div className="absolute inset-0 bg-gradient-to-t from-[#2c2418]/75 via-[#2c2418]/35 to-[#2c2418]/20" />
+				</div>
+
 				<button
 					type="button"
 					onClick={toggleMuted}
-					className="absolute top-4 right-4 z-30 flex items-center justify-center w-11 h-11 rounded-full bg-white/80 backdrop-blur-sm border border-pink-200/50 text-pink-600 hover:bg-white/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-pink-400"
+					className="absolute top-4 right-4 z-30 flex items-center justify-center w-11 h-11 rounded-full bg-[#f5f0e8]/85 backdrop-blur-sm border border-white/30 text-primary hover:bg-[#f5f0e8] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-secondary"
 					aria-label={muted ? "Unmute sounds" : "Mute sounds"}
 				>
 					{muted ? <VolumeX className="w-5 h-5" /> : <Volume2 className="w-5 h-5" />}
@@ -208,47 +202,61 @@ export function GiftGate({ opened, onOpen, onShakeChange }: GiftGateProps): JSX.
 
 				<div
 					className={cn(
-						"relative z-10 text-center space-y-10 transition-all w-full max-w-xl mx-auto",
+						"relative z-10 min-h-screen flex flex-col items-center justify-end sm:justify-center px-6 pb-16 sm:pb-0 pt-24",
 						isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
 					)}
-					style={{ transitionDuration: `${HERO_FADE_DURATION}ms` }}
+					style={{ transitionDuration: `${HERO_FADE_DURATION}ms`, transitionProperty: "opacity, transform" }}
 				>
-					<div className="space-y-6 px-2">
+					<div className="w-full max-w-3xl mx-auto text-center space-y-8 editorial-fade-up">
+						<p className="font-sans text-[0.7rem] sm:text-xs uppercase tracking-[0.28em] text-[#f5f0e8]/70">
+							September 18
+						</p>
 						<h1
-							className="font-script text-6xl sm:text-7xl md:text-8xl leading-[1.2] text-balance text-pink-600"
+							className="font-serif text-5xl sm:text-6xl md:text-7xl lg:text-8xl leading-[1.1] text-balance text-[#f5f0e8]"
 							suppressHydrationWarning
 						>
 							{heroCopy.title}
 						</h1>
+
 						{!heroCopy.canOpen && <BirthdayCountdown parts={countdown} />}
+
 						{heroCopy.canOpen && heroCopy.subtitle && (
-							<p className="font-sans text-base sm:text-lg tracking-wide text-pink-900/50">
+							<p className="font-serif italic text-lg sm:text-xl text-[#f5f0e8]/80">
 								{heroCopy.subtitle}
 							</p>
 						)}
-					</div>
 
-					<div className="flex flex-col items-center">
-						<GiftBox
-							opened={opened}
-							locked={!heroCopy.canOpen}
-							wiggling={wiggling}
-							ariaLabel={heroCopy.giftAriaLabel}
-							onActivate={handleGiftActivate}
-						/>
-						<div className="min-h-8 mt-2 flex items-center justify-center">
-							{opened && (
-								<p className="font-script text-2xl text-pink-600">{heroCopy.successMessage}</p>
+						<div className="pt-2 space-y-3">
+							{!opened && (
+								<button
+									type="button"
+									onClick={handleActivate}
+									aria-label={heroCopy.openAriaLabel}
+									className={cn(
+										"inline-flex items-center justify-center min-h-11 px-10 py-3",
+										"border border-[#f5f0e8]/55 bg-[#f5f0e8]/10 text-[#f5f0e8]",
+										"font-sans text-xs uppercase tracking-[0.22em]",
+										"backdrop-blur-sm transition-colors duration-300",
+										"hover:bg-[#f5f0e8]/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-secondary"
+									)}
+								>
+									{heroCopy.canOpen ? "Open" : "Not yet"}
+								</button>
 							)}
-							{!opened && showLockedHint && heroCopy.lockedHint && (
-								<p className="font-sans text-sm text-pink-800/70">{heroCopy.lockedHint}</p>
-							)}
-							{!opened && !showLockedHint && !heroCopy.canOpen && (
-								<p className="font-sans text-sm text-pink-800/40">Opens September 18</p>
-							)}
-							{!opened && !showLockedHint && heroCopy.canOpen && (
-								<p className="font-sans text-sm text-pink-800/40">Tap to open</p>
-							)}
+
+							<div className="min-h-8 flex items-center justify-center">
+								{opened && (
+									<p className="font-serif italic text-xl text-[#f5f0e8]">
+										{heroCopy.successMessage}
+									</p>
+								)}
+								{!opened && showLockedHint && heroCopy.lockedHint && (
+									<p className="font-sans text-sm text-[#f5f0e8]/80">{heroCopy.lockedHint}</p>
+								)}
+								{!opened && !showLockedHint && !heroCopy.canOpen && (
+									<p className="font-sans text-sm text-[#f5f0e8]/50">Opens September 18</p>
+								)}
+							</div>
 						</div>
 					</div>
 				</div>

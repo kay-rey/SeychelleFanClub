@@ -1,38 +1,108 @@
 import type { JSX } from "react";
 import Image from "next/image";
-import { Card, CardContent } from "@/components/ui/card";
+import { cn } from "@/lib/utils";
 import { GALLERY_PHOTOS } from "@/lib/constants";
 
-export function PhotoGallery(): JSX.Element {
+import type { GalleryPhoto } from "@/lib/types";
+
+function PhotoFigure({
+	photo,
+	className,
+	priority = false,
+}: {
+	photo: GalleryPhoto;
+	className?: string;
+	priority?: boolean;
+}): JSX.Element {
 	return (
-		<section className="py-20 px-4 relative z-10">
-			<div className="container mx-auto">
-				<h2 className="font-serif text-4xl md:text-5xl text-center text-primary mb-16 text-balance">
-					Us
-				</h2>
-				<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-					{GALLERY_PHOTOS.map((photo) => (
-						<Card
-							key={photo.src}
-							className="group overflow-hidden border-pink-200 hover:shadow-xl transition-all duration-300 hover:-translate-y-2"
-						>
-							<CardContent className="p-0 relative">
-								<Image
-									src={photo.src}
-									alt={photo.caption}
-									width={400}
-									height={400}
-									sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"
-									className="w-full aspect-square object-cover transition-transform duration-300 group-hover:scale-105"
-								/>
-								<div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-								<div className="absolute bottom-4 left-4 right-4 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-									<p className="font-medium text-sm">{photo.caption}</p>
-								</div>
-							</CardContent>
-						</Card>
-					))}
+		<figure className={cn("group space-y-3", className)}>
+			<div className="relative overflow-hidden bg-muted/40">
+				<Image
+					src={photo.src}
+					alt={photo.caption}
+					width={photo.width}
+					height={photo.height}
+					priority={priority}
+					sizes="(min-width: 1024px) 70vw, 100vw"
+					className="w-full h-auto object-cover transition-transform duration-[1.4s] ease-out group-hover:scale-[1.02]"
+				/>
+			</div>
+			<figcaption className="flex items-center gap-3 px-1">
+				<span className="h-px flex-1 bg-border" aria-hidden />
+				<span className="font-sans text-[0.65rem] uppercase tracking-[0.22em] text-muted-foreground">
+					{photo.caption}
+				</span>
+				<span className="h-px flex-1 bg-border" aria-hidden />
+			</figcaption>
+		</figure>
+	);
+}
+
+/**
+ * Single editorial photo feature — full-bleed, portrait, and paired frames.
+ */
+export function PhotoGallery(): JSX.Element {
+	const frames: JSX.Element[] = [];
+	let index = 0;
+
+	while (index < GALLERY_PHOTOS.length) {
+		const photo = GALLERY_PHOTOS[index];
+		const layout = photo.layout ?? "full";
+
+		if (layout === "pair") {
+			const next = GALLERY_PHOTOS[index + 1];
+			const pairMate = next?.layout === "pair" ? next : null;
+
+			frames.push(
+				<div
+					key={`pair-${photo.src}`}
+					className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-10 items-end"
+				>
+					<PhotoFigure photo={photo} />
+					{pairMate ? <PhotoFigure photo={pairMate} /> : null}
 				</div>
+			);
+
+			index += pairMate ? 2 : 1;
+			continue;
+		}
+
+		if (layout === "portrait") {
+			frames.push(
+				<div key={photo.src} className="flex justify-center">
+					<PhotoFigure photo={photo} className="w-full max-w-md md:max-w-lg" />
+				</div>
+			);
+			index += 1;
+			continue;
+		}
+
+		frames.push(
+			<PhotoFigure
+				key={photo.src}
+				photo={photo}
+				priority={index === 0}
+				className="w-full"
+			/>
+		);
+		index += 1;
+	}
+
+	return (
+		<section className="py-24 md:py-32 px-4 relative z-10">
+			<div className="container mx-auto max-w-5xl space-y-16 md:space-y-24">
+				<header className="text-center space-y-4 max-w-2xl mx-auto">
+					<p className="font-sans text-[0.65rem] uppercase tracking-[0.28em] text-muted-foreground">
+						Feature
+					</p>
+					<h2 className="font-serif text-4xl md:text-5xl text-primary text-balance">
+						In this light
+					</h2>
+					<p className="font-serif italic text-lg text-muted-foreground">
+						Frames from days that felt like a villa garden — soft stone, quiet air, you.
+					</p>
+				</header>
+				<div className="space-y-16 md:space-y-24">{frames}</div>
 			</div>
 		</section>
 	);

@@ -17,10 +17,10 @@ function padTwo(value: number): string {
 function CountdownUnit({ value, label }: CountdownUnitProps): JSX.Element {
 	return (
 		<div className="flex flex-col items-center">
-			<span className="font-mono tabular-nums text-3xl sm:text-4xl text-pink-600 leading-none w-[2ch] text-center">
+			<span className="font-mono tabular-nums text-2xl sm:text-3xl text-[#f5f0e8] leading-none w-[2ch] text-center">
 				{padTwo(value)}
 			</span>
-			<span className="mt-2 text-[0.65rem] sm:text-xs uppercase tracking-[0.18em] text-pink-900/40">
+			<span className="mt-2 text-[0.6rem] sm:text-[0.65rem] uppercase tracking-[0.2em] text-[#f5f0e8]/45">
 				{label}
 			</span>
 		</div>
@@ -35,23 +35,25 @@ export function BirthdayCountdown({ parts }: BirthdayCountdownProps): JSX.Elemen
 	const ariaLabel = `${days} days, ${hours} hours, ${minutes} minutes, ${seconds} seconds until midnight Pacific Time on September 18`;
 
 	return (
-		<div className="space-y-2" role="timer" aria-label={ariaLabel}>
+		<div className="space-y-3" role="timer" aria-label={ariaLabel}>
 			<div className="flex items-start justify-center gap-3 sm:gap-5">
 				<CountdownUnit value={days} label={days === 1 ? "day" : "days"} />
-				<span className="font-mono text-3xl sm:text-4xl text-pink-300 leading-none" aria-hidden>
+				<span className="font-mono text-2xl sm:text-3xl text-[#f5f0e8]/35 leading-none" aria-hidden>
 					:
 				</span>
 				<CountdownUnit value={hours} label="hours" />
-				<span className="font-mono text-3xl sm:text-4xl text-pink-300 leading-none" aria-hidden>
+				<span className="font-mono text-2xl sm:text-3xl text-[#f5f0e8]/35 leading-none" aria-hidden>
 					:
 				</span>
 				<CountdownUnit value={minutes} label="minutes" />
-				<span className="font-mono text-3xl sm:text-4xl text-pink-300 leading-none" aria-hidden>
+				<span className="font-mono text-2xl sm:text-3xl text-[#f5f0e8]/35 leading-none" aria-hidden>
 					:
 				</span>
 				<CountdownUnit value={seconds} label="seconds" />
 			</div>
-			<p className="font-sans text-xs tracking-wide text-pink-900/35">until midnight Pacific Time</p>
+			<p className="font-sans text-[0.65rem] uppercase tracking-[0.18em] text-[#f5f0e8]/40">
+				until midnight Pacific Time
+			</p>
 		</div>
 	);
 }

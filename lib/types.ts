@@ -1,9 +1,14 @@
+export type GalleryLayout = "full" | "portrait" | "pair";
+
 export interface GalleryPhoto {
 	src: string;
 	caption: string;
+	layout?: GalleryLayout;
+	width: number;
+	height: number;
 }
 
-export type BirthdayNoteIcon = "heart" | "music" | "sun";
+export type BirthdayNoteIcon = "leaf" | "heart" | "sun";
 
 export interface BirthdayNote {
 	icon: BirthdayNoteIcon;
@@ -14,7 +19,7 @@ export interface BirthdayNote {
 export interface HeroCopy {
 	title: string;
 	subtitle: string | null;
-	giftAriaLabel: string;
+	openAriaLabel: string;
 	successMessage: string;
 	canOpen: boolean;
 	lockedHint: string | null;

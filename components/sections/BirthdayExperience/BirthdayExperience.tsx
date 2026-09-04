@@ -11,8 +11,8 @@ interface BirthdayExperienceProps {
 }
 
 /**
- * Client island for the gift unwrap. Server-rendered sections are passed as children
- * and only mount in the DOM after the gift opens.
+ * Client island for the editorial unlock. Server-rendered sections are passed as children
+ * and only mount in the DOM after the cover opens.
  */
 export function BirthdayExperience({ children }: BirthdayExperienceProps): JSX.Element {
 	const [opened, setOpened] = useState(false);

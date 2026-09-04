@@ -1,33 +1,59 @@
 import type { GalleryPhoto } from "@/lib/types";
 
 /**
- * Gallery photos displayed after the gift unwraps.
- * Paths currently point at the existing set; swap the folder to `/images/birthday/` when new shots are ready.
+ * Full-bleed editorial cover. Swap to a Getty Villa still when ready.
+ */
+export const COVER_IMAGE = {
+	src: "/images/hero.jpg",
+	alt: "Soft light over warm stone — birthday cover for Seychelle",
+} as const;
+
+/**
+ * Editorial gallery after unlock.
+ * Paths still use existing shots as stand-ins; move files to `/images/birthday/` when ready.
  */
 export const GALLERY_PHOTOS: GalleryPhoto[] = [
 	{
 		src: "/images/valentines/weddingsquare.jpg",
-		caption: "Our wedding",
+		caption: "Light on stone",
+		layout: "full",
+		width: 1600,
+		height: 1067,
 	},
 	{
 		src: "/images/valentines/firstdate.jpg",
-		caption: "Our first date memories",
-	},
-	{
-		src: "/images/valentines/game.jpg",
-		caption: "Galaxy game day together",
-	},
-	{
-		src: "/images/valentines/ramsgame.jpg",
-		caption: "Rams game with Tito and Tita",
+		caption: "A quiet afternoon",
+		layout: "portrait",
+		width: 900,
+		height: 1200,
 	},
 	{
 		src: "/images/valentines/santamonica.jpg",
-		caption: "A day in Santa Monica",
+		caption: "Garden air",
+		layout: "pair",
+		width: 1600,
+		height: 1067,
+	},
+	{
+		src: "/images/valentines/game.jpg",
+		caption: "Together",
+		layout: "pair",
+		width: 1600,
+		height: 1067,
+	},
+	{
+		src: "/images/valentines/ramsgame.jpg",
+		caption: "Golden hour",
+		layout: "full",
+		width: 1600,
+		height: 1067,
 	},
 	{
 		src: "/images/valentines/nightmarebeforexmasshow.jpg",
-		caption: "Nightmare Before Christmas show",
+		caption: "Evening quiet",
+		layout: "portrait",
+		width: 900,
+		height: 1200,
 	},
 ];
 

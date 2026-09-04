@@ -4,40 +4,40 @@
 @custom-variant dark (&:is(.dark *));
 
 :root {
-	/* Birthday palette: soft pinks with warmer gold and yellow accents */
-	--background: oklch(0.99 0.01 85);
-	--foreground: oklch(0.2 0.02 320);
-	--card: oklch(1 0 0);
-	--card-foreground: oklch(0.2 0.02 320);
-	--popover: oklch(1 0 0);
-	--popover-foreground: oklch(0.2 0.02 320);
-	--primary: oklch(0.75 0.15 340);
-	--primary-foreground: oklch(0.98 0.01 320);
-	--secondary: oklch(0.82 0.12 75);
-	--secondary-foreground: oklch(0.2 0.02 320);
-	--muted: oklch(0.96 0.02 85);
-	--muted-foreground: oklch(0.5 0.02 320);
-	--accent: oklch(0.82 0.14 75);
-	--accent-foreground: oklch(0.2 0.02 320);
+	/* Getty Villa editorial: limestone, olive, soft terracotta, champagne gold */
+	--background: oklch(0.96 0.012 85);
+	--foreground: oklch(0.28 0.02 55);
+	--card: oklch(0.98 0.008 85);
+	--card-foreground: oklch(0.28 0.02 55);
+	--popover: oklch(0.98 0.008 85);
+	--popover-foreground: oklch(0.28 0.02 55);
+	--primary: oklch(0.42 0.04 145);
+	--primary-foreground: oklch(0.97 0.01 85);
+	--secondary: oklch(0.78 0.06 75);
+	--secondary-foreground: oklch(0.28 0.02 55);
+	--muted: oklch(0.93 0.015 85);
+	--muted-foreground: oklch(0.48 0.02 55);
+	--accent: oklch(0.72 0.07 45);
+	--accent-foreground: oklch(0.28 0.02 55);
 	--destructive: oklch(0.577 0.245 27.325);
 	--destructive-foreground: oklch(0.577 0.245 27.325);
-	--border: oklch(0.9 0.02 320);
-	--input: oklch(0.9 0.02 320);
-	--ring: oklch(0.75 0.15 340);
-	--chart-1: oklch(0.75 0.15 340);
-	--chart-2: oklch(0.8 0.1 25);
-	--chart-3: oklch(0.7 0.1 200);
-	--chart-4: oklch(0.8 0.1 120);
-	--chart-5: oklch(0.65 0.12 280);
-	--radius: 0.75rem;
-	--sidebar: oklch(0.98 0.01 320);
-	--sidebar-foreground: oklch(0.2 0.02 320);
-	--sidebar-primary: oklch(0.75 0.15 340);
-	--sidebar-primary-foreground: oklch(0.98 0.01 320);
-	--sidebar-accent: oklch(0.95 0.02 320);
-	--sidebar-accent-foreground: oklch(0.2 0.02 320);
-	--sidebar-border: oklch(0.9 0.02 320);
-	--sidebar-ring: oklch(0.75 0.15 340);
+	--border: oklch(0.88 0.02 75);
+	--input: oklch(0.88 0.02 75);
+	--ring: oklch(0.55 0.04 145);
+	--chart-1: oklch(0.55 0.04 145);
+	--chart-2: oklch(0.72 0.07 45);
+	--chart-3: oklch(0.78 0.06 75);
+	--chart-4: oklch(0.65 0.05 120);
+	--chart-5: oklch(0.5 0.03 55);
+	--radius: 0.25rem;
+	--sidebar: oklch(0.96 0.012 85);
+	--sidebar-foreground: oklch(0.28 0.02 55);
+	--sidebar-primary: oklch(0.42 0.04 145);
+	--sidebar-primary-foreground: oklch(0.97 0.01 85);
+	--sidebar-accent: oklch(0.93 0.015 85);
+	--sidebar-accent-foreground: oklch(0.28 0.02 55);
+	--sidebar-border: oklch(0.88 0.02 75);
+	--sidebar-ring: oklch(0.55 0.04 145);
 }
 
 .dark {
@@ -98,10 +98,8 @@
 }
 
 @theme inline {
-	/* Added custom font variables for Playfair and Poppins */
 	--font-serif: var(--font-playfair);
-	--font-script: var(--font-corinthia);
-	--font-sans: var(--font-poppins);
+	--font-sans: var(--font-dm-sans);
 	--font-mono: var(--font-geist-mono);
 	--color-background: var(--background);
 	--color-foreground: var(--foreground);
@@ -146,7 +144,7 @@
 		@apply border-border outline-ring/50;
 	}
 	html {
-		background-color: #fff7ed;
+		background-color: #f5f0e8;
 		min-height: 100vh;
 		overflow-y: scroll;
 		scrollbar-width: none;
@@ -156,7 +154,7 @@
 		display: none;
 	}
 	body {
-		background-color: #fff7ed;
+		background-color: #f5f0e8;
 		min-height: 100vh;
 		scrollbar-width: none;
 		-ms-overflow-style: none;
@@ -228,23 +226,23 @@
 .aurora-layer {
 	--aurora-bands: repeating-linear-gradient(
 		100deg,
-		#fce7f3 8%,
-		#fef3c7 16%,
-		#fbcfe8 24%,
-		#fde68a 32%,
-		#ffe4e6 40%,
-		#f9a8d4 48%
+		#ebe4d6 8%,
+		#d4c4a8 16%,
+		#e8dfd0 24%,
+		#c5b89a 32%,
+		#f0ebe3 40%,
+		#b8a88a 48%
 	);
 	position: absolute;
 	inset: -20%;
 	pointer-events: none;
-	opacity: 0.32;
-	filter: blur(64px) saturate(1.05);
+	opacity: 0.28;
+	filter: blur(72px) saturate(0.9);
 	background-image: var(--aurora-bands);
 	background-size: 220% 180%;
 	background-position: 50% 50%;
 	will-change: background-position;
-	animation: aurora-drift 80s linear infinite;
+	animation: aurora-drift 100s linear infinite;
 }
 
 .aurora-layer::after {
@@ -253,9 +251,57 @@
 	inset: 0;
 	background-image: var(--aurora-bands);
 	background-size: 180% 140%;
-	opacity: 0.28;
+	opacity: 0.2;
 	mix-blend-mode: soft-light;
-	animation: aurora-drift 110s linear infinite reverse;
+	animation: aurora-drift 130s linear infinite reverse;
+}
+
+/* Editorial cover and gallery motion */
+@keyframes cover-ken-burns {
+	from {
+		transform: scale(1);
+	}
+	to {
+		transform: scale(1.06);
+	}
+}
+
+.cover-image-motion {
+	animation: cover-ken-burns 28s ease-in-out infinite alternate;
+}
+
+@keyframes editorial-fade-up {
+	from {
+		opacity: 0;
+		transform: translateY(12px);
+	}
+	to {
+		opacity: 1;
+		transform: translateY(0);
+	}
+}
+
+.editorial-fade-up {
+	animation: editorial-fade-up 0.9s ease-out both;
+}
+
+@keyframes soft-mark-burst {
+	0% {
+		transform: translate(0, 0) scale(0.5);
+		opacity: 0.7;
+	}
+	100% {
+		transform: translate(var(--tx), var(--ty)) scale(1);
+		opacity: 0;
+	}
+}
+
+.soft-mark {
+	width: 6px;
+	height: 6px;
+	border-radius: 9999px;
+	background: oklch(0.82 0.06 75 / 0.85);
+	animation: soft-mark-burst 1.35s ease-out forwards;
 }
 
 /* Confetti burst for mixed birthday icons */
@@ -542,12 +588,15 @@
 	.float,
 	.animate-shake,
 	.confetti-piece,
+	.soft-mark,
 	.animate-pulse-subtle,
 	.gift-lid-group,
 	.gift-ready,
 	.gift-wiggle,
 	.aurora-layer,
 	.aurora-layer::after,
+	.cover-image-motion,
+	.editorial-fade-up,
 	.floating-heart-1,
 	.floating-heart-2,
 	.floating-heart-3,

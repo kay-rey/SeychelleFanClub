@@ -19,26 +19,26 @@ export const HERO_FADE_DURATION = 1000;
 
 export const BIRTHDAY_NOTES: BirthdayNote[] = [
 	{
-		icon: "heart",
-		title: "Your heart",
-		body: "You have a way of making everyone around you feel special. Your kindness is a quiet strength that makes my world better — this year, and every year.",
+		icon: "leaf",
+		title: "Your stillness",
+		body: "You carry a calm that settles a room — like shade in a stone garden. Being near you feels like finding the quiet path.",
 	},
 	{
-		icon: "music",
-		title: "Every song with you",
-		body: "From car karaoke to kitchen dance parties, you're the melody to my favorite moments. I love every song we share.",
+		icon: "heart",
+		title: "Your warmth",
+		body: "You make ordinary hours feel considered. The way you look at the world — patient, bright — is the light I keep returning to.",
 	},
 	{
 		icon: "sun",
 		title: "Your light",
-		body: "You're my sunshine — happiest with your toes in the sand and the sound of the waves. Being with you feels like endless summer.",
+		body: "Soft afternoon light on limestone. That is how I think of you this year: warm, exacting, and beautiful without trying.",
 	},
 ];
 
 export const LETTER_GREETING = "Happy birthday, Seychelle.";
 
 export const LETTER_BODY =
-	"For Seychelle, the light of my life. Twenty-eight looks beautiful on you. Just like a perfect day at the beach, you bring warmth and sunshine to my world. Of all the treasures in the world, I was lucky enough to find you. You are the melody to my favorite song and the calm in my ocean. My love for you is deeper than any sea in the universe.";
+	"For Seychelle, the light of my life. Twenty-eight looks beautiful on you — like late sun on warm stone, like a garden that knows how to wait. Of all the quiet places in the world, I was lucky enough to find you. You are the still center of my favorite days. My love for you is steady as marble and soft as the air between the columns.";
 
 export const LETTER_SIGN_OFF = "- With all my love";
 
@@ -89,19 +89,19 @@ export function getHeroCopy(now: Date): HeroCopy {
 
 	if (!unlocked) {
 		return {
-			title: "A gift for Seychelle",
+			title: "For Seychelle",
 			subtitle: null,
-			giftAriaLabel: "This gift opens at midnight Pacific Time on September 18",
+			openAriaLabel: "This feature opens at midnight Pacific Time on September 18",
 			successMessage: "Happy birthday.",
 			canOpen: false,
-			lockedHint: "This gift opens on her birthday.",
+			lockedHint: "This opens on her birthday.",
 		};
 	}
 
 	return {
 		title: `Happy ${turningAge}th birthday, Seychelle`,
-		subtitle: "Open your gift",
-		giftAriaLabel: "Open your birthday gift",
+		subtitle: "A quiet feature, just for you",
+		openAriaLabel: "Open your birthday feature",
 		successMessage: "Happy birthday.",
 		canOpen: true,
 		lockedHint: null,
