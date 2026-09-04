@@ -32,11 +32,6 @@ export const COVER_IMAGE = {
  */
 export const GALLERY_PHOTOS: GalleryPhoto[] = [
 	{
-		src: coverP1031328,
-		caption: "Outer Peristyle",
-		layout: "full",
-	},
-	{
 		src: galleryP1031386,
 		caption: "Light on the railing",
 		layout: "portrait",

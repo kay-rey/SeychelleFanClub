@@ -203,17 +203,17 @@ export function GiftGate({ opened, onOpen, onShakeChange }: GiftGateProps): JSX.
 
 				<div
 					className={cn(
-						"relative z-10 min-h-screen flex flex-col items-center justify-start px-6 pt-20 sm:pt-24 md:pt-28",
+						"relative z-10 min-h-screen flex flex-col items-center justify-start px-6 pt-12 sm:pt-14 md:pt-16",
 						isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
 					)}
 					style={{ transitionDuration: `${HERO_FADE_DURATION}ms`, transitionProperty: "opacity, transform" }}
 				>
-					<div className="w-full max-w-3xl mx-auto text-center space-y-8 editorial-fade-up">
+					<div className="w-full max-w-3xl mx-auto text-center space-y-5 sm:space-y-6 editorial-fade-up">
 						<p className="font-sans text-[0.7rem] sm:text-xs uppercase tracking-[0.28em] text-[#f5f0e8]/70">
 							September 18
 						</p>
 						<h1
-							className="font-serif text-5xl sm:text-6xl md:text-7xl lg:text-8xl leading-[1.1] text-balance text-[#f5f0e8]"
+							className="font-serif text-4xl sm:text-5xl md:text-6xl lg:text-7xl leading-[1.1] text-balance text-[#f5f0e8]"
 							suppressHydrationWarning
 						>
 							{heroCopy.title}
