@@ -9,6 +9,12 @@ export const BIRTHDAY = {
 
 export const LOCAL_STORAGE_MUTED_KEY = "birthday-muted";
 
+/**
+ * Temporary design unlock — treat the site as open on her birthday.
+ * Set to `false` before September 18 so the real lock returns.
+ */
+export const PREVIEW_AS_UNLOCKED = true;
+
 export const CONFETTI_COUNT = 14;
 export const CONFETTI_RADIUS = 180;
 
@@ -77,6 +83,7 @@ export function getCountdownToUnlock(now: Date): CountdownParts {
  * True at or after midnight Pacific on September 18 of this Pacific year.
  */
 export function canOpenGift(now: Date): boolean {
+	if (PREVIEW_AS_UNLOCKED) return true;
 	return getCountdownToUnlock(now).totalMs <= 0;
 }
 
