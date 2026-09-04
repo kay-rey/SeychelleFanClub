@@ -1,4 +1,4 @@
-import type { BirthdayNote, ConfettiPiece, HeroCopy } from "@/lib/types";
+import type { BirthdayNote, ConfettiPiece, CountdownParts, HeroCopy } from "@/lib/types";
 
 /** Seychelle's birthday (month is 1-indexed). */
 export const BIRTHDAY = {
@@ -8,24 +8,6 @@ export const BIRTHDAY = {
 } as const;
 
 export const LOCAL_STORAGE_MUTED_KEY = "birthday-muted";
-
-/** Not yet "runs away" to these positions; x >= 0 so it never overlaps the gift. */
-export const NOT_YET_POSITIONS = [
-	{ x: 0, y: 0 },
-	{ x: 36, y: -20 },
-	{ x: 24, y: 28 },
-] as const;
-
-/** Each Not yet click: the button shrinks. */
-export const NOT_YET_SIZE_STEPS = [
-	"h-11 min-w-[5.5rem] px-3 text-sm",
-	"h-10 min-w-[5rem] px-2 text-sm",
-	"h-9 min-w-[4.5rem] px-2 text-xs",
-	"h-8 min-w-[4rem] px-1.5 text-xs",
-	"h-7 min-w-[3.5rem] px-1 text-[10px]",
-] as const;
-
-export const MAX_NOT_YET_CLICKS = NOT_YET_SIZE_STEPS.length - 1;
 
 export const CONFETTI_COUNT = 14;
 export const CONFETTI_RADIUS = 180;
@@ -65,46 +47,137 @@ export const LETTER_BODY =
 
 export const LETTER_SIGN_OFF = "- With all my love";
 
+export const PACIFIC_TIME_ZONE = "America/Los_Angeles";
+
+const MS_PER_SECOND = 1000;
+const SECONDS_PER_MINUTE = 60;
+const SECONDS_PER_HOUR = 3600;
+const SECONDS_PER_DAY = 86400;
+
 /**
- * Age Seychelle turns (or turned) in the given calendar year.
+ * Age Seychelle turns (or turned) in the given calendar year, using Pacific time.
  */
 export function getTurningAge(now: Date): number {
-	return now.getFullYear() - BIRTHDAY.year;
+	return getPacificYear(now) - BIRTHDAY.year;
 }
 
 /**
- * Whole days until this year's birthday. 0 on the day, negative after.
+ * Remaining time until midnight Pacific on September 18 of the current Pacific year.
  */
-export function getDaysUntilBirthday(now: Date): number {
-	const startOfToday = new Date(now.getFullYear(), now.getMonth(), now.getDate());
-	const birthdayThisYear = new Date(now.getFullYear(), BIRTHDAY.month - 1, BIRTHDAY.day);
-	const diffMs = birthdayThisYear.getTime() - startOfToday.getTime();
-	return Math.round(diffMs / (1000 * 60 * 60 * 24));
+export function getCountdownToUnlock(now: Date): CountdownParts {
+	const unlockAt = getBirthdayUnlockAt(now);
+	const totalMs = Math.max(0, unlockAt.getTime() - now.getTime());
+	const totalSeconds = Math.floor(totalMs / MS_PER_SECOND);
+
+	return {
+		days: Math.floor(totalSeconds / SECONDS_PER_DAY),
+		hours: Math.floor((totalSeconds % SECONDS_PER_DAY) / SECONDS_PER_HOUR),
+		minutes: Math.floor((totalSeconds % SECONDS_PER_HOUR) / SECONDS_PER_MINUTE),
+		seconds: totalSeconds % SECONDS_PER_MINUTE,
+		totalMs,
+	};
 }
 
 /**
- * Hero headline and supporting line based on today's date.
+ * True at or after midnight Pacific on September 18 of this Pacific year.
+ */
+export function canOpenGift(now: Date): boolean {
+	return getCountdownToUnlock(now).totalMs <= 0;
+}
+
+/**
+ * Hero headline and supporting line based on the current instant.
  */
 export function getHeroCopy(now: Date): HeroCopy {
-	const days = getDaysUntilBirthday(now);
 	const turningAge = getTurningAge(now);
+	const unlocked = canOpenGift(now);
 
-	if (days > 0) {
-		const dayWord = days === 1 ? "day" : "days";
+	if (!unlocked) {
 		return {
-			title: "Your birthday is almost here",
-			subtitle: `${days} ${dayWord} until you're ${turningAge}`,
-			giftAriaLabel: "Open your birthday gift",
-			successMessage: "Yay! Let's celebrate.",
+			title: "A gift for Seychelle",
+			subtitle: null,
+			giftAriaLabel: "This gift opens at midnight Pacific Time on September 18",
+			successMessage: "Happy birthday.",
+			canOpen: false,
+			lockedHint: "This gift opens on her birthday.",
 		};
 	}
 
 	return {
 		title: `Happy ${turningAge}th birthday, Seychelle`,
-		subtitle: "Tap to open your present",
-		giftAriaLabel: "Open your birthday present",
-		successMessage: "Yay! Let's celebrate.",
+		subtitle: "Open your gift",
+		giftAriaLabel: "Open your birthday gift",
+		successMessage: "Happy birthday.",
+		canOpen: true,
+		lockedHint: null,
 	};
+}
+
+function getPacificYear(now: Date): number {
+	const parts = new Intl.DateTimeFormat("en-US", {
+		timeZone: PACIFIC_TIME_ZONE,
+		year: "numeric",
+	}).formatToParts(now);
+	const yearPart = parts.find((part) => part.type === "year");
+	return Number(yearPart?.value);
+}
+
+/**
+ * Midnight Pacific Time on September 18 of the Pacific calendar year for `now`.
+ */
+function getBirthdayUnlockAt(now: Date): Date {
+	const year = getPacificYear(now);
+	return zonedDateTimeToUtc(year, BIRTHDAY.month, BIRTHDAY.day, 0, 0, 0, PACIFIC_TIME_ZONE);
+}
+
+/**
+ * Converts a wall-clock date/time in a named time zone to a UTC `Date`.
+ */
+function zonedDateTimeToUtc(
+	year: number,
+	month: number,
+	day: number,
+	hour: number,
+	minute: number,
+	second: number,
+	timeZone: string
+): Date {
+	const formatter = new Intl.DateTimeFormat("en-US", {
+		timeZone,
+		year: "numeric",
+		month: "2-digit",
+		day: "2-digit",
+		hour: "2-digit",
+		minute: "2-digit",
+		second: "2-digit",
+		hourCycle: "h23",
+	});
+
+	const readAsUtc = (ms: number): number => {
+		const values = Object.fromEntries(
+			formatter
+				.formatToParts(new Date(ms))
+				.filter((part) => part.type !== "literal")
+				.map((part) => [part.type, part.value])
+		);
+		return Date.UTC(
+			Number(values.year),
+			Number(values.month) - 1,
+			Number(values.day),
+			Number(values.hour),
+			Number(values.minute),
+			Number(values.second)
+		);
+	};
+
+	const wantedAsUtc = Date.UTC(year, month - 1, day, hour, minute, second);
+	let utcMs = wantedAsUtc;
+
+	for (let i = 0; i < 3; i += 1) {
+		utcMs += wantedAsUtc - readAsUtc(utcMs);
+	}
+
+	return new Date(utcMs);
 }
 
 /**

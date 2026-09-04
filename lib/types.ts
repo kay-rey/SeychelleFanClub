@@ -16,10 +16,20 @@ export interface HeroCopy {
 	subtitle: string | null;
 	giftAriaLabel: string;
 	successMessage: string;
+	canOpen: boolean;
+	lockedHint: string | null;
 }
 
 export interface ConfettiPiece {
 	id: number;
 	tx: number;
 	ty: number;
+}
+
+export interface CountdownParts {
+	days: number;
+	hours: number;
+	minutes: number;
+	seconds: number;
+	totalMs: number;
 }
