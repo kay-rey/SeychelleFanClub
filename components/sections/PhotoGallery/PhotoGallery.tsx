@@ -20,8 +20,7 @@ function PhotoFigure({
 				<Image
 					src={photo.src}
 					alt={photo.caption}
-					width={photo.width}
-					height={photo.height}
+					placeholder="blur"
 					priority={priority}
 					sizes="(min-width: 1024px) 70vw, 100vw"
 					className="w-full h-auto object-cover transition-transform duration-[1.4s] ease-out group-hover:scale-[1.02]"
@@ -55,7 +54,7 @@ export function PhotoGallery(): JSX.Element {
 
 			frames.push(
 				<div
-					key={`pair-${photo.src}`}
+					key={`pair-${photo.src.src}`}
 					className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-10 items-end"
 				>
 					<PhotoFigure photo={photo} />
@@ -69,7 +68,7 @@ export function PhotoGallery(): JSX.Element {
 
 		if (layout === "portrait") {
 			frames.push(
-				<div key={photo.src} className="flex justify-center">
+				<div key={photo.src.src} className="flex justify-center">
 					<PhotoFigure photo={photo} className="w-full max-w-md md:max-w-lg" />
 				</div>
 			);
@@ -79,7 +78,7 @@ export function PhotoGallery(): JSX.Element {
 
 		frames.push(
 			<PhotoFigure
-				key={photo.src}
+				key={photo.src.src}
 				photo={photo}
 				priority={index === 0}
 				className="w-full"

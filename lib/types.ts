@@ -1,11 +1,17 @@
+import type { StaticImageData } from "next/image";
+
 export type GalleryLayout = "full" | "portrait" | "pair";
 
 export interface GalleryPhoto {
-	src: string;
+	src: StaticImageData;
 	caption: string;
 	layout?: GalleryLayout;
-	width: number;
-	height: number;
+}
+
+export interface JollibeePhoto {
+	src: StaticImageData;
+	alt: string;
+	caption: string;
 }
 
 export type BirthdayNoteIcon = "leaf" | "heart" | "sun";

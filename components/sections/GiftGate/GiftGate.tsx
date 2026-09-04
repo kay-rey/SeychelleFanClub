@@ -185,6 +185,7 @@ export function GiftGate({ opened, onOpen, onShakeChange }: GiftGateProps): JSX.
 						alt={COVER_IMAGE.alt}
 						fill
 						priority
+						placeholder="blur"
 						sizes="100vw"
 						className="object-cover cover-image-motion"
 					/>

@@ -4,6 +4,7 @@ import { DM_Sans, Playfair_Display } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
 import { Suspense } from "react";
 import { AudioPreload } from "@/components/shared/AudioPreload";
+import { COVER_IMAGE } from "@/lib/constants";
 import "./globals.css";
 
 export const viewport: Viewport = {
@@ -44,9 +45,9 @@ export const metadata: Metadata = {
 		type: "website",
 		images: [
 			{
-				url: "/images/birthday/p1031314.jpg",
-				width: 2560,
-				height: 3840,
+				url: COVER_IMAGE.src.src,
+				width: COVER_IMAGE.src.width,
+				height: COVER_IMAGE.src.height,
 				alt: "Birthday feature for Seychelle",
 			},
 		],
@@ -55,7 +56,7 @@ export const metadata: Metadata = {
 		card: "summary_large_image",
 		title: "Happy birthday, Seychelle",
 		description: "An editorial birthday feature for Seychelle",
-		images: ["/images/birthday/p1031314.jpg"],
+		images: [COVER_IMAGE.src.src],
 	},
 };
 

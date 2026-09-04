@@ -23,13 +23,12 @@ export function JollibeeSection(): JSX.Element {
 
 				<div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-10 items-end">
 					{JOLLIBEE_PHOTOS.map((photo) => (
-						<figure key={photo.src} className="space-y-3">
+						<figure key={photo.src.src} className="space-y-3">
 							<div className="relative overflow-hidden bg-muted/40">
 								<Image
 									src={photo.src}
 									alt={photo.alt}
-									width={photo.width}
-									height={photo.height}
+									placeholder="blur"
 									sizes="(min-width: 768px) 40vw, 100vw"
 									className="w-full h-auto object-cover"
 								/>
