@@ -273,7 +273,7 @@ export function GiftGate({ opened, onOpen, onShakeChange }: GiftGateProps): JSX.
 				>
 					<div className="space-y-6 px-2">
 						<h1
-							className="font-serif text-4xl sm:text-5xl md:text-6xl leading-[1.15] text-balance text-pink-600"
+							className="font-script text-6xl sm:text-7xl md:text-8xl leading-[1.2] text-balance text-pink-600"
 							suppressHydrationWarning
 						>
 							{heroCopy.title}
@@ -296,7 +296,7 @@ export function GiftGate({ opened, onOpen, onShakeChange }: GiftGateProps): JSX.
 						/>
 						<div className="min-h-8 mt-2 flex items-center justify-center">
 							{opened && (
-								<p className="font-serif text-lg text-pink-600">{heroCopy.successMessage}</p>
+								<p className="font-script text-2xl text-pink-600">{heroCopy.successMessage}</p>
 							)}
 							{!opened && showLockedHint && heroCopy.lockedHint && (
 								<p className="font-sans text-sm text-pink-800/70">{heroCopy.lockedHint}</p>

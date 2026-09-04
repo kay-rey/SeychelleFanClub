@@ -1,6 +1,6 @@
 import type React from "react";
 import type { Metadata, Viewport } from "next";
-import { Playfair_Display, Poppins } from "next/font/google";
+import { Corinthia, Playfair_Display, Poppins } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
 import { Suspense } from "react";
 import { AudioPreload } from "@/components/shared/AudioPreload";
@@ -16,6 +16,13 @@ export const viewport: Viewport = {
 const playfair = Playfair_Display({
 	subsets: ["latin"],
 	variable: "--font-playfair",
+	display: "swap",
+});
+
+const corinthia = Corinthia({
+	subsets: ["latin"],
+	weight: ["400", "700"],
+	variable: "--font-corinthia",
 	display: "swap",
 });
 
@@ -59,7 +66,7 @@ export default function RootLayout({
 }>) {
 	return (
 		<html lang="en">
-			<body className={`font-sans ${playfair.variable} ${poppins.variable}`}>
+			<body className={`font-sans ${playfair.variable} ${corinthia.variable} ${poppins.variable}`}>
 				<AudioPreload />
 				<Suspense fallback={null}>{children}</Suspense>
 				<Analytics />

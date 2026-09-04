@@ -8,18 +8,17 @@ interface BirthdayCountdownProps {
 interface CountdownUnitProps {
 	value: number;
 	label: string;
-	pad: boolean;
 }
 
 function padTwo(value: number): string {
 	return value.toString().padStart(2, "0");
 }
 
-function CountdownUnit({ value, label, pad }: CountdownUnitProps): JSX.Element {
+function CountdownUnit({ value, label }: CountdownUnitProps): JSX.Element {
 	return (
-		<div className="flex flex-col items-center min-w-[3.25rem] sm:min-w-[3.75rem]">
-			<span className="font-serif text-3xl sm:text-4xl tabular-nums text-pink-600 leading-none">
-				{pad ? padTwo(value) : String(value)}
+		<div className="flex flex-col items-center">
+			<span className="font-mono tabular-nums text-3xl sm:text-4xl text-pink-600 leading-none w-[2ch] text-center">
+				{padTwo(value)}
 			</span>
 			<span className="mt-2 text-[0.65rem] sm:text-xs uppercase tracking-[0.18em] text-pink-900/40">
 				{label}
@@ -38,19 +37,19 @@ export function BirthdayCountdown({ parts }: BirthdayCountdownProps): JSX.Elemen
 	return (
 		<div className="space-y-2" role="timer" aria-label={ariaLabel}>
 			<div className="flex items-start justify-center gap-3 sm:gap-5">
-				<CountdownUnit value={days} label={days === 1 ? "day" : "days"} pad={false} />
-				<span className="font-serif text-3xl sm:text-4xl text-pink-300 leading-none" aria-hidden>
+				<CountdownUnit value={days} label={days === 1 ? "day" : "days"} />
+				<span className="font-mono text-3xl sm:text-4xl text-pink-300 leading-none" aria-hidden>
 					:
 				</span>
-				<CountdownUnit value={hours} label="hours" pad />
-				<span className="font-serif text-3xl sm:text-4xl text-pink-300 leading-none" aria-hidden>
+				<CountdownUnit value={hours} label="hours" />
+				<span className="font-mono text-3xl sm:text-4xl text-pink-300 leading-none" aria-hidden>
 					:
 				</span>
-				<CountdownUnit value={minutes} label="minutes" pad />
-				<span className="font-serif text-3xl sm:text-4xl text-pink-300 leading-none" aria-hidden>
+				<CountdownUnit value={minutes} label="minutes" />
+				<span className="font-mono text-3xl sm:text-4xl text-pink-300 leading-none" aria-hidden>
 					:
 				</span>
-				<CountdownUnit value={seconds} label="seconds" pad />
+				<CountdownUnit value={seconds} label="seconds" />
 			</div>
 			<p className="font-sans text-xs tracking-wide text-pink-900/35">until midnight Pacific Time</p>
 		</div>

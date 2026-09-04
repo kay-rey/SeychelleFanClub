@@ -100,6 +100,7 @@
 @theme inline {
 	/* Added custom font variables for Playfair and Poppins */
 	--font-serif: var(--font-playfair);
+	--font-script: var(--font-corinthia);
 	--font-sans: var(--font-poppins);
 	--font-mono: var(--font-geist-mono);
 	--color-background: var(--background);
