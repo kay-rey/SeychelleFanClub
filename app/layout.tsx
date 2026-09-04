@@ -44,9 +44,9 @@ export const metadata: Metadata = {
 		type: "website",
 		images: [
 			{
-				url: "/images/hero.jpg",
-				width: 1200,
-				height: 630,
+				url: "/images/birthday/p1031314.jpg",
+				width: 1600,
+				height: 2400,
 				alt: "Birthday feature for Seychelle",
 			},
 		],
@@ -55,7 +55,7 @@ export const metadata: Metadata = {
 		card: "summary_large_image",
 		title: "Happy birthday, Seychelle",
 		description: "An editorial birthday feature for Seychelle",
-		images: ["/images/hero.jpg"],
+		images: ["/images/birthday/p1031314.jpg"],
 	},
 };
 
