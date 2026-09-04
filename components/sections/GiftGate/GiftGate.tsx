@@ -1,17 +1,13 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState, type CSSProperties, type JSX } from "react";
-import { Cake, Gift, Heart, PartyPopper, Shell, Sparkles, Volume2, VolumeX } from "lucide-react";
+import { useEffect, useRef, useState, type CSSProperties, type JSX } from "react";
+import { Cake, Gift, Heart, PartyPopper, Volume2, VolumeX } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { NO_SOUNDS, YES_SOUND } from "@/lib/constants";
 import {
 	CONFETTI_DURATION,
-	FLOATING_GIFT_COUNT,
-	FLOATING_HEART_COUNT,
-	FLOATING_SHELL_COUNT,
 	HERO_FADE_DURATION,
 	LOCAL_STORAGE_MUTED_KEY,
-	SPARKLE_COUNT,
 	WRONG_ANSWER_DURATION,
 	getConfettiPieces,
 	getCountdownToUnlock,
@@ -55,16 +51,6 @@ export function GiftGate({ opened, onOpen, onShakeChange }: GiftGateProps): JSX.
 
 	const heroCopy: HeroCopy = getHeroCopy(now);
 	const countdown = getCountdownToUnlock(now);
-
-	const sparkleStyles = useMemo(
-		() =>
-			Array.from({ length: SPARKLE_COUNT }, () => ({
-				left: `${Math.random() * 100}%`,
-				top: `${Math.random() * 100}%`,
-				animationDelay: `${Math.random() * 2}s`,
-			})),
-		[]
-	);
 
 	useEffect(() => {
 		setIsVisible(true);
@@ -210,51 +196,7 @@ export function GiftGate({ opened, onOpen, onShakeChange }: GiftGateProps): JSX.
 				</div>
 			)}
 
-			<div className="fixed inset-0 z-0">
-				<div className="absolute inset-0 bg-gradient-to-br from-pink-50 via-amber-50/40 to-rose-50" />
-				<div className="absolute inset-0 bg-gradient-to-tr from-pink-100/20 via-transparent to-yellow-100/20" />
-				<div className="absolute inset-0 bg-gradient-to-bl from-yellow-100/20 via-transparent to-pink-100/15" />
-				<div className="absolute -top-1/2 -left-1/2 w-full h-full bg-gradient-radial from-pink-200/10 via-transparent to-transparent" />
-				<div className="absolute -bottom-1/2 -right-1/2 w-full h-full bg-gradient-radial from-amber-200/10 via-transparent to-transparent" />
-			</div>
-
-			{isVisible && (
-				<div className="fixed inset-0 pointer-events-none overflow-hidden z-0">
-					{sparkleStyles.map((style, i) => (
-						<div key={i} className="absolute sparkle" style={style}>
-							<Sparkles className="w-4 h-4 text-pink-300" />
-						</div>
-					))}
-				</div>
-			)}
-
-			{isVisible && (
-				<div className="fixed inset-0 pointer-events-none overflow-hidden z-0">
-					{Array.from({ length: FLOATING_HEART_COUNT }, (_, i) => i + 1).map((n) => (
-						<div key={`heart-${n}`} className={`floating-heart-${n}`}>
-							<Heart className="w-4 h-4 text-pink-300/60" />
-						</div>
-					))}
-					{Array.from({ length: FLOATING_SHELL_COUNT }, (_, i) => i + 1).map((n) => (
-						<div key={`shell-${n}`} className={`floating-shell-${n}`}>
-							<Shell className="w-5 h-5 text-yellow-300/40" />
-						</div>
-					))}
-					{Array.from({ length: FLOATING_GIFT_COUNT }, (_, i) => i + 1).map((n) => (
-						<div key={`gift-${n}`} className={`floating-gift-${n}`}>
-							<Gift className="w-5 h-5 text-pink-300/50" />
-						</div>
-					))}
-				</div>
-			)}
-
 			<section className="min-h-screen flex flex-col items-center justify-center px-4 relative overflow-hidden z-[60]">
-				<div className="absolute inset-0 bg-gradient-to-b from-pink-200/30 via-amber-100/15 to-transparent" />
-				<div className="absolute inset-0 overflow-hidden pointer-events-none">
-					<div className="absolute -top-32 -left-32 w-80 h-80 bg-gradient-to-br from-pink-300/40 to-amber-200/30 rounded-full blur-3xl" />
-					<div className="absolute -top-32 -right-32 w-72 h-72 bg-gradient-to-br from-yellow-200/30 to-pink-300/40 rounded-full blur-3xl" />
-				</div>
-
 				<button
 					type="button"
 					onClick={toggleMuted}

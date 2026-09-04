@@ -17,11 +17,6 @@ export const CONFETTI_DURATION = 1600;
 export const SCROLL_DELAY = 50;
 export const HERO_FADE_DURATION = 1000;
 
-export const SPARKLE_COUNT = 20;
-export const FLOATING_HEART_COUNT = 8;
-export const FLOATING_SHELL_COUNT = 6;
-export const FLOATING_GIFT_COUNT = 4;
-
 export const BIRTHDAY_NOTES: BirthdayNote[] = [
 	{
 		icon: "heart",

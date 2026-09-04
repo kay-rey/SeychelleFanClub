@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState, type JSX, type ReactNode } from "react";
 import { GiftGate } from "@/components/sections/GiftGate/GiftGate";
+import { AuroraBackground } from "@/components/shared/AuroraBackground";
 import { cn } from "@/lib/utils";
 import { SCROLL_DELAY } from "@/lib/birthday";
 
@@ -45,6 +46,7 @@ export function BirthdayExperience({ children }: BirthdayExperienceProps): JSX.E
 
 	return (
 		<div className={cn("min-h-screen relative", isShaking && "animate-shake")}>
+			<AuroraBackground />
 			<GiftGate opened={opened} onOpen={handleOpen} onShakeChange={setIsShaking} />
 			{opened && <div ref={contentRef}>{children}</div>}
 		</div>

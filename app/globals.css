@@ -146,8 +146,7 @@
 		@apply border-border outline-ring/50;
 	}
 	html {
-		background: linear-gradient(135deg, #fce7f3 0%, #fff7ed 50%, #fce7f3 100%);
-		background-color: #fce7f3;
+		background-color: #fff7ed;
 		min-height: 100vh;
 		overflow-y: scroll;
 		scrollbar-width: none;
@@ -157,8 +156,7 @@
 		display: none;
 	}
 	body {
-		background: linear-gradient(135deg, #fce7f3 0%, #fff7ed 50%, #fce7f3 100%);
-		background-color: #fce7f3;
+		background-color: #fff7ed;
 		min-height: 100vh;
 		scrollbar-width: none;
 		-ms-overflow-style: none;
@@ -216,6 +214,48 @@
 
 .animate-shake {
 	animation: shake 0.5s ease-in-out;
+}
+
+@keyframes aurora-drift {
+	from {
+		background-position: 50% 50%;
+	}
+	to {
+		background-position: 350% 50%;
+	}
+}
+
+.aurora-layer {
+	--aurora-bands: repeating-linear-gradient(
+		100deg,
+		#fce7f3 8%,
+		#fef3c7 16%,
+		#fbcfe8 24%,
+		#fde68a 32%,
+		#ffe4e6 40%,
+		#f9a8d4 48%
+	);
+	position: absolute;
+	inset: -20%;
+	pointer-events: none;
+	opacity: 0.32;
+	filter: blur(64px) saturate(1.05);
+	background-image: var(--aurora-bands);
+	background-size: 220% 180%;
+	background-position: 50% 50%;
+	will-change: background-position;
+	animation: aurora-drift 80s linear infinite;
+}
+
+.aurora-layer::after {
+	content: "";
+	position: absolute;
+	inset: 0;
+	background-image: var(--aurora-bands);
+	background-size: 180% 140%;
+	opacity: 0.28;
+	mix-blend-mode: soft-light;
+	animation: aurora-drift 110s linear infinite reverse;
 }
 
 /* Confetti burst for mixed birthday icons */
@@ -506,6 +546,8 @@
 	.gift-lid-group,
 	.gift-ready,
 	.gift-wiggle,
+	.aurora-layer,
+	.aurora-layer::after,
 	.floating-heart-1,
 	.floating-heart-2,
 	.floating-heart-3,
