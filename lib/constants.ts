@@ -111,10 +111,29 @@ export const GALLERY_PHOTOS: GalleryPhoto[] = [
 		width: 1600,
 		height: 2400,
 	},
+];
+
+export interface JollibeePhoto {
+	src: string;
+	alt: string;
+	caption: string;
+	width: number;
+	height: number;
+}
+
+/** Cheeky hero meet-cute — kept out of the main editorial gallery. */
+export const JOLLIBEE_PHOTOS: JollibeePhoto[] = [
 	{
-		src: "/images/birthday/p1030086.jpg",
-		caption: "A little joy",
-		layout: "full",
+		src: "/images/birthday/jollibee/mascot-event.jpg",
+		alt: "Seychelle posing with the Jollibee mascot at an outdoor event",
+		caption: "First contact",
+		width: 1600,
+		height: 2400,
+	},
+	{
+		src: "/images/birthday/jollibee/jollibee.jpg",
+		alt: "Seychelle giving a thumbs-up beside the Jollibee statue outside the restaurant",
+		caption: "The shrine",
 		width: 1600,
 		height: 2400,
 	},
