@@ -45,8 +45,8 @@ export const metadata: Metadata = {
 		images: [
 			{
 				url: "/images/birthday/p1031314.jpg",
-				width: 1600,
-				height: 2400,
+				width: 2560,
+				height: 3840,
 				alt: "Birthday feature for Seychelle",
 			},
 		],
