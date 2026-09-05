@@ -1,20 +1,45 @@
 import type { JSX } from "react";
 import { LETTER_BODY, LETTER_GREETING, LETTER_SIGN_OFF } from "@/lib/birthday";
 
+/**
+ * Closing letter on a limestone page with a faint deckled edge.
+ * Deckle is applied only to the paper face so the type stays sharp.
+ */
 export function BirthdayLetter(): JSX.Element {
 	return (
 		<section className="py-24 md:py-32 px-4 relative z-10">
+			<svg className="absolute h-0 w-0" aria-hidden>
+				<defs>
+					<filter
+						id="letter-deckle"
+						x="-3%"
+						y="-3%"
+						width="106%"
+						height="106%"
+						filterUnits="objectBoundingBox"
+					>
+						<feTurbulence
+							type="fractalNoise"
+							baseFrequency="0.035"
+							numOctaves="3"
+							seed="7"
+							result="noise"
+						/>
+						<feDisplacementMap
+							in="SourceGraphic"
+							in2="noise"
+							scale="5"
+							xChannelSelector="R"
+							yChannelSelector="G"
+						/>
+					</filter>
+				</defs>
+			</svg>
+
 			<div className="container mx-auto max-w-3xl">
-				<div className="relative overflow-hidden border border-border/70 bg-[#f5f0e8]/50 px-8 py-16 sm:px-12 sm:py-20 md:px-16 md:py-24 text-center">
-					<div
-						className="pointer-events-none absolute inset-0 opacity-40"
-						style={{
-							background:
-								"radial-gradient(ellipse at 50% 0%, oklch(0.88 0.04 220 / 0.35), transparent 55%), radial-gradient(ellipse at 80% 100%, oklch(0.86 0.05 85 / 0.25), transparent 45%)",
-						}}
-						aria-hidden
-					/>
-					<div className="relative space-y-10">
+				<div className="relative px-8 py-16 sm:px-12 sm:py-20 md:px-16 md:py-24 text-center">
+					<div className="letter-paper-face" aria-hidden />
+					<div className="relative z-10 space-y-10">
 						<p className="font-script text-4xl md:text-5xl lg:text-6xl text-primary text-balance leading-[1.2]">
 							{LETTER_GREETING}
 						</p>
