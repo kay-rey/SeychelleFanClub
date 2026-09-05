@@ -21,15 +21,13 @@ export function BirthdayExperience({ children }: BirthdayExperienceProps): JSX.E
 
 	useEffect(() => {
 		if (!opened) {
-			document.documentElement.style.overflow = "hidden";
-			document.body.style.overflow = "hidden";
-		} else {
-			document.documentElement.style.overflow = "";
-			document.body.style.overflow = "";
+			document.documentElement.removeAttribute("data-scroll-unlocked");
+			window.scrollTo(0, 0);
+			return;
 		}
+		document.documentElement.setAttribute("data-scroll-unlocked", "");
 		return () => {
-			document.documentElement.style.overflow = "";
-			document.body.style.overflow = "";
+			document.documentElement.removeAttribute("data-scroll-unlocked");
 		};
 	}, [opened]);
 
@@ -45,7 +43,13 @@ export function BirthdayExperience({ children }: BirthdayExperienceProps): JSX.E
 	};
 
 	return (
-		<div className={cn("min-h-screen relative", isShaking && "animate-shake")}>
+		<div
+			className={cn(
+				"relative",
+				opened ? "min-h-dvh" : "h-dvh overflow-hidden",
+				isShaking && "animate-shake"
+			)}
+		>
 			<AuroraBackground />
 			<GiftGate opened={opened} onOpen={handleOpen} onShakeChange={setIsShaking} />
 			{opened && <div ref={contentRef}>{children}</div>}

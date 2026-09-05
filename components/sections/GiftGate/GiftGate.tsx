@@ -223,7 +223,12 @@ export function GiftGate({ opened, onOpen, onShakeChange }: GiftGateProps): JSX.
 				</div>
 			)}
 
-			<section className="relative min-h-screen z-[60] overflow-x-hidden">
+			<section
+				className={cn(
+					"z-[60] overflow-x-hidden",
+					opened ? "relative min-h-dvh" : "fixed inset-0 h-dvh w-full"
+				)}
+			>
 				<div className="absolute inset-0 overflow-hidden">
 					<Image
 						src={COVER_IMAGE.src}
@@ -252,13 +257,12 @@ export function GiftGate({ opened, onOpen, onShakeChange }: GiftGateProps): JSX.
 
 				<div
 					className={cn(
-						"relative z-10 min-h-screen flex flex-col items-center justify-start px-6 pb-10",
-						isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
+						"relative z-10 flex h-full min-h-dvh flex-col items-center justify-start px-6 pb-10 transition-opacity",
+						isVisible ? "opacity-100" : "opacity-0"
 					)}
 					style={{
 						paddingTop: "max(4.5rem, calc(env(safe-area-inset-top, 0px) + 2.75rem))",
 						transitionDuration: `${HERO_FADE_DURATION}ms`,
-						transitionProperty: "opacity, transform",
 					}}
 				>
 					<div className="w-full max-w-3xl mx-auto text-center space-y-5 sm:space-y-6 editorial-fade-up">

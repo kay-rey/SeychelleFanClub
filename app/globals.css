@@ -146,20 +146,31 @@
 	}
 	html {
 		background-color: #f5f0e8;
-		min-height: 100vh;
-		overflow-y: scroll;
+		/* Locked cover is the default first paint — no scroll until unlock. */
+		height: 100%;
+		overflow: hidden;
 		scrollbar-width: none;
 		-ms-overflow-style: none;
+	}
+	html[data-scroll-unlocked] {
+		height: auto;
+		min-height: 100dvh;
+		overflow-x: hidden;
+		overflow-y: auto;
 	}
 	html::-webkit-scrollbar {
 		display: none;
 	}
 	body {
 		background-color: #f5f0e8;
-		min-height: 100vh;
+		min-height: 100dvh;
+		overflow: hidden;
 		scrollbar-width: none;
 		-ms-overflow-style: none;
 		@apply text-foreground font-sans;
+	}
+	html[data-scroll-unlocked] body {
+		overflow: visible;
 	}
 	body::-webkit-scrollbar {
 		display: none;
