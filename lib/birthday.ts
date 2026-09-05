@@ -68,7 +68,14 @@ export const CATALINA_WEEKEND = {
 	eyebrow: "This weekend",
 	headline: "Catalina, with you",
 	body: "Ferry wake, Avalon light, and nowhere else I’d rather be. Your birthday weekend, out on the water — just us.",
-	detail: "Catalina Island · Birthday weekend",
+	detail: "Sunday, September 20",
+} as const;
+
+/** Ferry / trip day — Pacific calendar date (days-only countdown). */
+export const CATALINA_TRIP = {
+	year: 2026,
+	month: 9,
+	day: 20,
 } as const;
 
 export const PACIFIC_TIME_ZONE = "America/Los_Angeles";
@@ -77,12 +84,49 @@ const MS_PER_SECOND = 1000;
 const SECONDS_PER_MINUTE = 60;
 const SECONDS_PER_HOUR = 3600;
 const SECONDS_PER_DAY = 86400;
+const MS_PER_DAY = MS_PER_SECOND * SECONDS_PER_DAY;
 
 /**
  * Age Seychelle turns (or turned) in the given calendar year, using Pacific time.
  */
 export function getTurningAge(now: Date): number {
 	return getPacificYear(now) - BIRTHDAY.year;
+}
+
+/**
+ * Whole Pacific calendar days until Catalina (Sunday, Sept 20).
+ * 0 on the trip day; stays 0 afterward.
+ */
+export function getDaysUntilCatalina(now: Date): number {
+	const today = getPacificYmd(now);
+	const todayMidnight = zonedDateTimeToUtc(
+		today.year,
+		today.month,
+		today.day,
+		0,
+		0,
+		0,
+		PACIFIC_TIME_ZONE
+	);
+	const tripMidnight = zonedDateTimeToUtc(
+		CATALINA_TRIP.year,
+		CATALINA_TRIP.month,
+		CATALINA_TRIP.day,
+		0,
+		0,
+		0,
+		PACIFIC_TIME_ZONE
+	);
+	return Math.max(0, Math.round((tripMidnight.getTime() - todayMidnight.getTime()) / MS_PER_DAY));
+}
+
+/**
+ * Label for the Catalina days countdown.
+ */
+export function getCatalinaDaysLabel(days: number): string {
+	if (days <= 0) return "Today";
+	if (days === 1) return "1 day";
+	return `${days} days`;
 }
 
 /**
