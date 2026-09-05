@@ -42,26 +42,26 @@ export const BIRTHDAY_NOTES: BirthdayNote[] = [
 	{
 		icon: "leaf",
 		title: "Your stillness",
-		body: "You carry a calm that settles a room — like shade in a stone garden. Being near you feels like finding the quiet path.",
+		body: "You carry a calm that settles a room, like shade in a stone garden. Being near you feels like finding the quiet path.",
 	},
 	{
 		icon: "heart",
 		title: "Your warmth",
-		body: "You make ordinary hours feel considered. The way you look at the world — patient, bright — is the light I keep returning to.",
+		body: "You make ordinary hours feel considered. The way you look at the world, patient and bright, is a reminder of how good life can be.",
 	},
 	{
 		icon: "sun",
-		title: "Your light",
-		body: "Soft afternoon light on limestone. That is how I think of you this year: warm, exacting, and beautiful without trying.",
+		title: "Your grace",
+		body: "You have an effortless sense of beauty that can’t be taught. In every space you touch, in the way you compose our days, you bring a natural elegance that simply belongs.",
 	},
 ];
 
-export const LETTER_GREETING = "Happy birthday, Seychelle.";
+export const LETTER_GREETING = "Happy 28th birthday, Seychelle.";
 
 export const LETTER_BODY =
-	"For Seychelle, the light of my life. Twenty-eight looks beautiful on you — like late sun on warm stone, like a garden that knows how to wait. Of all the quiet places in the world, I was lucky enough to find you. You are the still center of my favorite days. My love for you is steady as marble and soft as the air between the columns.";
+	"To my favorite person, my business partner, and the prettiest woman in any room. You inspire everything around you just by being yourself. Whether we’re cheering our heads off at Galaxy games, exploring new places, or just sitting on the couch after a long day, you make our life together feel rich and intentional. Thank you for your endless care, for the heart you put into our home, for the love in every meal you cook, and for keeping us laughing through it all. Watching you step out of your comfort zone, trust your own voice, and grow into everything you’re building this year has been incredible to see. Sobrang proud ako sa'yo. You are courageous, funny, and beautiful in a way that words will never quite capture. Every room is brighter when you walk in, and I count the minutes until you're back. Mahal kita, today and for all the years to come.";
 
-export const LETTER_SIGN_OFF = "- With all my love";
+export const LETTER_SIGN_OFF = "All yours, always";
 
 export const PACIFIC_TIME_ZONE = "America/Los_Angeles";
 

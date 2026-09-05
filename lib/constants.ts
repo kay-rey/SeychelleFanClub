@@ -1,6 +1,7 @@
 import type { GalleryPhoto, JollibeePhoto } from "@/lib/types";
 
 import coverP1031328 from "@/public/images/birthday/p1031328.jpg";
+import shareP1031418 from "@/public/images/birthday/shareimage/p1031418-og.jpg";
 import galleryP1031314 from "@/public/images/birthday/p1031314.jpg";
 import galleryP1031386 from "@/public/images/birthday/p1031386.jpg";
 import galleryP1000144 from "@/public/images/birthday/p1000144.jpg";
@@ -24,6 +25,12 @@ import jollibeeStatue from "@/public/images/birthday/jollibee/jollibee.jpg";
 export const COVER_IMAGE = {
 	src: coverP1031328,
 	alt: "Seychelle in a white dress beside the Outer Peristyle fountain at the Getty Villa",
+} as const;
+
+/** Open Graph / Twitter share preview (1200×630). */
+export const SHARE_IMAGE = {
+	src: shareP1031418,
+	alt: "Birthday page for Seychelle",
 } as const;
 
 /**
@@ -107,7 +114,7 @@ export const JOLLIBEE_PHOTOS: JollibeePhoto[] = [
 	},
 	{
 		src: jollibeeStatue,
-		alt: "Seychelle giving a thumbs-up beside the Jollibee statue outside the restaurant",
+		alt: "Seychelle giving a thumbs up beside the Jollibee statue outside the restaurant",
 		caption: "The shrine",
 	},
 ];
@@ -127,4 +134,4 @@ export const YES_SOUND = "/sounds/yes/myinstants.mp3";
 export const AUDIO_FILES = [BIRTHDAY_SONG, YES_SOUND, ...NO_SOUNDS] as const;
 
 export const SPOTIFY_PLAYLIST_EMBED_URL =
-	"https://open.spotify.com/embed/playlist/4Pz6z80H9oZHUj50W9GX6C?utm_source=generator";
+	"https://open.spotify.com/embed/playlist/5eA9ITdCnH5xDpjaj23coZ?utm_source=generator";

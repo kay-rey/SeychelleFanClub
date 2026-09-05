@@ -4,7 +4,7 @@ import { Cormorant_Garamond, DM_Sans, Great_Vibes } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
 import { Suspense } from "react";
 import { AudioPreload } from "@/components/shared/AudioPreload";
-import { COVER_IMAGE } from "@/lib/constants";
+import { SHARE_IMAGE } from "@/lib/constants";
 import "./globals.css";
 
 export const viewport: Viewport = {
@@ -41,7 +41,7 @@ const siteUrl =
 export const metadata: Metadata = {
 	metadataBase: new URL(siteUrl),
 	title: "Happy birthday, Seychelle",
-	description: "An editorial birthday feature for Seychelle",
+	description: "A birthday celebration page for Seychelle",
 	icons: {
 		icon: "/favicon.ico",
 		shortcut: "/favicon.ico",
@@ -49,22 +49,22 @@ export const metadata: Metadata = {
 	},
 	openGraph: {
 		title: "Happy birthday, Seychelle",
-		description: "An editorial birthday feature for Seychelle",
+		description: "A birthday celebration page for Seychelle",
 		type: "website",
 		images: [
 			{
-				url: COVER_IMAGE.src.src,
-				width: COVER_IMAGE.src.width,
-				height: COVER_IMAGE.src.height,
-				alt: "Birthday feature for Seychelle",
+				url: SHARE_IMAGE.src.src,
+				width: SHARE_IMAGE.src.width,
+				height: SHARE_IMAGE.src.height,
+				alt: SHARE_IMAGE.alt,
 			},
 		],
 	},
 	twitter: {
 		card: "summary_large_image",
 		title: "Happy birthday, Seychelle",
-		description: "An editorial birthday feature for Seychelle",
-		images: [COVER_IMAGE.src.src],
+		description: "A birthday celebration page for Seychelle",
+		images: [SHARE_IMAGE.src.src],
 	},
 };
 
