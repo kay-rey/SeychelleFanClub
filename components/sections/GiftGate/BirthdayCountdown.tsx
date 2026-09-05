@@ -1,4 +1,5 @@
 import type { JSX } from "react";
+import { TEST_UNLOCK_AT_NEXT_MIDNIGHT } from "@/lib/birthday";
 import type { CountdownParts } from "@/lib/types";
 
 interface BirthdayCountdownProps {
@@ -28,11 +29,14 @@ function CountdownUnit({ value, label }: CountdownUnitProps): JSX.Element {
 }
 
 /**
- * Live remaining time until midnight Pacific on September 18.
+ * Live remaining time until the unlock midnight (birthday or tonight while testing).
  */
 export function BirthdayCountdown({ parts }: BirthdayCountdownProps): JSX.Element {
 	const { days, hours, minutes, seconds } = parts;
-	const ariaLabel = `${days} days, ${hours} hours, ${minutes} minutes, ${seconds} seconds until midnight Pacific Time on September 18`;
+	const unlockLabel = TEST_UNLOCK_AT_NEXT_MIDNIGHT
+		? "midnight Pacific Time tonight"
+		: "midnight Pacific Time on September 18";
+	const ariaLabel = `${days} days, ${hours} hours, ${minutes} minutes, ${seconds} seconds until ${unlockLabel}`;
 
 	return (
 		<div className="space-y-3" role="timer" aria-label={ariaLabel}>

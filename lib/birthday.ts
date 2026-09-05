@@ -15,6 +15,12 @@ export const LOCAL_STORAGE_MUTED_KEY = "birthday-muted";
  */
 export const PREVIEW_AS_UNLOCKED = false;
 
+/**
+ * Temporary smoke-test unlock — countdown targets the next Pacific midnight.
+ * Set to `false` after testing so September 18 is the real unlock again.
+ */
+export const TEST_UNLOCK_AT_NEXT_MIDNIGHT = false;
+
 export const CONFETTI_COUNT = 14;
 export const CONFETTI_RADIUS = 180;
 
@@ -64,7 +70,7 @@ export function getTurningAge(now: Date): number {
 }
 
 /**
- * Remaining time until midnight Pacific on September 18 of the current Pacific year.
+ * Remaining time until the gift unlocks (birthday midnight, or next midnight while testing).
  */
 export function getCountdownToUnlock(now: Date): CountdownParts {
 	const unlockAt = getBirthdayUnlockAt(now);
@@ -81,7 +87,7 @@ export function getCountdownToUnlock(now: Date): CountdownParts {
 }
 
 /**
- * True at or after midnight Pacific on September 18 of this Pacific year.
+ * True at or after the configured unlock instant.
  */
 export function canOpenGift(now: Date): boolean {
 	if (PREVIEW_AS_UNLOCKED) return true;
@@ -99,10 +105,14 @@ export function getHeroCopy(now: Date): HeroCopy {
 		return {
 			title: "For Seychelle",
 			subtitle: null,
-			openAriaLabel: "This feature opens at midnight Pacific Time on September 18",
+			openAriaLabel: TEST_UNLOCK_AT_NEXT_MIDNIGHT
+				? "This feature opens at midnight Pacific Time tonight"
+				: "This feature opens at midnight Pacific Time on September 18",
 			successMessage: "Happy birthday.",
 			canOpen: false,
-			lockedHint: "This opens on her birthday.",
+			lockedHint: TEST_UNLOCK_AT_NEXT_MIDNIGHT
+				? "This opens at midnight tonight."
+				: "This opens on her birthday.",
 		};
 	}
 
@@ -117,20 +127,61 @@ export function getHeroCopy(now: Date): HeroCopy {
 }
 
 function getPacificYear(now: Date): number {
+	return getPacificYmd(now).year;
+}
+
+function getPacificYmd(now: Date): { year: number; month: number; day: number } {
 	const parts = new Intl.DateTimeFormat("en-US", {
 		timeZone: PACIFIC_TIME_ZONE,
 		year: "numeric",
+		month: "2-digit",
+		day: "2-digit",
 	}).formatToParts(now);
-	const yearPart = parts.find((part) => part.type === "year");
-	return Number(yearPart?.value);
+	const values = Object.fromEntries(
+		parts.filter((part) => part.type !== "literal").map((part) => [part.type, part.value])
+	);
+
+	return {
+		year: Number(values.year),
+		month: Number(values.month),
+		day: Number(values.day),
+	};
 }
 
 /**
- * Midnight Pacific Time on September 18 of the Pacific calendar year for `now`.
+ * Unlock instant: September 18 midnight Pacific, or the next Pacific midnight while testing.
  */
 function getBirthdayUnlockAt(now: Date): Date {
+	if (TEST_UNLOCK_AT_NEXT_MIDNIGHT) {
+		return getNextMidnightPacific(now);
+	}
+
 	const year = getPacificYear(now);
 	return zonedDateTimeToUtc(year, BIRTHDAY.month, BIRTHDAY.day, 0, 0, 0, PACIFIC_TIME_ZONE);
+}
+
+/**
+ * The next 00:00 in America/Los_Angeles strictly after `now`.
+ */
+function getNextMidnightPacific(now: Date): Date {
+	const { year, month, day } = getPacificYmd(now);
+	const todayMidnight = zonedDateTimeToUtc(year, month, day, 0, 0, 0, PACIFIC_TIME_ZONE);
+
+	if (now.getTime() < todayMidnight.getTime()) {
+		return todayMidnight;
+	}
+
+	// Advance one calendar day (Date.UTC handles month/year rollover).
+	const nextCalendarDay = new Date(Date.UTC(year, month - 1, day + 1, 12, 0, 0));
+	return zonedDateTimeToUtc(
+		nextCalendarDay.getUTCFullYear(),
+		nextCalendarDay.getUTCMonth() + 1,
+		nextCalendarDay.getUTCDate(),
+		0,
+		0,
+		0,
+		PACIFIC_TIME_ZONE
+	);
 }
 
 /**
