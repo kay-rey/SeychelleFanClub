@@ -2,6 +2,7 @@ import type { JSX } from "react";
 import Image from "next/image";
 import { cn } from "@/lib/utils";
 import { GALLERY_PHOTOS } from "@/lib/constants";
+import { RevealOnScroll } from "@/components/shared/RevealOnScroll";
 
 import type { GalleryPhoto } from "@/lib/types";
 
@@ -43,23 +44,25 @@ function PhotoFigure({
 export function PhotoGallery(): JSX.Element {
 	const frames: JSX.Element[] = [];
 	let index = 0;
+	let frameOrder = 0;
 
 	while (index < GALLERY_PHOTOS.length) {
 		const photo = GALLERY_PHOTOS[index];
 		const layout = photo.layout ?? "full";
+		const delayMs = Math.min(frameOrder * 70, 280);
+		frameOrder += 1;
 
 		if (layout === "pair") {
 			const next = GALLERY_PHOTOS[index + 1];
 			const pairMate = next?.layout === "pair" ? next : null;
 
 			frames.push(
-				<div
-					key={`pair-${photo.src.src}`}
-					className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-10 items-end"
-				>
-					<PhotoFigure photo={photo} />
-					{pairMate ? <PhotoFigure photo={pairMate} /> : null}
-				</div>
+				<RevealOnScroll key={`pair-${photo.src.src}`} delayMs={delayMs}>
+					<div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-10 items-end">
+						<PhotoFigure photo={photo} />
+						{pairMate ? <PhotoFigure photo={pairMate} /> : null}
+					</div>
+				</RevealOnScroll>
 			);
 
 			index += pairMate ? 2 : 1;
@@ -68,21 +71,20 @@ export function PhotoGallery(): JSX.Element {
 
 		if (layout === "portrait") {
 			frames.push(
-				<div key={photo.src.src} className="flex justify-center">
-					<PhotoFigure photo={photo} className="w-full max-w-md md:max-w-lg" />
-				</div>
+				<RevealOnScroll key={photo.src.src} delayMs={delayMs}>
+					<div className="flex justify-center">
+						<PhotoFigure photo={photo} className="w-full max-w-md md:max-w-lg" />
+					</div>
+				</RevealOnScroll>
 			);
 			index += 1;
 			continue;
 		}
 
 		frames.push(
-			<PhotoFigure
-				key={photo.src.src}
-				photo={photo}
-				priority={index === 0}
-				className="w-full"
-			/>
+			<RevealOnScroll key={photo.src.src} delayMs={delayMs}>
+				<PhotoFigure photo={photo} priority={index === 0} className="w-full" />
+			</RevealOnScroll>
 		);
 		index += 1;
 	}
@@ -90,17 +92,19 @@ export function PhotoGallery(): JSX.Element {
 	return (
 		<section className="py-24 md:py-32 px-4 relative z-10">
 			<div className="container mx-auto max-w-5xl space-y-16 md:space-y-24">
-				<header className="text-center space-y-4 max-w-2xl mx-auto">
-					<p className="font-sans text-[0.65rem] uppercase tracking-[0.28em] text-muted-foreground">
-						Feature
-					</p>
-					<h2 className="font-serif text-4xl md:text-5xl text-primary text-balance">
-						In this light
-					</h2>
-					<p className="font-serif italic text-lg text-muted-foreground">
-						Frames from days that felt like a villa garden — soft stone, quiet air, you.
-					</p>
-				</header>
+				<RevealOnScroll>
+					<header className="text-center space-y-4 max-w-2xl mx-auto">
+						<p className="font-sans text-[0.65rem] uppercase tracking-[0.28em] text-muted-foreground">
+							Feature
+						</p>
+						<h2 className="font-serif text-4xl md:text-5xl text-primary text-balance">
+							In this light
+						</h2>
+						<p className="font-serif italic text-lg text-muted-foreground">
+							Frames from days that felt like a villa garden — soft stone, quiet air, you.
+						</p>
+					</header>
+				</RevealOnScroll>
 				<div className="space-y-16 md:space-y-24">{frames}</div>
 			</div>
 		</section>

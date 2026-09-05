@@ -3,6 +3,7 @@ import { Heart, Leaf, Sun } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 
 import { BIRTHDAY_NOTES } from "@/lib/birthday";
+import { RevealOnScroll } from "@/components/shared/RevealOnScroll";
 
 import type { BirthdayNoteIcon } from "@/lib/types";
 
@@ -25,19 +26,21 @@ export function BirthdayNotes(): JSX.Element {
 					</h2>
 				</header>
 				<div className="grid grid-cols-1 md:grid-cols-3 gap-12 md:gap-10">
-					{BIRTHDAY_NOTES.map((note) => {
+					{BIRTHDAY_NOTES.map((note, index) => {
 						const Icon = NOTE_ICONS[note.icon];
 						return (
-							<article key={note.title} className="text-center space-y-5">
-								<div className="mx-auto flex h-10 w-10 items-center justify-center text-primary/70">
-									<Icon className="h-6 w-6" aria-hidden />
-								</div>
-								<div className="mx-auto h-px w-10 bg-border" aria-hidden />
-								<h3 className="font-serif text-2xl text-primary">{note.title}</h3>
-								<p className="text-muted-foreground leading-relaxed text-sm sm:text-base">
-									{note.body}
-								</p>
-							</article>
+							<RevealOnScroll key={note.title} delayMs={index * 90}>
+								<article className="text-center space-y-5">
+									<div className="mx-auto flex h-10 w-10 items-center justify-center text-primary/70">
+										<Icon className="h-6 w-6" aria-hidden />
+									</div>
+									<div className="mx-auto h-px w-10 bg-border" aria-hidden />
+									<h3 className="font-serif text-2xl text-primary">{note.title}</h3>
+									<p className="text-muted-foreground leading-relaxed text-sm sm:text-base">
+										{note.body}
+									</p>
+								</article>
+							</RevealOnScroll>
 						);
 					})}
 				</div>

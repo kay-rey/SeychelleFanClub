@@ -1,6 +1,7 @@
 import type { JSX } from "react";
 import Image from "next/image";
 import { JOLLIBEE_PHOTOS } from "@/lib/constants";
+import { RevealOnScroll } from "@/components/shared/RevealOnScroll";
 
 /**
  * A light interlude: Seychelle meets her hero, the Jollibee mascot.
@@ -22,25 +23,27 @@ export function JollibeeSection(): JSX.Element {
 				</header>
 
 				<div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-10 items-end">
-					{JOLLIBEE_PHOTOS.map((photo) => (
-						<figure key={photo.src.src} className="space-y-3">
-							<div className="relative overflow-hidden bg-muted/40">
-								<Image
-									src={photo.src}
-									alt={photo.alt}
-									placeholder="blur"
-									sizes="(min-width: 768px) 40vw, 100vw"
-									className="w-full h-auto object-cover"
-								/>
-							</div>
-							<figcaption className="flex items-center gap-3 px-1">
-								<span className="h-px flex-1 bg-border" aria-hidden />
-								<span className="font-sans text-[0.65rem] uppercase tracking-[0.22em] text-muted-foreground">
-									{photo.caption}
-								</span>
-								<span className="h-px flex-1 bg-border" aria-hidden />
-							</figcaption>
-						</figure>
+					{JOLLIBEE_PHOTOS.map((photo, index) => (
+						<RevealOnScroll key={photo.src.src} delayMs={index * 90}>
+							<figure className="space-y-3">
+								<div className="relative overflow-hidden bg-muted/40">
+									<Image
+										src={photo.src}
+										alt={photo.alt}
+										placeholder="blur"
+										sizes="(min-width: 768px) 40vw, 100vw"
+										className="w-full h-auto object-cover"
+									/>
+								</div>
+								<figcaption className="flex items-center gap-3 px-1">
+									<span className="h-px flex-1 bg-border" aria-hidden />
+									<span className="font-sans text-[0.65rem] uppercase tracking-[0.22em] text-muted-foreground">
+										{photo.caption}
+									</span>
+									<span className="h-px flex-1 bg-border" aria-hidden />
+								</figcaption>
+							</figure>
+						</RevealOnScroll>
 					))}
 				</div>
 

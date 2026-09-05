@@ -6,16 +6,27 @@ import { BirthdayNotes } from "@/components/sections/BirthdayNotes/BirthdayNotes
 import { PlaylistSection } from "@/components/sections/PlaylistSection/PlaylistSection";
 import { BirthdayLetter } from "@/components/sections/BirthdayLetter/BirthdayLetter";
 import { SiteFooter } from "@/components/sections/SiteFooter/SiteFooter";
+import { RevealOnScroll } from "@/components/shared/RevealOnScroll";
 
 export default function HomePage(): JSX.Element {
 	return (
 		<BirthdayExperience>
 			<PhotoGallery />
-			<JollibeeSection />
-			<BirthdayNotes />
-			<PlaylistSection />
-			<BirthdayLetter />
-			<SiteFooter />
+			<RevealOnScroll>
+				<JollibeeSection />
+			</RevealOnScroll>
+			<RevealOnScroll delayMs={60}>
+				<BirthdayNotes />
+			</RevealOnScroll>
+			<RevealOnScroll delayMs={60}>
+				<PlaylistSection />
+			</RevealOnScroll>
+			<RevealOnScroll delayMs={60}>
+				<BirthdayLetter />
+			</RevealOnScroll>
+			<RevealOnScroll delayMs={40}>
+				<SiteFooter />
+			</RevealOnScroll>
 		</BirthdayExperience>
 	);
 }
