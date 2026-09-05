@@ -134,4 +134,4 @@ export const YES_SOUND = "/sounds/yes/myinstants.mp3";
 export const AUDIO_FILES = [BIRTHDAY_SONG, YES_SOUND, ...NO_SOUNDS] as const;
 
 export const SPOTIFY_PLAYLIST_EMBED_URL =
-	"https://open.spotify.com/embed/playlist/4Pz6z80H9oZHUj50W9GX6C?utm_source=generator";
+	"https://open.spotify.com/embed/playlist/5eA9ITdCnH5xDpjaj23coZ?utm_source=generator";
