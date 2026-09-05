@@ -245,7 +245,7 @@
 	position: absolute;
 	inset: -20%;
 	pointer-events: none;
-	opacity: 0.28;
+	opacity: 0.4;
 	filter: blur(72px) saturate(0.9);
 	background-image: var(--aurora-bands);
 	background-size: 220% 180%;
@@ -260,7 +260,7 @@
 	inset: 0;
 	background-image: var(--aurora-bands);
 	background-size: 180% 140%;
-	opacity: 0.2;
+	opacity: 0.3;
 	mix-blend-mode: soft-light;
 	animation: aurora-drift 130s linear infinite reverse;
 }
