@@ -17,8 +17,8 @@ export const PREVIEW_AS_UNLOCKED = false;
 
 /**
  * Temporary smoke-test unlock modes. Use only one at a time; both false = Sept 18.
- * - `next-minute`: unlocks at the next wall-clock minute (reload to re-arm, ~0–60s wait)
- * - `next-midnight`: unlocks at the next Pacific midnight
+ * - `next-minute`: unlocks at the next wall-clock minute, then stays unlocked until reload
+ * - `next-midnight`: unlocks at the next Pacific midnight, then stays unlocked until reload
  */
 export const TEST_UNLOCK_AT_NEXT_MINUTE = true;
 export const TEST_UNLOCK_AT_NEXT_MIDNIGHT = false;
@@ -157,15 +157,25 @@ function getPacificYmd(now: Date): { year: number; month: number; day: number } 
 	};
 }
 
+/** Client-only sticky target so smoke tests stay unlocked after the countdown hits zero. */
+let smokeTestUnlockAtMs: number | null = null;
+
 /**
  * Unlock instant: September 18 midnight Pacific, or a smoke-test target.
+ * Smoke-test targets are fixed on first client read until a full page reload.
  */
 function getBirthdayUnlockAt(now: Date): Date {
-	if (TEST_UNLOCK_AT_NEXT_MINUTE) {
-		return getNextMinute(now);
-	}
-	if (TEST_UNLOCK_AT_NEXT_MIDNIGHT) {
-		return getNextMidnightPacific(now);
+	if (TEST_UNLOCK_AT_NEXT_MINUTE || TEST_UNLOCK_AT_NEXT_MIDNIGHT) {
+		if (typeof window !== "undefined") {
+			if (smokeTestUnlockAtMs === null) {
+				smokeTestUnlockAtMs = TEST_UNLOCK_AT_NEXT_MINUTE
+					? getNextMinute(now).getTime()
+					: getNextMidnightPacific(now).getTime();
+			}
+			return new Date(smokeTestUnlockAtMs);
+		}
+		// SSR: ephemeral next target (client will sticky its own value after hydrate).
+		return TEST_UNLOCK_AT_NEXT_MINUTE ? getNextMinute(now) : getNextMidnightPacific(now);
 	}
 
 	const year = getPacificYear(now);
