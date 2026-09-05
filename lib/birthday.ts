@@ -107,7 +107,7 @@ export function getHeroCopy(now: Date): HeroCopy {
 
 	return {
 		title: `Happy ${turningAge}th birthday, Seychelle`,
-		subtitle: "A quiet feature, just for you",
+		subtitle: null,
 		openAriaLabel: "Open your birthday feature",
 		successMessage: "Happy birthday.",
 		canOpen: true,

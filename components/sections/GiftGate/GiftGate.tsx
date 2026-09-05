@@ -189,7 +189,10 @@ export function GiftGate({ opened, onOpen, onShakeChange }: GiftGateProps): JSX.
 						sizes="100vw"
 						className="object-cover cover-image-motion"
 					/>
-					<div className="absolute inset-0 bg-gradient-to-b from-[#2c2418]/70 via-[#2c2418]/25 to-transparent" />
+					<div
+						className="absolute inset-0 bg-[linear-gradient(to_bottom,rgba(44,36,24,0.82)_0%,rgba(44,36,24,0.55)_18%,rgba(44,36,24,0.18)_40%,transparent_55%)]"
+						aria-hidden
+					/>
 				</div>
 
 				<button
