@@ -2,7 +2,6 @@
 
 import { useEffect, useRef, useState, type JSX, type ReactNode } from "react";
 import { GiftGate } from "@/components/sections/GiftGate/GiftGate";
-import { AuroraBackground } from "@/components/shared/AuroraBackground";
 import { cn } from "@/lib/utils";
 import { SCROLL_DELAY } from "@/lib/birthday";
 
@@ -15,7 +14,7 @@ interface BirthdayExperienceProps {
  * and only mount after Open.
  *
  * Locked: document cannot scroll (CSS on `html`). Cover is a normal in-flow `100svh`
- * block. Aurora (cream wash) mounts only after Open so it cannot flash under the photo.
+ * block. Unlocked pages use the limestone html background.
  */
 export function BirthdayExperience({ children }: BirthdayExperienceProps): JSX.Element {
 	const [opened, setOpened] = useState(false);
@@ -52,7 +51,6 @@ export function BirthdayExperience({ children }: BirthdayExperienceProps): JSX.E
 
 	return (
 		<div className={cn("relative", isShaking && "animate-shake")}>
-			{opened && <AuroraBackground />}
 			<GiftGate opened={opened} onOpen={handleOpen} onShakeChange={setIsShaking} />
 			{opened && <div ref={contentRef}>{children}</div>}
 		</div>
