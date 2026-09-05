@@ -14,10 +14,10 @@ export function BirthdayLetter(): JSX.Element {
 						<p className="font-script text-4xl md:text-5xl lg:text-6xl text-primary text-balance leading-[1.2]">
 							{LETTER_GREETING}
 						</p>
-						<blockquote className="font-serif text-xl md:text-2xl lg:text-[1.65rem] text-foreground/80 leading-relaxed text-balance">
+						<blockquote className="font-serif text-xl md:text-2xl lg:text-[1.65rem] text-foreground/95 leading-relaxed text-balance">
 							{LETTER_BODY}
 						</blockquote>
-						<p className="font-script text-2xl md:text-3xl text-primary/80 leading-[1.3]">
+						<p className="font-script text-2xl md:text-3xl text-primary/95 leading-[1.3]">
 							{LETTER_SIGN_OFF}
 						</p>
 					</div>

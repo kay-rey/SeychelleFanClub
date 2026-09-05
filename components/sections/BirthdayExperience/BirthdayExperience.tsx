@@ -13,8 +13,8 @@ interface BirthdayExperienceProps {
  * Client island for the editorial unlock. Server-rendered sections are passed as children
  * and only mount after Open.
  *
- * Locked: document cannot scroll (CSS on `html`). Cover is a normal in-flow `100svh`
- * block. Unlocked pages use the limestone html background.
+ * Locked: document cannot scroll (CSS on `html`). Cover is a normal in-flow
+ * block with a JS-locked pixel height so mobile chrome cannot resize it.
  */
 export function BirthdayExperience({ children }: BirthdayExperienceProps): JSX.Element {
 	const [opened, setOpened] = useState(false);

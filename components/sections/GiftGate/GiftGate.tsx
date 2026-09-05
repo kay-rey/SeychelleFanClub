@@ -35,8 +35,8 @@ interface GiftGateProps {
 /**
  * Photography-first editorial cover.
  *
- * One in-flow `100svh` section. Photo and copy are absolute inside it.
- * Positioning never changes after Open — the section just scrolls away.
+ * One in-flow section. Height is locked to a pixel value after mount so mobile
+ * browser chrome show/hide cannot resize the hero while scrolling.
  */
 export function GiftGate({ opened, onOpen, onShakeChange }: GiftGateProps): JSX.Element {
 	const [isVisible, setIsVisible] = useState(false);
@@ -51,9 +51,43 @@ export function GiftGate({ opened, onOpen, onShakeChange }: GiftGateProps): JSX.
 	const songStartedRef = useRef(false);
 	const noSoundIndexRef = useRef(0);
 	const prevCanOpenRef = useRef<boolean | null>(null);
+	const lastViewportWidthRef = useRef(0);
 
 	const heroCopy: HeroCopy = getHeroCopy(now);
 	const countdown = getCountdownToUnlock(now);
+
+	useEffect(() => {
+		const lockCoverHeight = (): void => {
+			document.documentElement.style.setProperty(
+				"--gift-cover-height",
+				`${window.innerHeight}px`
+			);
+		};
+
+		lockCoverHeight();
+		lastViewportWidthRef.current = window.innerWidth;
+
+		const onOrientationChange = (): void => {
+			window.setTimeout(() => {
+				lastViewportWidthRef.current = window.innerWidth;
+				lockCoverHeight();
+			}, 200);
+		};
+
+		const onResize = (): void => {
+			// Ignore toolbar show/hide (height-only). Relock on real layout width changes.
+			if (window.innerWidth === lastViewportWidthRef.current) return;
+			lastViewportWidthRef.current = window.innerWidth;
+			lockCoverHeight();
+		};
+
+		window.addEventListener("orientationchange", onOrientationChange);
+		window.addEventListener("resize", onResize);
+		return () => {
+			window.removeEventListener("orientationchange", onOrientationChange);
+			window.removeEventListener("resize", onResize);
+		};
+	}, []);
 
 	useEffect(() => {
 		setIsVisible(true);
