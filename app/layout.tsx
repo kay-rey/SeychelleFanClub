@@ -41,7 +41,7 @@ const siteUrl =
 export const metadata: Metadata = {
 	metadataBase: new URL(siteUrl),
 	title: "Happy birthday, Seychelle",
-	description: "An editorial birthday feature for Seychelle",
+	description: "A birthday celebration page for Seychelle",
 	icons: {
 		icon: "/favicon.ico",
 		shortcut: "/favicon.ico",
@@ -49,21 +49,21 @@ export const metadata: Metadata = {
 	},
 	openGraph: {
 		title: "Happy birthday, Seychelle",
-		description: "An editorial birthday feature for Seychelle",
+		description: "A birthday celebration page for Seychelle",
 		type: "website",
 		images: [
 			{
 				url: COVER_IMAGE.src.src,
 				width: COVER_IMAGE.src.width,
 				height: COVER_IMAGE.src.height,
-				alt: "Birthday feature for Seychelle",
+				alt: "Birthday page for Seychelle",
 			},
 		],
 	},
 	twitter: {
 		card: "summary_large_image",
 		title: "Happy birthday, Seychelle",
-		description: "An editorial birthday feature for Seychelle",
+		description: "A birthday celebration page for Seychelle",
 		images: [COVER_IMAGE.src.src],
 	},
 };

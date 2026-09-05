@@ -101,7 +101,7 @@ export function PhotoGallery(): JSX.Element {
 							In this light
 						</h2>
 						<p className="font-serif italic text-lg text-muted-foreground">
-							Frames from days that felt like a villa garden — soft stone, quiet air, you.
+							Every room, every garden, every frame, better because you&apos;re in it.
 						</p>
 					</header>
 				</RevealOnScroll>

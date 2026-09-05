@@ -13,7 +13,7 @@ export function PlaylistSection(): JSX.Element {
 						Your birthday mix
 					</h2>
 					<p className="font-serif italic text-lg text-muted-foreground">
-						Songs that sound like you.
+						Songs for the drives, the quiet hours, and you.
 					</p>
 				</header>
 				<div className="w-full border border-border/80 overflow-hidden bg-[#f5f0e8]/60">

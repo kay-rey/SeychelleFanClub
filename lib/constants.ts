@@ -107,7 +107,7 @@ export const JOLLIBEE_PHOTOS: JollibeePhoto[] = [
 	},
 	{
 		src: jollibeeStatue,
-		alt: "Seychelle giving a thumbs-up beside the Jollibee statue outside the restaurant",
+		alt: "Seychelle giving a thumbs up beside the Jollibee statue outside the restaurant",
 		caption: "The shrine",
 	},
 ];

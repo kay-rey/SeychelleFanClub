@@ -368,7 +368,7 @@ export function GiftGate({ opened, onOpen, onShakeChange }: GiftGateProps): JSX.
 											justUnlocked && "unlock-time-line"
 										)}
 									>
-										Your gift is ready.
+										Made with love, just for you.
 									</p>
 								)}
 							</div>
