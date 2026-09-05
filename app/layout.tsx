@@ -80,7 +80,14 @@ export default function RootLayout({
 			>
 				<style
 					dangerouslySetInnerHTML={{
-						__html: "html,body{margin:0;background:#1c1812;overflow:hidden}.gift-cover{position:relative;width:100%;height:100vh;height:100svh;overflow:hidden}.gift-cover-media{position:absolute;inset:0}.gift-cover-media img{height:100%;width:100%;object-fit:cover;object-position:center}",
+						__html: [
+							"html,body{margin:0;background:#1c1812;overflow:hidden}",
+							"html[data-unlocked]{background:#f5f0e8;overflow-x:hidden;overflow-y:auto}",
+							"html[data-unlocked] body{overflow:visible;background:inherit}",
+							".gift-cover{position:relative;width:100%;height:100vh;height:100svh;overflow:hidden}",
+							".gift-cover-media{position:absolute;inset:0}",
+							".gift-cover-media img{height:100%;width:100%;object-fit:cover;object-position:center}",
+						].join(""),
 					}}
 				/>
 				<AudioPreload />

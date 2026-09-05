@@ -39,6 +39,8 @@ export function BirthdayExperience({ children }: BirthdayExperienceProps): JSX.E
 
 	const handleOpen = (): void => {
 		setOpened(true);
+		// Unlock scroll immediately (don't wait for useEffect) so the page can move.
+		document.documentElement.setAttribute("data-unlocked", "");
 		requestAnimationFrame(() => {
 			requestAnimationFrame(() => {
 				setTimeout(() => {
