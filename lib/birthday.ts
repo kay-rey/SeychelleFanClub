@@ -28,10 +28,13 @@ export const isUnlockSmokeTest =
 
 export const CONFETTI_COUNT = 14;
 export const CONFETTI_RADIUS = 180;
+export const UNLOCK_FANFARE_COUNT = 36;
+export const UNLOCK_FANFARE_RADIUS = 320;
 
 export const WRONG_ANSWER_DURATION = 1500;
 export const CONFETTI_DURATION = 1600;
-export const UNLOCK_MOMENT_DURATION = 2200;
+export const UNLOCK_FANFARE_DURATION = 3200;
+export const UNLOCK_MOMENT_DURATION = 5200;
 export const SCROLL_DELAY = 50;
 export const HERO_FADE_DURATION = 1000;
 
@@ -274,6 +277,35 @@ export function getConfettiPieces(): ConfettiPiece[] {
 			id: i,
 			tx: CONFETTI_RADIUS * Math.cos(angle),
 			ty: CONFETTI_RADIUS * Math.sin(angle),
+		};
+	});
+}
+
+const FANFARE_TONES: Array<NonNullable<ConfettiPiece["tone"]>> = [
+	"gold",
+	"cream",
+	"terracotta",
+	"olive",
+	"gold",
+	"cream",
+];
+
+/**
+ * Wider, staggered burst for the midnight / countdown unlock moment.
+ */
+export function getUnlockFanfarePieces(): ConfettiPiece[] {
+	return Array.from({ length: UNLOCK_FANFARE_COUNT }, (_, i) => {
+		const ring = i % 3;
+		const radius = UNLOCK_FANFARE_RADIUS * (0.55 + ring * 0.22);
+		const angle =
+			(i / UNLOCK_FANFARE_COUNT) * 2 * Math.PI - Math.PI / 2 + ring * 0.18;
+		return {
+			id: i,
+			tx: radius * Math.cos(angle),
+			ty: radius * Math.sin(angle),
+			size: 5 + (i % 5) * 3,
+			delayMs: (i % 8) * 45,
+			tone: FANFARE_TONES[i % FANFARE_TONES.length],
 		};
 	});
 }

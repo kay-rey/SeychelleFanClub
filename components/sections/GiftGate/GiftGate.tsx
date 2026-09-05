@@ -11,17 +11,20 @@ import {
 	LOCAL_STORAGE_MUTED_KEY,
 	TEST_UNLOCK_AT_NEXT_MINUTE,
 	TEST_UNLOCK_AT_NEXT_MIDNIGHT,
+	UNLOCK_FANFARE_DURATION,
 	UNLOCK_MOMENT_DURATION,
 	WRONG_ANSWER_DURATION,
 	getConfettiPieces,
 	getCountdownToUnlock,
 	getHeroCopy,
+	getUnlockFanfarePieces,
 } from "@/lib/birthday";
 import { BirthdayCountdown } from "@/components/sections/GiftGate/BirthdayCountdown";
 
 import type { HeroCopy } from "@/lib/types";
 
 const SOFT_MARKS = getConfettiPieces();
+const UNLOCK_MARKS = getUnlockFanfarePieces();
 
 interface GiftGateProps {
 	opened: boolean;
@@ -40,6 +43,7 @@ export function GiftGate({ opened, onOpen, onShakeChange }: GiftGateProps): JSX.
 	const [showLockedHint, setShowLockedHint] = useState(false);
 	const [muted, setMuted] = useState(false);
 	const [showMarks, setShowMarks] = useState(false);
+	const [showUnlockFanfare, setShowUnlockFanfare] = useState(false);
 	const [justUnlocked, setJustUnlocked] = useState(false);
 	const [now, setNow] = useState<Date>(() => new Date());
 	const nopeAudioRefs = useRef<HTMLAudioElement[]>([]);
@@ -100,10 +104,12 @@ export function GiftGate({ opened, onOpen, onShakeChange }: GiftGateProps): JSX.
 		}
 	}, [muted]);
 
-	const triggerHapticFeedback = (type: "success" | "error"): void => {
+	const triggerHapticFeedback = (type: "success" | "error" | "fanfare"): void => {
 		if (typeof window === "undefined" || !navigator.vibrate) return;
 		try {
-			if (type === "success") {
+			if (type === "fanfare") {
+				navigator.vibrate([40, 50, 40, 50, 40, 80, 160]);
+			} else if (type === "success") {
 				navigator.vibrate([40, 30, 60]);
 			} else {
 				navigator.vibrate([30, 50, 30]);
@@ -124,18 +130,18 @@ export function GiftGate({ opened, onOpen, onShakeChange }: GiftGateProps): JSX.
 
 		setJustUnlocked(true);
 		setShowLockedHint(false);
-		setShowMarks(true);
-		triggerHapticFeedback("success");
+		setShowUnlockFanfare(true);
+		triggerHapticFeedback("fanfare");
 
-		const marksTimeout = window.setTimeout(() => {
-			setShowMarks(false);
-		}, CONFETTI_DURATION);
+		const fanfareTimeout = window.setTimeout(() => {
+			setShowUnlockFanfare(false);
+		}, UNLOCK_FANFARE_DURATION);
 		const unlockTimeout = window.setTimeout(() => {
 			setJustUnlocked(false);
 		}, UNLOCK_MOMENT_DURATION);
 
 		return () => {
-			window.clearTimeout(marksTimeout);
+			window.clearTimeout(fanfareTimeout);
 			window.clearTimeout(unlockTimeout);
 		};
 	}, [heroCopy.canOpen, opened]);
@@ -244,6 +250,31 @@ export function GiftGate({ opened, onOpen, onShakeChange }: GiftGateProps): JSX.
 					/>
 				</div>
 
+				{showUnlockFanfare && (
+					<div className="absolute inset-0 z-[15] pointer-events-none overflow-hidden" aria-hidden>
+						<div className="unlock-veil" />
+						<div className="unlock-ring" />
+						<div className="absolute inset-0 flex items-center justify-center">
+							{UNLOCK_MARKS.map(({ id, tx, ty, size = 8, delayMs = 0, tone = "gold" }) => (
+								<div
+									key={`unlock-mark-${id}`}
+									className={cn("unlock-mark", `unlock-mark-tone-${tone}`)}
+									style={
+										{
+											width: size,
+											height: size,
+											animationDelay: `${delayMs}ms`,
+											"--tx": `${tx}px`,
+											"--ty": `${ty}px`,
+											"--spin": `${(id % 2 === 0 ? 1 : -1) * (90 + (id % 5) * 28)}deg`,
+										} as CSSProperties
+									}
+								/>
+							))}
+						</div>
+					</div>
+				)}
+
 				<button
 					type="button"
 					onClick={toggleMuted}
@@ -261,13 +292,19 @@ export function GiftGate({ opened, onOpen, onShakeChange }: GiftGateProps): JSX.
 					style={{ transitionDuration: `${HERO_FADE_DURATION}ms` }}
 				>
 					<div className="w-full max-w-3xl mx-auto text-center space-y-5 sm:space-y-6 editorial-fade-up">
-						<p className="font-sans text-[0.7rem] sm:text-xs uppercase tracking-[0.28em] text-[#f5f0e8]/90">
-							{TEST_UNLOCK_AT_NEXT_MINUTE
-								? "This minute"
-								: TEST_UNLOCK_AT_NEXT_MIDNIGHT
-									? "Tonight"
-									: "September 18"}
-						</p>
+						{justUnlocked ? (
+							<p className="font-sans text-[0.7rem] sm:text-xs uppercase tracking-[0.28em] text-[#f5f0e8] unlock-banner">
+								It&apos;s time
+							</p>
+						) : (
+							<p className="font-sans text-[0.7rem] sm:text-xs uppercase tracking-[0.28em] text-[#f5f0e8]/90">
+								{TEST_UNLOCK_AT_NEXT_MINUTE
+									? "This minute"
+									: TEST_UNLOCK_AT_NEXT_MIDNIGHT
+										? "Tonight"
+										: "September 18"}
+							</p>
+						)}
 						<h1
 							key={heroCopy.title}
 							className={cn(
@@ -299,7 +336,7 @@ export function GiftGate({ opened, onOpen, onShakeChange }: GiftGateProps): JSX.
 										"font-sans text-xs uppercase tracking-[0.22em]",
 										"backdrop-blur-sm transition-colors duration-300",
 										"hover:bg-[#f5f0e8]/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-secondary",
-										heroCopy.canOpen && justUnlocked && "unlock-cta-enter"
+										heroCopy.canOpen && justUnlocked && "unlock-cta-glow"
 									)}
 								>
 									{heroCopy.canOpen ? "Open" : "Not yet"}
@@ -324,9 +361,14 @@ export function GiftGate({ opened, onOpen, onShakeChange }: GiftGateProps): JSX.
 												: "Opens September 18"}
 									</p>
 								)}
-								{!opened && !showLockedHint && heroCopy.canOpen && justUnlocked && (
-									<p className="font-serif italic text-sm text-[#f5f0e8]/80 unlock-cta-enter">
-										It&apos;s time.
+								{!opened && !showLockedHint && heroCopy.canOpen && (
+									<p
+										className={cn(
+											"font-serif italic text-base sm:text-lg text-[#f5f0e8]/90",
+											justUnlocked && "unlock-time-line"
+										)}
+									>
+										Your gift is ready.
 									</p>
 								)}
 							</div>

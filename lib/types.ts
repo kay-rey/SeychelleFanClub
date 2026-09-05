@@ -35,6 +35,9 @@ export interface ConfettiPiece {
 	id: number;
 	tx: number;
 	ty: number;
+	size?: number;
+	delayMs?: number;
+	tone?: "gold" | "cream" | "terracotta" | "olive";
 }
 
 export interface CountdownParts {
