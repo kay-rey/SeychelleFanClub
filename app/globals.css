@@ -217,12 +217,13 @@
 	pointer-events: none;
 }
 
-/* STEP 1: photo-only cover. No JS height var. */
+/* STEP 1: photo-only. Size to 100lvh — logs showed svh=745 fills innerHeight
+   but leaves an lvh(853) chrome band of #1c1812 below. No text yet, so lvh is safe. */
 .gift-cover {
 	position: relative;
 	width: 100%;
 	height: 100vh;
-	height: 100svh;
+	height: 100lvh;
 	overflow: hidden;
 }
 

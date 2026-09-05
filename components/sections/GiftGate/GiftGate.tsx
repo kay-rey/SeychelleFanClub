@@ -60,7 +60,7 @@ export function GiftGate(_props: GiftGateProps): JSX.Element {
 			};
 			const payload = {
 				sessionId: "fac517",
-				runId: "step1-photo-only",
+				runId: "step1-photo-lvh",
 				hypothesisId: "baseline",
 				location: "GiftGate.tsx:step1",
 				message: phase,
@@ -93,7 +93,7 @@ export function GiftGate(_props: GiftGateProps): JSX.Element {
 				setDebugJson(JSON.stringify(logsRef.current, null, 2));
 				setDebugText(
 					[
-						"STEP 1 — photo only",
+						"STEP 1 — photo @ 100lvh",
 						phase,
 						`cover=${coverH}`,
 						`media=${mediaRect ? Math.round(mediaRect.height) : "?"}`,
