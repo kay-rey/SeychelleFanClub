@@ -4,6 +4,7 @@ import { PhotoGallery } from "@/components/sections/PhotoGallery/PhotoGallery";
 import { JollibeeSection } from "@/components/sections/JollibeeSection/JollibeeSection";
 import { BirthdayNotes } from "@/components/sections/BirthdayNotes/BirthdayNotes";
 import { PlaylistSection } from "@/components/sections/PlaylistSection/PlaylistSection";
+import { CatalinaWeekend } from "@/components/sections/CatalinaWeekend/CatalinaWeekend";
 import { BirthdayLetter } from "@/components/sections/BirthdayLetter/BirthdayLetter";
 import { SiteFooter } from "@/components/sections/SiteFooter/SiteFooter";
 import { RevealOnScroll } from "@/components/shared/RevealOnScroll";
@@ -20,6 +21,9 @@ export default function HomePage(): JSX.Element {
 			</RevealOnScroll>
 			<RevealOnScroll delayMs={60}>
 				<PlaylistSection />
+			</RevealOnScroll>
+			<RevealOnScroll delayMs={60}>
+				<CatalinaWeekend />
 			</RevealOnScroll>
 			<RevealOnScroll delayMs={60}>
 				<BirthdayLetter />
