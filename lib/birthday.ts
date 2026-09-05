@@ -67,7 +67,7 @@ export const LETTER_SIGN_OFF = "All yours, always";
 export const CATALINA_WEEKEND = {
 	eyebrow: "This weekend",
 	headline: "Catalina, with you",
-	body: "Ferry wake, Avalon light, and nowhere else I’d rather be. Your birthday weekend, out on the water — just us.",
+	body: "Ferry wake, Avalon light, and nowhere else I’d rather be. Your birthday weekend, out on the water, just us.",
 	detail: "Sunday, September 20",
 } as const;
 
