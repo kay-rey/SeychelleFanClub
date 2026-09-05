@@ -57,7 +57,8 @@ const config: Config = {
 			sm: 'calc(var(--radius) - 4px)'
 		},
 		fontFamily: {
-			serif: ['var(--font-playfair)', 'Georgia', 'serif'],
+			serif: ['var(--font-cormorant)', 'Georgia', 'serif'],
+			script: ['var(--font-great-vibes)', 'cursive'],
 			sans: ['var(--font-dm-sans)', 'system-ui', 'sans-serif'],
 		}
   	}

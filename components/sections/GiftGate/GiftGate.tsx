@@ -213,7 +213,7 @@ export function GiftGate({ opened, onOpen, onShakeChange }: GiftGateProps): JSX.
 							September 18
 						</p>
 						<h1
-							className="font-serif text-4xl sm:text-5xl md:text-6xl lg:text-7xl leading-[1.1] text-balance text-[#f5f0e8]"
+							className="font-script text-5xl sm:text-6xl md:text-7xl lg:text-8xl leading-[1.15] text-balance text-[#f5f0e8]"
 							suppressHydrationWarning
 						>
 							{heroCopy.title}

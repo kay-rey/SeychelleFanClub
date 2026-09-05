@@ -1,6 +1,6 @@
 import type React from "react";
 import type { Metadata, Viewport } from "next";
-import { DM_Sans, Playfair_Display } from "next/font/google";
+import { Cormorant_Garamond, DM_Sans, Great_Vibes } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
 import { Suspense } from "react";
 import { AudioPreload } from "@/components/shared/AudioPreload";
@@ -14,9 +14,18 @@ export const viewport: Viewport = {
 	themeColor: "#f5f0e8",
 };
 
-const playfair = Playfair_Display({
+const greatVibes = Great_Vibes({
 	subsets: ["latin"],
-	variable: "--font-playfair",
+	weight: "400",
+	variable: "--font-great-vibes",
+	display: "swap",
+});
+
+const cormorant = Cormorant_Garamond({
+	subsets: ["latin"],
+	weight: ["400", "500", "600"],
+	style: ["normal", "italic"],
+	variable: "--font-cormorant",
 	display: "swap",
 });
 
@@ -67,7 +76,9 @@ export default function RootLayout({
 }>) {
 	return (
 		<html lang="en">
-			<body className={`font-sans ${playfair.variable} ${dmSans.variable}`}>
+			<body
+				className={`font-sans ${greatVibes.variable} ${cormorant.variable} ${dmSans.variable}`}
+			>
 				<AudioPreload />
 				<Suspense fallback={null}>{children}</Suspense>
 				<Analytics />
