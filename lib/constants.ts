@@ -112,6 +112,9 @@ export const JOLLIBEE_PHOTOS: JollibeePhoto[] = [
 	},
 ];
 
+/** Local birthday song — plays when the feature opens. */
+export const BIRTHDAY_SONG = "/sounds/birthdaysong2026/seychellebirthdaysong.mp3";
+
 export const NO_SOUNDS = [
 	"/sounds/no/fahhh.mp3",
 	"/sounds/no/buzzer.mp3",
@@ -121,7 +124,7 @@ export const NO_SOUNDS = [
 
 export const YES_SOUND = "/sounds/yes/myinstants.mp3";
 
-export const AUDIO_FILES = [YES_SOUND, ...NO_SOUNDS] as const;
+export const AUDIO_FILES = [BIRTHDAY_SONG, YES_SOUND, ...NO_SOUNDS] as const;
 
 export const SPOTIFY_PLAYLIST_EMBED_URL =
 	"https://open.spotify.com/embed/playlist/4Pz6z80H9oZHUj50W9GX6C?utm_source=generator";

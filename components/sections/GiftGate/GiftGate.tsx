@@ -4,7 +4,7 @@ import { useEffect, useRef, useState, type CSSProperties, type JSX } from "react
 import Image from "next/image";
 import { Volume2, VolumeX } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { COVER_IMAGE, NO_SOUNDS, YES_SOUND } from "@/lib/constants";
+import { BIRTHDAY_SONG, COVER_IMAGE, NO_SOUNDS } from "@/lib/constants";
 import {
 	CONFETTI_DURATION,
 	HERO_FADE_DURATION,
@@ -36,7 +36,8 @@ export function GiftGate({ opened, onOpen, onShakeChange }: GiftGateProps): JSX.
 	const [showMarks, setShowMarks] = useState(false);
 	const [now, setNow] = useState<Date>(() => new Date());
 	const nopeAudioRefs = useRef<HTMLAudioElement[]>([]);
-	const yayAudioRef = useRef<HTMLAudioElement | null>(null);
+	const birthdaySongRef = useRef<HTMLAudioElement | null>(null);
+	const songStartedRef = useRef(false);
 	const noSoundIndexRef = useRef(0);
 
 	const heroCopy: HeroCopy = getHeroCopy(now);
@@ -67,16 +68,29 @@ export function GiftGate({ opened, onOpen, onShakeChange }: GiftGateProps): JSX.
 			return audio;
 		});
 
-		const yayAudio = new Audio(YES_SOUND);
-		yayAudio.preload = "auto";
-		yayAudio.load();
-		yayAudioRef.current = yayAudio;
+		const birthdaySong = new Audio(BIRTHDAY_SONG);
+		birthdaySong.preload = "auto";
+		birthdaySong.loop = false;
+		birthdaySong.load();
+		birthdaySongRef.current = birthdaySong;
 
 		return () => {
 			nopeAudioRefs.current = [];
-			yayAudioRef.current = null;
+			birthdaySong.pause();
+			birthdaySongRef.current = null;
 		};
 	}, []);
+
+	useEffect(() => {
+		const song = birthdaySongRef.current;
+		if (!song) return;
+		song.muted = muted;
+		if (muted) {
+			song.pause();
+		} else if (songStartedRef.current) {
+			song.play().catch(() => {});
+		}
+	}, [muted]);
 
 	const playNope = (): void => {
 		if (muted) return;
@@ -93,16 +107,16 @@ export function GiftGate({ opened, onOpen, onShakeChange }: GiftGateProps): JSX.
 		}
 	};
 
-	const playYay = (): void => {
-		if (muted) return;
+	const playBirthdaySong = (): void => {
+		songStartedRef.current = true;
+		const song = birthdaySongRef.current;
+		if (!song || muted) return;
 		try {
-			const audio = yayAudioRef.current;
-			if (audio) {
-				audio.currentTime = 0;
-				audio.play().catch(() => {});
-			}
+			song.currentTime = 0;
+			song.muted = false;
+			song.play().catch(() => {});
 		} catch {
-			// ignore when files are missing
+			// ignore when playback is blocked
 		}
 	};
 
@@ -141,7 +155,7 @@ export function GiftGate({ opened, onOpen, onShakeChange }: GiftGateProps): JSX.
 	const handleOpen = (): void => {
 		if (opened) return;
 		setShowMarks(true);
-		playYay();
+		playBirthdaySong();
 		onOpen();
 		triggerHapticFeedback("success");
 		setTimeout(() => setShowMarks(false), CONFETTI_DURATION);

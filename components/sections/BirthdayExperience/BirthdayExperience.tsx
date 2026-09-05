@@ -4,7 +4,7 @@ import { useEffect, useRef, useState, type JSX, type ReactNode } from "react";
 import { GiftGate } from "@/components/sections/GiftGate/GiftGate";
 import { AuroraBackground } from "@/components/shared/AuroraBackground";
 import { cn } from "@/lib/utils";
-import { PREVIEW_AS_UNLOCKED, SCROLL_DELAY } from "@/lib/birthday";
+import { SCROLL_DELAY } from "@/lib/birthday";
 
 interface BirthdayExperienceProps {
 	children: ReactNode;
@@ -15,7 +15,7 @@ interface BirthdayExperienceProps {
  * and only mount in the DOM after the cover opens.
  */
 export function BirthdayExperience({ children }: BirthdayExperienceProps): JSX.Element {
-	const [opened, setOpened] = useState(PREVIEW_AS_UNLOCKED);
+	const [opened, setOpened] = useState(false);
 	const [isShaking, setIsShaking] = useState(false);
 	const contentRef = useRef<HTMLDivElement>(null);
 
