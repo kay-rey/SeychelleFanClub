@@ -51,11 +51,16 @@ const config: Config = {
   				'5': 'hsl(var(--chart-5))'
   			}
   		},
-  		borderRadius: {
-  			lg: 'var(--radius)',
-  			md: 'calc(var(--radius) - 2px)',
-  			sm: 'calc(var(--radius) - 4px)'
-  		}
+		borderRadius: {
+			lg: 'var(--radius)',
+			md: 'calc(var(--radius) - 2px)',
+			sm: 'calc(var(--radius) - 4px)'
+		},
+		fontFamily: {
+			serif: ['var(--font-cormorant)', 'Georgia', 'serif'],
+			script: ['var(--font-great-vibes)', 'cursive'],
+			sans: ['var(--font-dm-sans)', 'system-ui', 'sans-serif'],
+		}
   	}
   },
   plugins: [require("tailwindcss-animate")],

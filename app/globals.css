@@ -4,40 +4,40 @@
 @custom-variant dark (&:is(.dark *));
 
 :root {
-	/* Updated color palette to pink and red Valentine's theme with subtle yellow accents */
-	--background: oklch(0.98 0.01 320);
-	--foreground: oklch(0.2 0.02 320);
-	--card: oklch(1 0 0);
-	--card-foreground: oklch(0.2 0.02 320);
-	--popover: oklch(1 0 0);
-	--popover-foreground: oklch(0.2 0.02 320);
-	--primary: oklch(0.75 0.15 340);
-	--primary-foreground: oklch(0.98 0.01 320);
-	--secondary: oklch(0.8 0.1 25);
-	--secondary-foreground: oklch(0.2 0.02 320);
-	--muted: oklch(0.95 0.02 320);
-	--muted-foreground: oklch(0.5 0.02 320);
-	--accent: oklch(0.75 0.15 15);
-	--accent-foreground: oklch(0.2 0.02 320);
+	/* Getty Villa editorial: limestone, olive, soft terracotta, champagne gold */
+	--background: oklch(0.96 0.012 85);
+	--foreground: oklch(0.28 0.02 55);
+	--card: oklch(0.98 0.008 85);
+	--card-foreground: oklch(0.28 0.02 55);
+	--popover: oklch(0.98 0.008 85);
+	--popover-foreground: oklch(0.28 0.02 55);
+	--primary: oklch(0.42 0.04 145);
+	--primary-foreground: oklch(0.97 0.01 85);
+	--secondary: oklch(0.78 0.06 75);
+	--secondary-foreground: oklch(0.28 0.02 55);
+	--muted: oklch(0.93 0.015 85);
+	--muted-foreground: oklch(0.48 0.02 55);
+	--accent: oklch(0.72 0.07 45);
+	--accent-foreground: oklch(0.28 0.02 55);
 	--destructive: oklch(0.577 0.245 27.325);
 	--destructive-foreground: oklch(0.577 0.245 27.325);
-	--border: oklch(0.9 0.02 320);
-	--input: oklch(0.9 0.02 320);
-	--ring: oklch(0.75 0.15 340);
-	--chart-1: oklch(0.75 0.15 340);
-	--chart-2: oklch(0.8 0.1 25);
-	--chart-3: oklch(0.7 0.1 200);
-	--chart-4: oklch(0.8 0.1 120);
-	--chart-5: oklch(0.65 0.12 280);
-	--radius: 0.75rem;
-	--sidebar: oklch(0.98 0.01 320);
-	--sidebar-foreground: oklch(0.2 0.02 320);
-	--sidebar-primary: oklch(0.75 0.15 340);
-	--sidebar-primary-foreground: oklch(0.98 0.01 320);
-	--sidebar-accent: oklch(0.95 0.02 320);
-	--sidebar-accent-foreground: oklch(0.2 0.02 320);
-	--sidebar-border: oklch(0.9 0.02 320);
-	--sidebar-ring: oklch(0.75 0.15 340);
+	--border: oklch(0.88 0.02 75);
+	--input: oklch(0.88 0.02 75);
+	--ring: oklch(0.55 0.04 145);
+	--chart-1: oklch(0.55 0.04 145);
+	--chart-2: oklch(0.72 0.07 45);
+	--chart-3: oklch(0.78 0.06 75);
+	--chart-4: oklch(0.65 0.05 120);
+	--chart-5: oklch(0.5 0.03 55);
+	--radius: 0.25rem;
+	--sidebar: oklch(0.96 0.012 85);
+	--sidebar-foreground: oklch(0.28 0.02 55);
+	--sidebar-primary: oklch(0.42 0.04 145);
+	--sidebar-primary-foreground: oklch(0.97 0.01 85);
+	--sidebar-accent: oklch(0.93 0.015 85);
+	--sidebar-accent-foreground: oklch(0.28 0.02 55);
+	--sidebar-border: oklch(0.88 0.02 75);
+	--sidebar-ring: oklch(0.55 0.04 145);
 }
 
 .dark {
@@ -98,9 +98,9 @@
 }
 
 @theme inline {
-	/* Added custom font variables for Playfair and Poppins */
-	--font-serif: var(--font-playfair);
-	--font-sans: var(--font-poppins);
+	--font-serif: var(--font-cormorant);
+	--font-script: var(--font-great-vibes);
+	--font-sans: var(--font-dm-sans);
 	--font-mono: var(--font-geist-mono);
 	--color-background: var(--background);
 	--color-foreground: var(--foreground);
@@ -145,23 +145,29 @@
 		@apply border-border outline-ring/50;
 	}
 	html {
-		background: linear-gradient(135deg, #fce7f3 0%, #fef2f2 50%, #fce7f3 100%);
-		background-color: #fce7f3;
-		min-height: 100vh;
-		overflow-y: scroll;
+		background-color: #1c1812;
+		overflow: hidden;
 		scrollbar-width: none;
 		-ms-overflow-style: none;
+	}
+	html[data-unlocked] {
+		background-color: #f5f0e8;
+		overflow-x: hidden;
+		overflow-y: auto;
 	}
 	html::-webkit-scrollbar {
 		display: none;
 	}
 	body {
-		background: linear-gradient(135deg, #fce7f3 0%, #fef2f2 50%, #fce7f3 100%);
-		background-color: #fce7f3;
-		min-height: 100vh;
+		background-color: inherit;
+		min-height: 100%;
+		overflow: hidden;
 		scrollbar-width: none;
 		-ms-overflow-style: none;
 		@apply text-foreground font-sans;
+	}
+	html[data-unlocked] body {
+		overflow: visible;
 	}
 	body::-webkit-scrollbar {
 		display: none;
@@ -199,7 +205,7 @@
 	animation: float 3s ease-in-out infinite;
 }
 
-/* Valentine wrong-answer shake */
+/* Wrong-answer shake */
 @keyframes shake {
 	0%,
 	100% {
@@ -217,7 +223,320 @@
 	animation: shake 0.5s ease-in-out;
 }
 
-/* Valentine heart confetti burst */
+@keyframes aurora-drift {
+	from {
+		background-position: 50% 50%;
+	}
+	to {
+		background-position: 350% 50%;
+	}
+}
+
+.aurora-layer {
+	--aurora-bands: repeating-linear-gradient(
+		100deg,
+		#ebe4d6 8%,
+		#d4c4a8 16%,
+		#e8dfd0 24%,
+		#c5b89a 32%,
+		#f0ebe3 40%,
+		#b8a88a 48%
+	);
+	position: absolute;
+	inset: -20%;
+	pointer-events: none;
+	opacity: 0.28;
+	filter: blur(72px) saturate(0.9);
+	background-image: var(--aurora-bands);
+	background-size: 220% 180%;
+	background-position: 50% 50%;
+	will-change: background-position;
+	animation: aurora-drift 100s linear infinite;
+}
+
+.aurora-layer::after {
+	content: "";
+	position: absolute;
+	inset: 0;
+	background-image: var(--aurora-bands);
+	background-size: 180% 140%;
+	opacity: 0.2;
+	mix-blend-mode: soft-light;
+	animation: aurora-drift 130s linear infinite reverse;
+}
+
+/* Locked cover: one in-flow viewport. Never fixed. Never dvh (it resizes after paint). */
+.gift-cover {
+	position: relative;
+	width: 100%;
+	height: 100vh;
+	height: 100svh;
+	overflow: hidden;
+}
+
+.gift-cover-media {
+	position: absolute;
+	inset: 0;
+}
+
+.gift-cover-media img {
+	height: 100%;
+	width: 100%;
+	object-fit: cover;
+	object-position: center;
+}
+
+.gift-cover-ui {
+	position: absolute;
+	inset: 0;
+	z-index: 1;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	padding: 3.5rem 1.5rem 2rem;
+}
+
+@keyframes editorial-fade-up {
+	from {
+		opacity: 0;
+		transform: translateY(12px);
+	}
+	to {
+		opacity: 1;
+		transform: translateY(0);
+	}
+}
+
+.editorial-fade-up {
+	animation: editorial-fade-up 0.9s ease-out both;
+}
+
+/* Section / figure entrance as content scrolls into view */
+.reveal-on-scroll {
+	opacity: 0;
+	transform: translateY(1.35rem);
+	transition:
+		opacity 0.95s cubic-bezier(0.22, 1, 0.36, 1),
+		transform 0.95s cubic-bezier(0.22, 1, 0.36, 1);
+	will-change: opacity, transform;
+}
+
+.reveal-on-scroll.is-visible {
+	opacity: 1;
+	transform: translateY(0);
+}
+
+@keyframes soft-mark-burst {
+	0% {
+		transform: translate(0, 0) scale(0.5);
+		opacity: 0.7;
+	}
+	100% {
+		transform: translate(var(--tx), var(--ty)) scale(1);
+		opacity: 0;
+	}
+}
+
+.soft-mark {
+	width: 6px;
+	height: 6px;
+	border-radius: 9999px;
+	background: oklch(0.82 0.06 75 / 0.85);
+	animation: soft-mark-burst 1.35s ease-out forwards;
+}
+
+/* Countdown unlock fanfare — Getty Villa gold / limestone / terracotta */
+@keyframes unlock-veil-flash {
+	0% {
+		opacity: 0;
+	}
+	12% {
+		opacity: 1;
+	}
+	100% {
+		opacity: 0;
+	}
+}
+
+.unlock-veil {
+	position: absolute;
+	inset: 0;
+	pointer-events: none;
+	background:
+		radial-gradient(circle at 50% 38%, oklch(0.92 0.08 85 / 0.55), transparent 55%),
+		radial-gradient(circle at 50% 50%, oklch(0.78 0.06 75 / 0.28), transparent 70%);
+	animation: unlock-veil-flash 2.4s ease-out both;
+}
+
+@keyframes unlock-ring-expand {
+	0% {
+		transform: scale(0.15);
+		opacity: 0.9;
+		border-width: 2px;
+	}
+	100% {
+		transform: scale(2.8);
+		opacity: 0;
+		border-width: 0;
+	}
+}
+
+.unlock-ring {
+	position: absolute;
+	left: 50%;
+	top: 42%;
+	width: min(42vw, 14rem);
+	height: min(42vw, 14rem);
+	margin-left: calc(min(42vw, 14rem) / -2);
+	margin-top: calc(min(42vw, 14rem) / -2);
+	border-radius: 9999px;
+	border: 1.5px solid oklch(0.86 0.07 85 / 0.9);
+	box-shadow: 0 0 40px oklch(0.82 0.08 80 / 0.35);
+	animation: unlock-ring-expand 2.1s cubic-bezier(0.16, 1, 0.3, 1) both;
+	pointer-events: none;
+}
+
+@keyframes unlock-mark-burst {
+	0% {
+		transform: translate(0, 0) scale(0.35) rotate(0deg);
+		opacity: 0;
+	}
+	14% {
+		opacity: 1;
+	}
+	100% {
+		transform: translate(var(--tx), var(--ty)) scale(1) rotate(var(--spin, 140deg));
+		opacity: 0;
+	}
+}
+
+.unlock-mark {
+	position: absolute;
+	border-radius: 9999px;
+	animation: unlock-mark-burst 2.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+	box-shadow: 0 0 12px currentColor;
+}
+
+.unlock-mark-tone-gold {
+	background: oklch(0.86 0.08 85);
+	color: oklch(0.86 0.08 85 / 0.55);
+}
+
+.unlock-mark-tone-cream {
+	background: oklch(0.95 0.02 85);
+	color: oklch(0.95 0.02 85 / 0.4);
+}
+
+.unlock-mark-tone-terracotta {
+	background: oklch(0.72 0.09 45);
+	color: oklch(0.72 0.09 45 / 0.45);
+}
+
+.unlock-mark-tone-olive {
+	background: oklch(0.62 0.06 145);
+	color: oklch(0.62 0.06 145 / 0.4);
+}
+
+@keyframes unlock-banner-enter {
+	0% {
+		opacity: 0;
+		transform: translateY(1.25rem) scale(0.92);
+		letter-spacing: 0.4em;
+		filter: blur(8px);
+	}
+	55% {
+		opacity: 1;
+		filter: blur(0);
+	}
+	100% {
+		opacity: 1;
+		transform: translateY(0) scale(1);
+		letter-spacing: 0.28em;
+		filter: blur(0);
+	}
+}
+
+.unlock-banner {
+	animation: unlock-banner-enter 1.35s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes unlock-title-enter {
+	0% {
+		opacity: 0;
+		transform: translateY(1.75rem) scale(0.88);
+		filter: blur(10px);
+		text-shadow: 0 0 0 transparent;
+	}
+	55% {
+		opacity: 1;
+		filter: blur(0);
+		text-shadow: 0 0 48px oklch(0.88 0.08 85 / 0.55);
+	}
+	100% {
+		opacity: 1;
+		transform: translateY(0) scale(1);
+		filter: blur(0);
+		text-shadow: 0 0 24px oklch(0.88 0.08 85 / 0.2);
+	}
+}
+
+.unlock-title-enter {
+	animation: unlock-title-enter 1.65s cubic-bezier(0.22, 1, 0.36, 1) 0.15s both;
+}
+
+@keyframes unlock-cta-enter {
+	from {
+		opacity: 0;
+		transform: translateY(1rem) scale(0.94);
+	}
+	to {
+		opacity: 1;
+		transform: translateY(0) scale(1);
+	}
+}
+
+.unlock-cta-enter {
+	animation: unlock-cta-enter 1s cubic-bezier(0.22, 1, 0.36, 1) 0.55s both;
+}
+
+@keyframes unlock-cta-glow {
+	0%,
+	100% {
+		box-shadow:
+			0 0 0 0 oklch(0.86 0.08 85 / 0),
+			0 0 24px oklch(0.86 0.08 85 / 0.15);
+		border-color: oklch(0.92 0.04 85 / 0.55);
+	}
+	50% {
+		box-shadow:
+			0 0 0 10px oklch(0.86 0.08 85 / 0),
+			0 0 40px oklch(0.86 0.08 85 / 0.45);
+		border-color: oklch(0.94 0.06 85 / 0.95);
+	}
+}
+
+.unlock-cta-glow {
+	animation:
+		unlock-cta-enter 1s cubic-bezier(0.22, 1, 0.36, 1) 0.55s both,
+		unlock-cta-glow 1.8s ease-in-out 1.4s infinite;
+}
+
+@keyframes unlock-time-line {
+	0% {
+		opacity: 0;
+		transform: translateY(0.75rem);
+	}
+	100% {
+		opacity: 1;
+		transform: translateY(0);
+	}
+}
+
+.unlock-time-line {
+	animation: unlock-time-line 1s cubic-bezier(0.22, 1, 0.36, 1) 0.75s both;
+}
+
+/* Confetti burst for mixed birthday icons */
 @keyframes confetti-burst {
 	0% {
 		transform: translate(0, 0) scale(0.4);
@@ -229,11 +548,11 @@
 	}
 }
 
-.confetti-heart {
+.confetti-piece {
 	animation: confetti-burst 1.4s ease-out forwards;
 }
 
-/* Subtle pulse animation for Yes button */
+/* Subtle pulse for the gift button */
 @keyframes pulse-subtle {
 	0%,
 	100% {
@@ -248,6 +567,62 @@
 
 .animate-pulse-subtle {
 	animation: pulse-subtle 2s ease-in-out infinite;
+}
+
+/* Gift box */
+.gift-scene {
+	transform-origin: 50% 80%;
+}
+
+.gift-lid-group {
+	transform-origin: 110px 110px;
+	transform-box: fill-box;
+	transition: transform 0.85s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.gift-open .gift-lid-group {
+	transform: translateY(-28px) rotate(-12deg);
+}
+
+.gift-ready {
+	animation: gift-breathe 3.6s ease-in-out infinite;
+}
+
+@keyframes gift-breathe {
+	0%,
+	100% {
+		transform: translateY(0);
+	}
+	50% {
+		transform: translateY(-4px);
+	}
+}
+
+.gift-wiggle {
+	animation: gift-wiggle 0.55s ease-in-out;
+}
+
+@keyframes gift-wiggle {
+	0%,
+	100% {
+		transform: rotate(0deg);
+	}
+	20% {
+		transform: rotate(-5deg);
+	}
+	40% {
+		transform: rotate(5deg);
+	}
+	60% {
+		transform: rotate(-3deg);
+	}
+	80% {
+		transform: rotate(2deg);
+	}
+}
+
+.gift-scene:disabled {
+	cursor: default;
 }
 
 .gradient-bg {
@@ -407,13 +782,61 @@
 	animation-delay: 0.1s;
 }
 
+.floating-gift-1 {
+	position: absolute;
+	left: 8%;
+	top: 78%;
+	animation: float 4.2s ease-in-out infinite;
+	animation-delay: 0.4s;
+}
+
+.floating-gift-2 {
+	position: absolute;
+	left: 88%;
+	top: 48%;
+	animation: float 4.6s ease-in-out infinite;
+	animation-delay: 1.6s;
+}
+
+.floating-gift-3 {
+	position: absolute;
+	left: 42%;
+	top: 92%;
+	animation: float 5s ease-in-out infinite;
+	animation-delay: 2.2s;
+}
+
+.floating-gift-4 {
+	position: absolute;
+	left: 62%;
+	top: 18%;
+	animation: float 3.6s ease-in-out infinite;
+	animation-delay: 0.9s;
+}
+
 /* Respect prefers-reduced-motion: disable or simplify animations */
 @media (prefers-reduced-motion: reduce) {
 	.sparkle,
 	.float,
 	.animate-shake,
-	.confetti-heart,
+	.confetti-piece,
+	.soft-mark,
+	.unlock-mark,
+	.unlock-veil,
+	.unlock-ring,
+	.unlock-banner,
+	.unlock-time-line,
+	.unlock-cta-glow,
 	.animate-pulse-subtle,
+	.gift-lid-group,
+	.gift-ready,
+	.gift-wiggle,
+	.aurora-layer,
+	.aurora-layer::after,
+	.editorial-fade-up,
+	.reveal-on-scroll,
+	.unlock-title-enter,
+	.unlock-cta-enter,
 	.floating-heart-1,
 	.floating-heart-2,
 	.floating-heart-3,
@@ -427,11 +850,25 @@
 	.floating-shell-3,
 	.floating-shell-4,
 	.floating-shell-5,
-	.floating-shell-6 {
+	.floating-shell-6,
+	.floating-gift-1,
+	.floating-gift-2,
+	.floating-gift-3,
+	.floating-gift-4 {
 		animation: none !important;
+		transition: none !important;
+	}
+
+	.gift-open .gift-lid-group {
+		transform: none;
 	}
 
 	.gradient-bg {
 		animation: none !important;
+	}
+
+	.reveal-on-scroll {
+		opacity: 1 !important;
+		transform: none !important;
 	}
 }

@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
+import { AUDIO_FILES } from "@/lib/constants";
 
 /**
  * Client component that adds preload links for audio files to the document head.
@@ -8,13 +9,7 @@ import { useEffect } from "react";
  */
 export function AudioPreload(): null {
 	useEffect(() => {
-		const audioFiles = [
-			"/sounds/yes/myinstants.mp3",
-			"/sounds/no/fahhh.mp3",
-			"/sounds/no/buzzer.mp3",
-			"/sounds/no/error.mp3",
-			"/sounds/no/fart.mp3",
-		];
+		const audioFiles = [...AUDIO_FILES];
 
 		audioFiles.forEach((href) => {
 			const link = document.createElement("link");

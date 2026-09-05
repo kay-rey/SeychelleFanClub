@@ -1,28 +1,37 @@
 import type React from "react";
 import type { Metadata, Viewport } from "next";
-import { Playfair_Display, Poppins } from "next/font/google";
+import { Cormorant_Garamond, DM_Sans, Great_Vibes } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
 import { Suspense } from "react";
 import { AudioPreload } from "@/components/shared/AudioPreload";
+import { COVER_IMAGE } from "@/lib/constants";
 import "./globals.css";
 
 export const viewport: Viewport = {
 	width: "device-width",
 	initialScale: 1,
-	viewportFit: "cover",
-	themeColor: "#fce7f3",
+	themeColor: "#1c1812",
 };
 
-const playfair = Playfair_Display({
+const greatVibes = Great_Vibes({
 	subsets: ["latin"],
-	variable: "--font-playfair",
+	weight: "400",
+	variable: "--font-great-vibes",
 	display: "swap",
 });
 
-const poppins = Poppins({
+const cormorant = Cormorant_Garamond({
+	subsets: ["latin"],
+	weight: ["400", "500", "600"],
+	style: ["normal", "italic"],
+	variable: "--font-cormorant",
+	display: "swap",
+});
+
+const dmSans = DM_Sans({
 	subsets: ["latin"],
 	weight: ["300", "400", "500", "600"],
-	variable: "--font-poppins",
+	variable: "--font-dm-sans",
 	display: "swap",
 });
 
@@ -31,24 +40,31 @@ const siteUrl =
 
 export const metadata: Metadata = {
 	metadataBase: new URL(siteUrl),
-	title: "Will you be my valentine?",
-	description: "A special Valentine's Day surprise for Seychelle",
+	title: "Happy birthday, Seychelle",
+	description: "An editorial birthday feature for Seychelle",
 	icons: {
 		icon: "/favicon.ico",
 		shortcut: "/favicon.ico",
 		apple: "/favicon.ico",
 	},
 	openGraph: {
-		title: "Will you be my valentine?",
-		description: "A special Valentine's Day surprise for Seychelle",
+		title: "Happy birthday, Seychelle",
+		description: "An editorial birthday feature for Seychelle",
 		type: "website",
-		images: [{ url: "/images/hero.jpg", width: 1200, height: 630, alt: "Valentine's Day surprise" }],
+		images: [
+			{
+				url: COVER_IMAGE.src.src,
+				width: COVER_IMAGE.src.width,
+				height: COVER_IMAGE.src.height,
+				alt: "Birthday feature for Seychelle",
+			},
+		],
 	},
 	twitter: {
 		card: "summary_large_image",
-		title: "Will you be my valentine?",
-		description: "A special Valentine's Day surprise for Seychelle",
-		images: ["/images/hero.jpg"],
+		title: "Happy birthday, Seychelle",
+		description: "An editorial birthday feature for Seychelle",
+		images: [COVER_IMAGE.src.src],
 	},
 };
 
@@ -59,7 +75,21 @@ export default function RootLayout({
 }>) {
 	return (
 		<html lang="en">
-			<body className={`font-sans ${playfair.variable} ${poppins.variable}`}>
+			<body
+				className={`font-sans ${greatVibes.variable} ${cormorant.variable} ${dmSans.variable}`}
+			>
+				<style
+					dangerouslySetInnerHTML={{
+						__html: [
+							"html,body{margin:0;background:#1c1812;overflow:hidden}",
+							"html[data-unlocked]{background:#f5f0e8;overflow-x:hidden;overflow-y:auto}",
+							"html[data-unlocked] body{overflow:visible;background:inherit}",
+							".gift-cover{position:relative;width:100%;height:100vh;height:100svh;overflow:hidden}",
+							".gift-cover-media{position:absolute;inset:0}",
+							".gift-cover-media img{height:100%;width:100%;object-fit:cover;object-position:center}",
+						].join(""),
+					}}
+				/>
 				<AudioPreload />
 				<Suspense fallback={null}>{children}</Suspense>
 				<Analytics />

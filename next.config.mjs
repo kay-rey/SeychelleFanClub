@@ -8,7 +8,7 @@ const nextConfig = {
 	},
 	// Enable static optimization
 	experimental: {
-		optimizePackageImports: ["lucide-react", "@radix-ui/react-icons"],
+		optimizePackageImports: ["lucide-react"],
 	},
 	// Performance optimizations
 	compiler: {

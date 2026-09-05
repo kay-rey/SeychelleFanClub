@@ -47,4 +47,6 @@ next-env.d.ts
 # OS
 Thumbs.db
 
-diff.txt
+# Birthday camera originals (keep local; site uses compressed copies)
+/public/images/birthday/originals/
+/public/images/birthday/thumbs/
