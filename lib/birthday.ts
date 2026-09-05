@@ -13,7 +13,7 @@ export const LOCAL_STORAGE_MUTED_KEY = "birthday-muted";
  * Temporary design unlock — treat the site as open on her birthday.
  * Set to `false` before September 18 so the real lock returns.
  */
-export const PREVIEW_AS_UNLOCKED = true;
+export const PREVIEW_AS_UNLOCKED = false;
 
 /**
  * Temporary smoke-test unlock modes. Use only one at a time; both false = Sept 18.
