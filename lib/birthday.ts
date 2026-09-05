@@ -19,7 +19,7 @@ export const PREVIEW_AS_UNLOCKED = false;
  * Temporary smoke-test unlock — countdown targets the next Pacific midnight.
  * Set to `false` after testing so September 18 is the real unlock again.
  */
-export const TEST_UNLOCK_AT_NEXT_MIDNIGHT = false;
+export const TEST_UNLOCK_AT_NEXT_MIDNIGHT = true;
 
 export const CONFETTI_COUNT = 14;
 export const CONFETTI_RADIUS = 180;
