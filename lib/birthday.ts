@@ -16,10 +16,15 @@ export const LOCAL_STORAGE_MUTED_KEY = "birthday-muted";
 export const PREVIEW_AS_UNLOCKED = false;
 
 /**
- * Temporary smoke-test unlock — countdown targets the next Pacific midnight.
- * Set to `false` after testing so September 18 is the real unlock again.
+ * Temporary smoke-test unlock modes. Use only one at a time; both false = Sept 18.
+ * - `next-minute`: unlocks at the next wall-clock minute (reload to re-arm, ~0–60s wait)
+ * - `next-midnight`: unlocks at the next Pacific midnight
  */
-export const TEST_UNLOCK_AT_NEXT_MIDNIGHT = true;
+export const TEST_UNLOCK_AT_NEXT_MINUTE = true;
+export const TEST_UNLOCK_AT_NEXT_MIDNIGHT = false;
+
+export const isUnlockSmokeTest =
+	TEST_UNLOCK_AT_NEXT_MINUTE || TEST_UNLOCK_AT_NEXT_MIDNIGHT;
 
 export const CONFETTI_COUNT = 14;
 export const CONFETTI_RADIUS = 180;
@@ -70,7 +75,7 @@ export function getTurningAge(now: Date): number {
 }
 
 /**
- * Remaining time until the gift unlocks (birthday midnight, or next midnight while testing).
+ * Remaining time until the gift unlocks (birthday midnight, or a smoke-test target).
  */
 export function getCountdownToUnlock(now: Date): CountdownParts {
 	const unlockAt = getBirthdayUnlockAt(now);
@@ -105,14 +110,18 @@ export function getHeroCopy(now: Date): HeroCopy {
 		return {
 			title: "For Seychelle",
 			subtitle: null,
-			openAriaLabel: TEST_UNLOCK_AT_NEXT_MIDNIGHT
-				? "This feature opens at midnight Pacific Time tonight"
-				: "This feature opens at midnight Pacific Time on September 18",
+			openAriaLabel: TEST_UNLOCK_AT_NEXT_MINUTE
+				? "This feature opens at the next minute"
+				: TEST_UNLOCK_AT_NEXT_MIDNIGHT
+					? "This feature opens at midnight Pacific Time tonight"
+					: "This feature opens at midnight Pacific Time on September 18",
 			successMessage: "Happy birthday.",
 			canOpen: false,
-			lockedHint: TEST_UNLOCK_AT_NEXT_MIDNIGHT
-				? "This opens at midnight tonight."
-				: "This opens on her birthday.",
+			lockedHint: TEST_UNLOCK_AT_NEXT_MINUTE
+				? "This opens at the next minute."
+				: TEST_UNLOCK_AT_NEXT_MIDNIGHT
+					? "This opens at midnight tonight."
+					: "This opens on her birthday.",
 		};
 	}
 
@@ -149,15 +158,26 @@ function getPacificYmd(now: Date): { year: number; month: number; day: number } 
 }
 
 /**
- * Unlock instant: September 18 midnight Pacific, or the next Pacific midnight while testing.
+ * Unlock instant: September 18 midnight Pacific, or a smoke-test target.
  */
 function getBirthdayUnlockAt(now: Date): Date {
+	if (TEST_UNLOCK_AT_NEXT_MINUTE) {
+		return getNextMinute(now);
+	}
 	if (TEST_UNLOCK_AT_NEXT_MIDNIGHT) {
 		return getNextMidnightPacific(now);
 	}
 
 	const year = getPacificYear(now);
 	return zonedDateTimeToUtc(year, BIRTHDAY.month, BIRTHDAY.day, 0, 0, 0, PACIFIC_TIME_ZONE);
+}
+
+/** Wall-clock top of the next minute (local device time). */
+function getNextMinute(now: Date): Date {
+	const next = new Date(now.getTime());
+	next.setSeconds(0, 0);
+	next.setMinutes(next.getMinutes() + 1);
+	return next;
 }
 
 /**

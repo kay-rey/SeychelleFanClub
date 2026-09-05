@@ -1,5 +1,5 @@
 import type { JSX } from "react";
-import { TEST_UNLOCK_AT_NEXT_MIDNIGHT } from "@/lib/birthday";
+import { isUnlockSmokeTest, TEST_UNLOCK_AT_NEXT_MINUTE } from "@/lib/birthday";
 import type { CountdownParts } from "@/lib/types";
 
 interface BirthdayCountdownProps {
@@ -33,9 +33,11 @@ function CountdownUnit({ value, label }: CountdownUnitProps): JSX.Element {
  */
 export function BirthdayCountdown({ parts }: BirthdayCountdownProps): JSX.Element {
 	const { days, hours, minutes, seconds } = parts;
-	const unlockLabel = TEST_UNLOCK_AT_NEXT_MIDNIGHT
-		? "midnight Pacific Time tonight"
-		: "midnight Pacific Time on September 18";
+	const unlockLabel = TEST_UNLOCK_AT_NEXT_MINUTE
+		? "the next minute"
+		: isUnlockSmokeTest
+			? "midnight Pacific Time tonight"
+			: "midnight Pacific Time on September 18";
 	const ariaLabel = `${days} days, ${hours} hours, ${minutes} minutes, ${seconds} seconds until ${unlockLabel}`;
 
 	return (
@@ -56,7 +58,9 @@ export function BirthdayCountdown({ parts }: BirthdayCountdownProps): JSX.Elemen
 				<CountdownUnit value={seconds} label="seconds" />
 			</div>
 			<p className="font-sans text-[0.65rem] uppercase tracking-[0.18em] text-[#f5f0e8]/70">
-				until midnight Pacific Time
+				{TEST_UNLOCK_AT_NEXT_MINUTE
+					? "until the next minute"
+					: "until midnight Pacific Time"}
 			</p>
 		</div>
 	);

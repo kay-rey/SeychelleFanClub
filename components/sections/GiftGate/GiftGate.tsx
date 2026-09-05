@@ -9,6 +9,7 @@ import {
 	CONFETTI_DURATION,
 	HERO_FADE_DURATION,
 	LOCAL_STORAGE_MUTED_KEY,
+	TEST_UNLOCK_AT_NEXT_MINUTE,
 	TEST_UNLOCK_AT_NEXT_MIDNIGHT,
 	UNLOCK_MOMENT_DURATION,
 	WRONG_ANSWER_DURATION,
@@ -261,7 +262,11 @@ export function GiftGate({ opened, onOpen, onShakeChange }: GiftGateProps): JSX.
 				>
 					<div className="w-full max-w-3xl mx-auto text-center space-y-5 sm:space-y-6 editorial-fade-up">
 						<p className="font-sans text-[0.7rem] sm:text-xs uppercase tracking-[0.28em] text-[#f5f0e8]/90">
-							{TEST_UNLOCK_AT_NEXT_MIDNIGHT ? "Tonight" : "September 18"}
+							{TEST_UNLOCK_AT_NEXT_MINUTE
+								? "This minute"
+								: TEST_UNLOCK_AT_NEXT_MIDNIGHT
+									? "Tonight"
+									: "September 18"}
 						</p>
 						<h1
 							key={heroCopy.title}
@@ -312,9 +317,11 @@ export function GiftGate({ opened, onOpen, onShakeChange }: GiftGateProps): JSX.
 								)}
 								{!opened && !showLockedHint && !heroCopy.canOpen && (
 									<p className="font-sans text-sm text-[#f5f0e8]/75">
-										{TEST_UNLOCK_AT_NEXT_MIDNIGHT
-											? "Opens at midnight tonight"
-											: "Opens September 18"}
+										{TEST_UNLOCK_AT_NEXT_MINUTE
+											? "Opens at the next minute"
+											: TEST_UNLOCK_AT_NEXT_MIDNIGHT
+												? "Opens at midnight tonight"
+												: "Opens September 18"}
 									</p>
 								)}
 								{!opened && !showLockedHint && heroCopy.canOpen && justUnlocked && (
