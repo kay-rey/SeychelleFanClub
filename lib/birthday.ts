@@ -13,7 +13,7 @@ export const LOCAL_STORAGE_MUTED_KEY = "birthday-muted";
  * Temporary design unlock — treat the site as open on her birthday.
  * Set to `false` before September 18 so the real lock returns.
  */
-export const PREVIEW_AS_UNLOCKED = false;
+export const PREVIEW_AS_UNLOCKED = true;
 
 /**
  * Temporary smoke-test unlock modes. Use only one at a time; both false = Sept 18.
@@ -62,6 +62,14 @@ export const LETTER_BODY =
 	"To my favorite person, my business partner, and the prettiest woman in any room. You inspire everything around you just by being yourself. Whether we’re cheering our heads off at Galaxy games, exploring new places, or just sitting on the couch after a long day, you make our life together feel rich and intentional. Thank you for your endless care, for the heart you put into our home, for the love in every meal you cook, and for keeping us laughing through it all. Watching you step out of your comfort zone, trust your own voice, and grow into everything you’re building this year has been incredible to see. Sobrang proud ako sa'yo. You are courageous, funny, and beautiful in a way that words will never quite capture. Every room is brighter when you walk in, and I count the minutes until you're back. Mahal kita, today and for all the years to come.";
 
 export const LETTER_SIGN_OFF = "All yours, always";
+
+/** Birthday weekend on Catalina — she already knows; this is anticipation, not a reveal. */
+export const CATALINA_WEEKEND = {
+	eyebrow: "This weekend",
+	headline: "Catalina, with you",
+	body: "Ferry wake, Avalon light, and nowhere else I’d rather be. Your birthday weekend, out on the water — just us.",
+	detail: "Catalina Island · Birthday weekend",
+} as const;
 
 export const PACIFIC_TIME_ZONE = "America/Los_Angeles";
 
