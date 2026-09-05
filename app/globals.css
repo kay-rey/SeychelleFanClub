@@ -174,37 +174,6 @@
 	}
 }
 
-/* Added custom animations for sparkles and floating effects */
-@keyframes sparkle {
-	0%,
-	100% {
-		opacity: 0;
-		transform: scale(0);
-	}
-	50% {
-		opacity: 1;
-		transform: scale(1);
-	}
-}
-
-@keyframes float {
-	0%,
-	100% {
-		transform: translateY(0px);
-	}
-	50% {
-		transform: translateY(-10px);
-	}
-}
-
-.sparkle {
-	animation: sparkle 2s ease-in-out infinite;
-}
-
-.float {
-	animation: float 3s ease-in-out infinite;
-}
-
 /* Wrong-answer shake */
 @keyframes shake {
 	0%,
@@ -243,7 +212,7 @@
 	position: absolute;
 	inset: 0;
 	background: url("/images/birthday/letter/paper-texture.jpg") center / cover no-repeat;
-	opacity: 0.3;
+	opacity: 0.5;
 	mix-blend-mode: multiply;
 	pointer-events: none;
 }
@@ -652,155 +621,8 @@
 	filter: drop-shadow(0 25px 50px -12px rgba(0, 0, 0, 0.25));
 }
 
-/* Floating background elements */
-.floating-heart-1 {
-	position: absolute;
-	left: 10%;
-	top: 20%;
-	animation: float 3.2s ease-in-out infinite;
-	animation-delay: 0.5s;
-}
-
-.floating-heart-2 {
-	position: absolute;
-	left: 85%;
-	top: 15%;
-	animation: float 4.1s ease-in-out infinite;
-	animation-delay: 1.2s;
-}
-
-.floating-heart-3 {
-	position: absolute;
-	left: 20%;
-	top: 70%;
-	animation: float 3.8s ease-in-out infinite;
-	animation-delay: 2.1s;
-}
-
-.floating-heart-4 {
-	position: absolute;
-	left: 75%;
-	top: 80%;
-	animation: float 3.5s ease-in-out infinite;
-	animation-delay: 0.8s;
-}
-
-.floating-heart-5 {
-	position: absolute;
-	left: 50%;
-	top: 10%;
-	animation: float 4.3s ease-in-out infinite;
-	animation-delay: 2.5s;
-}
-
-.floating-heart-6 {
-	position: absolute;
-	left: 15%;
-	top: 45%;
-	animation: float 3.7s ease-in-out infinite;
-	animation-delay: 1.8s;
-}
-
-.floating-heart-7 {
-	position: absolute;
-	left: 90%;
-	top: 60%;
-	animation: float 4s ease-in-out infinite;
-	animation-delay: 0.3s;
-}
-
-.floating-heart-8 {
-	position: absolute;
-	left: 60%;
-	top: 85%;
-	animation: float 3.9s ease-in-out infinite;
-	animation-delay: 2.8s;
-}
-
-.floating-shell-1 {
-	position: absolute;
-	left: 25%;
-	top: 25%;
-	animation: float 4.5s ease-in-out infinite;
-	animation-delay: 1.5s;
-}
-
-.floating-shell-2 {
-	position: absolute;
-	left: 80%;
-	top: 35%;
-	animation: float 5.2s ease-in-out infinite;
-	animation-delay: 3.2s;
-}
-
-.floating-shell-3 {
-	position: absolute;
-	left: 5%;
-	top: 60%;
-	animation: float 4.8s ease-in-out infinite;
-	animation-delay: 0.7s;
-}
-
-.floating-shell-4 {
-	position: absolute;
-	left: 95%;
-	top: 75%;
-	animation: float 5s ease-in-out infinite;
-	animation-delay: 2.3s;
-}
-
-.floating-shell-5 {
-	position: absolute;
-	left: 40%;
-	top: 5%;
-	animation: float 4.7s ease-in-out infinite;
-	animation-delay: 1.9s;
-}
-
-.floating-shell-6 {
-	position: absolute;
-	left: 70%;
-	top: 90%;
-	animation: float 5.1s ease-in-out infinite;
-	animation-delay: 0.1s;
-}
-
-.floating-gift-1 {
-	position: absolute;
-	left: 8%;
-	top: 78%;
-	animation: float 4.2s ease-in-out infinite;
-	animation-delay: 0.4s;
-}
-
-.floating-gift-2 {
-	position: absolute;
-	left: 88%;
-	top: 48%;
-	animation: float 4.6s ease-in-out infinite;
-	animation-delay: 1.6s;
-}
-
-.floating-gift-3 {
-	position: absolute;
-	left: 42%;
-	top: 92%;
-	animation: float 5s ease-in-out infinite;
-	animation-delay: 2.2s;
-}
-
-.floating-gift-4 {
-	position: absolute;
-	left: 62%;
-	top: 18%;
-	animation: float 3.6s ease-in-out infinite;
-	animation-delay: 0.9s;
-}
-
 /* Respect prefers-reduced-motion: disable or simplify animations */
 @media (prefers-reduced-motion: reduce) {
-	.sparkle,
-	.float,
 	.animate-shake,
 	.confetti-piece,
 	.soft-mark,
@@ -817,25 +639,7 @@
 	.editorial-fade-up,
 	.reveal-on-scroll,
 	.unlock-title-enter,
-	.unlock-cta-enter,
-	.floating-heart-1,
-	.floating-heart-2,
-	.floating-heart-3,
-	.floating-heart-4,
-	.floating-heart-5,
-	.floating-heart-6,
-	.floating-heart-7,
-	.floating-heart-8,
-	.floating-shell-1,
-	.floating-shell-2,
-	.floating-shell-3,
-	.floating-shell-4,
-	.floating-shell-5,
-	.floating-shell-6,
-	.floating-gift-1,
-	.floating-gift-2,
-	.floating-gift-3,
-	.floating-gift-4 {
+	.unlock-cta-enter {
 		animation: none !important;
 		transition: none !important;
 	}
