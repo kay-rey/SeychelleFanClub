@@ -20,6 +20,7 @@ export const CONFETTI_RADIUS = 180;
 
 export const WRONG_ANSWER_DURATION = 1500;
 export const CONFETTI_DURATION = 1600;
+export const UNLOCK_MOMENT_DURATION = 2200;
 export const SCROLL_DELAY = 50;
 export const HERO_FADE_DURATION = 1000;
 

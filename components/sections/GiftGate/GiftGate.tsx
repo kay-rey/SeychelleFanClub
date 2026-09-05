@@ -9,6 +9,7 @@ import {
 	CONFETTI_DURATION,
 	HERO_FADE_DURATION,
 	LOCAL_STORAGE_MUTED_KEY,
+	UNLOCK_MOMENT_DURATION,
 	WRONG_ANSWER_DURATION,
 	getConfettiPieces,
 	getCountdownToUnlock,
@@ -34,11 +35,13 @@ export function GiftGate({ opened, onOpen, onShakeChange }: GiftGateProps): JSX.
 	const [showLockedHint, setShowLockedHint] = useState(false);
 	const [muted, setMuted] = useState(false);
 	const [showMarks, setShowMarks] = useState(false);
+	const [justUnlocked, setJustUnlocked] = useState(false);
 	const [now, setNow] = useState<Date>(() => new Date());
 	const nopeAudioRefs = useRef<HTMLAudioElement[]>([]);
 	const birthdaySongRef = useRef<HTMLAudioElement | null>(null);
 	const songStartedRef = useRef(false);
 	const noSoundIndexRef = useRef(0);
+	const prevCanOpenRef = useRef<boolean | null>(null);
 
 	const heroCopy: HeroCopy = getHeroCopy(now);
 	const countdown = getCountdownToUnlock(now);
@@ -92,6 +95,46 @@ export function GiftGate({ opened, onOpen, onShakeChange }: GiftGateProps): JSX.
 		}
 	}, [muted]);
 
+	const triggerHapticFeedback = (type: "success" | "error"): void => {
+		if (typeof window === "undefined" || !navigator.vibrate) return;
+		try {
+			if (type === "success") {
+				navigator.vibrate([40, 30, 60]);
+			} else {
+				navigator.vibrate([30, 50, 30]);
+			}
+		} catch {
+			// Silently fail if vibration is not supported or blocked
+		}
+	};
+
+	useEffect(() => {
+		const canOpen = heroCopy.canOpen;
+		const previous = prevCanOpenRef.current;
+		prevCanOpenRef.current = canOpen;
+
+		if (previous !== false || canOpen !== true || opened) {
+			return;
+		}
+
+		setJustUnlocked(true);
+		setShowLockedHint(false);
+		setShowMarks(true);
+		triggerHapticFeedback("success");
+
+		const marksTimeout = window.setTimeout(() => {
+			setShowMarks(false);
+		}, CONFETTI_DURATION);
+		const unlockTimeout = window.setTimeout(() => {
+			setJustUnlocked(false);
+		}, UNLOCK_MOMENT_DURATION);
+
+		return () => {
+			window.clearTimeout(marksTimeout);
+			window.clearTimeout(unlockTimeout);
+		};
+	}, [heroCopy.canOpen, opened]);
+
 	const playNope = (): void => {
 		if (muted) return;
 		try {
@@ -117,19 +160,6 @@ export function GiftGate({ opened, onOpen, onShakeChange }: GiftGateProps): JSX.
 			song.play().catch(() => {});
 		} catch {
 			// ignore when playback is blocked
-		}
-	};
-
-	const triggerHapticFeedback = (type: "success" | "error"): void => {
-		if (typeof window === "undefined" || !navigator.vibrate) return;
-		try {
-			if (type === "success") {
-				navigator.vibrate(50);
-			} else {
-				navigator.vibrate([30, 50, 30]);
-			}
-		} catch {
-			// Silently fail if vibration is not supported or blocked
 		}
 	};
 
@@ -230,7 +260,11 @@ export function GiftGate({ opened, onOpen, onShakeChange }: GiftGateProps): JSX.
 							September 18
 						</p>
 						<h1
-							className="font-script text-5xl sm:text-6xl md:text-7xl lg:text-8xl leading-[1.15] text-balance text-[#f5f0e8]"
+							key={heroCopy.title}
+							className={cn(
+								"font-script text-5xl sm:text-6xl md:text-7xl lg:text-8xl leading-[1.15] text-balance text-[#f5f0e8]",
+								justUnlocked && "unlock-title-enter"
+							)}
 							suppressHydrationWarning
 						>
 							{heroCopy.title}
@@ -255,7 +289,8 @@ export function GiftGate({ opened, onOpen, onShakeChange }: GiftGateProps): JSX.
 										"border border-[#f5f0e8]/55 bg-[#f5f0e8]/10 text-[#f5f0e8]",
 										"font-sans text-xs uppercase tracking-[0.22em]",
 										"backdrop-blur-sm transition-colors duration-300",
-										"hover:bg-[#f5f0e8]/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-secondary"
+										"hover:bg-[#f5f0e8]/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-secondary",
+										heroCopy.canOpen && justUnlocked && "unlock-cta-enter"
 									)}
 								>
 									{heroCopy.canOpen ? "Open" : "Not yet"}
@@ -273,6 +308,11 @@ export function GiftGate({ opened, onOpen, onShakeChange }: GiftGateProps): JSX.
 								)}
 								{!opened && !showLockedHint && !heroCopy.canOpen && (
 									<p className="font-sans text-sm text-[#f5f0e8]/75">Opens September 18</p>
+								)}
+								{!opened && !showLockedHint && heroCopy.canOpen && justUnlocked && (
+									<p className="font-serif italic text-sm text-[#f5f0e8]/80 unlock-cta-enter">
+										It&apos;s time.
+									</p>
 								)}
 							</div>
 						</div>

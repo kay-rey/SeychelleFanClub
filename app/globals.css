@@ -320,6 +320,38 @@
 	animation: soft-mark-burst 1.35s ease-out forwards;
 }
 
+@keyframes unlock-title-enter {
+	from {
+		opacity: 0;
+		transform: translateY(14px);
+		filter: blur(4px);
+	}
+	to {
+		opacity: 1;
+		transform: translateY(0);
+		filter: blur(0);
+	}
+}
+
+.unlock-title-enter {
+	animation: unlock-title-enter 1.1s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes unlock-cta-enter {
+	from {
+		opacity: 0;
+		transform: translateY(10px);
+	}
+	to {
+		opacity: 1;
+		transform: translateY(0);
+	}
+}
+
+.unlock-cta-enter {
+	animation: unlock-cta-enter 0.9s cubic-bezier(0.22, 1, 0.36, 1) 0.2s both;
+}
+
 /* Confetti burst for mixed birthday icons */
 @keyframes confetti-burst {
 	0% {
@@ -614,6 +646,8 @@
 	.cover-image-motion,
 	.editorial-fade-up,
 	.reveal-on-scroll,
+	.unlock-title-enter,
+	.unlock-cta-enter,
 	.floating-heart-1,
 	.floating-heart-2,
 	.floating-heart-3,
