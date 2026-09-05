@@ -10,8 +10,7 @@ import "./globals.css";
 export const viewport: Viewport = {
 	width: "device-width",
 	initialScale: 1,
-	viewportFit: "cover",
-	themeColor: "#f5f0e8",
+	themeColor: "#1c1812",
 };
 
 const greatVibes = Great_Vibes({
@@ -79,6 +78,11 @@ export default function RootLayout({
 			<body
 				className={`font-sans ${greatVibes.variable} ${cormorant.variable} ${dmSans.variable}`}
 			>
+				<style
+					dangerouslySetInnerHTML={{
+						__html: "html,body{margin:0;background:#1c1812;overflow:hidden}.gift-cover{position:relative;width:100%;height:100vh;height:100svh;overflow:hidden}.gift-cover-media{position:absolute;inset:0}.gift-cover-media img{height:100%;width:100%;object-fit:cover;object-position:center}",
+					}}
+				/>
 				<AudioPreload />
 				<Suspense fallback={null}>{children}</Suspense>
 				<Analytics />

@@ -145,7 +145,6 @@
 		@apply border-border outline-ring/50;
 	}
 	html {
-		/* Match cover scrim so any viewport chrome gap never flashes limestone. */
 		background-color: #1c1812;
 		overflow: hidden;
 		scrollbar-width: none;
@@ -266,20 +265,35 @@
 	animation: aurora-drift 130s linear infinite reverse;
 }
 
-/* Editorial cover and gallery motion */
-@keyframes cover-ken-burns {
-	from {
-		transform: scale(1.02);
-	}
-	to {
-		transform: scale(1.05);
-	}
+/* Locked cover: one in-flow viewport. Never fixed. Never dvh (it resizes after paint). */
+.gift-cover {
+	position: relative;
+	width: 100%;
+	height: 100vh;
+	height: 100svh;
+	overflow: hidden;
 }
 
-.cover-image-motion {
-	/* Start slightly zoomed so the animation never reveals a larger crop, then shrinks. */
-	transform: scale(1.02);
-	animation: cover-ken-burns 28s ease-in-out infinite alternate;
+.gift-cover-media {
+	position: absolute;
+	inset: 0;
+}
+
+.gift-cover-media img {
+	height: 100%;
+	width: 100%;
+	object-fit: cover;
+	object-position: center;
+}
+
+.gift-cover-ui {
+	position: absolute;
+	inset: 0;
+	z-index: 1;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	padding: 3.5rem 1.5rem 2rem;
 }
 
 @keyframes editorial-fade-up {
@@ -654,7 +668,6 @@
 	.gift-wiggle,
 	.aurora-layer,
 	.aurora-layer::after,
-	.cover-image-motion,
 	.editorial-fade-up,
 	.reveal-on-scroll,
 	.unlock-title-enter,

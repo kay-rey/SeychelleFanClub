@@ -31,12 +31,8 @@ interface GiftGateProps {
 /**
  * Photography-first editorial cover.
  *
- * Layout contract:
- * - In-flow shell is always `100svh` (document spacing, unlocked scroll target)
- * - While locked, photo + chrome are `fixed inset-0` so they fill the real screen
- *   even if `svh`/CSS settles after first paint (the cold-load bottom clip)
- * - After Open, those layers become `absolute` inside the shell and scroll away
- * - Copy never sizes the photo
+ * One in-flow `100svh` section. Photo and copy are absolute inside it.
+ * Positioning never changes after Open — the section just scrolls away.
  */
 export function GiftGate({ opened, onOpen, onShakeChange }: GiftGateProps): JSX.Element {
 	const [isVisible, setIsVisible] = useState(false);
@@ -212,7 +208,7 @@ export function GiftGate({ opened, onOpen, onShakeChange }: GiftGateProps): JSX.
 		<>
 			{showMarks && (
 				<div
-					className="fixed inset-0 z-[80] pointer-events-none flex items-center justify-center"
+					className="fixed inset-0 z-20 pointer-events-none flex items-center justify-center"
 					aria-hidden
 				>
 					{SOFT_MARKS.map(({ id, tx, ty }) => (
@@ -230,20 +226,8 @@ export function GiftGate({ opened, onOpen, onShakeChange }: GiftGateProps): JSX.
 				</div>
 			)}
 
-			{/*
-			  In-flow shell is always 100svh for document layout.
-			  While locked, media + chrome are `fixed inset-0` so they track the real
-			  screen — if svh/CSS settles after first paint, the photo cannot get shorter
-			  and clip. After Open (scrollY is 0), the same layers become absolute in the
-			  shell so they scroll away with the page.
-			*/}
-			<section className="relative isolate z-[60] h-[100svh] w-full overflow-hidden">
-				<div
-					className={cn(
-						"overflow-hidden",
-						opened ? "absolute inset-0" : "fixed inset-0 z-[60]"
-					)}
-				>
+			<section className="gift-cover z-10">
+				<div className="gift-cover-media">
 					<Image
 						src={COVER_IMAGE.src}
 						alt={COVER_IMAGE.alt}
@@ -251,7 +235,7 @@ export function GiftGate({ opened, onOpen, onShakeChange }: GiftGateProps): JSX.
 						priority
 						placeholder="blur"
 						sizes="100vw"
-						className="object-cover object-center cover-image-motion"
+						className="object-cover object-center"
 					/>
 					<div
 						className="absolute inset-0 bg-[linear-gradient(to_bottom,rgba(28,24,18,0.92)_0%,rgba(28,24,18,0.88)_24%,rgba(28,24,18,0.55)_34%,rgba(28,24,18,0.12)_44%,transparent_54%)]"
@@ -262,14 +246,7 @@ export function GiftGate({ opened, onOpen, onShakeChange }: GiftGateProps): JSX.
 				<button
 					type="button"
 					onClick={toggleMuted}
-					className={cn(
-						"z-[70] flex items-center justify-center w-11 h-11 rounded-full bg-[#f5f0e8]/85 backdrop-blur-sm border border-white/30 text-primary hover:bg-[#f5f0e8] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-secondary",
-						opened ? "absolute" : "fixed"
-					)}
-					style={{
-						top: "max(1rem, env(safe-area-inset-top, 0px))",
-						right: "max(1rem, env(safe-area-inset-right, 0px))",
-					}}
+					className="absolute top-4 right-4 z-20 flex items-center justify-center w-11 h-11 rounded-full bg-[#f5f0e8]/85 backdrop-blur-sm border border-white/30 text-primary hover:bg-[#f5f0e8] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-secondary"
 					aria-label={muted ? "Unmute sounds" : "Mute sounds"}
 				>
 					{muted ? <VolumeX className="w-5 h-5" /> : <Volume2 className="w-5 h-5" />}
@@ -277,15 +254,10 @@ export function GiftGate({ opened, onOpen, onShakeChange }: GiftGateProps): JSX.
 
 				<div
 					className={cn(
-						"z-[65] flex flex-col items-center px-6 transition-opacity",
-						opened ? "absolute inset-0" : "fixed inset-0",
+						"gift-cover-ui transition-opacity",
 						isVisible ? "opacity-100" : "opacity-0"
 					)}
-					style={{
-						paddingTop: "max(3.5rem, calc(env(safe-area-inset-top, 0px) + 2.25rem))",
-						paddingBottom: "max(2rem, env(safe-area-inset-bottom, 0px))",
-						transitionDuration: `${HERO_FADE_DURATION}ms`,
-					}}
+					style={{ transitionDuration: `${HERO_FADE_DURATION}ms` }}
 				>
 					<div className="w-full max-w-3xl mx-auto text-center space-y-5 sm:space-y-6 editorial-fade-up">
 						<p className="font-sans text-[0.7rem] sm:text-xs uppercase tracking-[0.28em] text-[#f5f0e8]/90">

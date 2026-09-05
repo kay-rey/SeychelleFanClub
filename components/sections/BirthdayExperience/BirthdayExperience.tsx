@@ -12,10 +12,10 @@ interface BirthdayExperienceProps {
 
 /**
  * Client island for the editorial unlock. Server-rendered sections are passed as children
- * and only mount in the DOM after the cover opens.
+ * and only mount after Open.
  *
- * Locked model: one in-flow cover at `100svh`. Scroll stays off via CSS (`html` overflow)
- * until Open — the cover never swaps fixed/relative, so the photo cannot jump or gap.
+ * Locked: document cannot scroll (CSS on `html`). Cover is a normal in-flow `100svh`
+ * block. Aurora (cream wash) mounts only after Open so it cannot flash under the photo.
  */
 export function BirthdayExperience({ children }: BirthdayExperienceProps): JSX.Element {
 	const [opened, setOpened] = useState(false);
@@ -50,7 +50,7 @@ export function BirthdayExperience({ children }: BirthdayExperienceProps): JSX.E
 
 	return (
 		<div className={cn("relative", isShaking && "animate-shake")}>
-			<AuroraBackground />
+			{opened && <AuroraBackground />}
 			<GiftGate opened={opened} onOpen={handleOpen} onShakeChange={setIsShaking} />
 			{opened && <div ref={contentRef}>{children}</div>}
 		</div>
