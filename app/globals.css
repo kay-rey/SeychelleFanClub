@@ -269,14 +269,16 @@
 /* Editorial cover and gallery motion */
 @keyframes cover-ken-burns {
 	from {
-		transform: scale(1);
+		transform: scale(1.02);
 	}
 	to {
-		transform: scale(1.06);
+		transform: scale(1.05);
 	}
 }
 
 .cover-image-motion {
+	/* Start slightly zoomed so the animation never reveals a larger crop, then shrinks. */
+	transform: scale(1.02);
 	animation: cover-ken-burns 28s ease-in-out infinite alternate;
 }
 
