@@ -190,7 +190,7 @@ export function GiftGate({ opened, onOpen, onShakeChange }: GiftGateProps): JSX.
 						className="object-cover cover-image-motion"
 					/>
 					<div
-						className="absolute inset-0 bg-[linear-gradient(to_bottom,rgba(44,36,24,0.82)_0%,rgba(44,36,24,0.55)_18%,rgba(44,36,24,0.18)_40%,transparent_55%)]"
+						className="absolute inset-0 bg-[linear-gradient(to_bottom,rgba(28,24,18,0.92)_0%,rgba(28,24,18,0.88)_24%,rgba(28,24,18,0.55)_34%,rgba(28,24,18,0.12)_44%,transparent_54%)]"
 						aria-hidden
 					/>
 				</div>
@@ -212,7 +212,7 @@ export function GiftGate({ opened, onOpen, onShakeChange }: GiftGateProps): JSX.
 					style={{ transitionDuration: `${HERO_FADE_DURATION}ms`, transitionProperty: "opacity, transform" }}
 				>
 					<div className="w-full max-w-3xl mx-auto text-center space-y-5 sm:space-y-6 editorial-fade-up">
-						<p className="font-sans text-[0.7rem] sm:text-xs uppercase tracking-[0.28em] text-[#f5f0e8]/70">
+						<p className="font-sans text-[0.7rem] sm:text-xs uppercase tracking-[0.28em] text-[#f5f0e8]/90">
 							September 18
 						</p>
 						<h1
@@ -258,7 +258,7 @@ export function GiftGate({ opened, onOpen, onShakeChange }: GiftGateProps): JSX.
 									<p className="font-sans text-sm text-[#f5f0e8]/80">{heroCopy.lockedHint}</p>
 								)}
 								{!opened && !showLockedHint && !heroCopy.canOpen && (
-									<p className="font-sans text-sm text-[#f5f0e8]/50">Opens September 18</p>
+									<p className="font-sans text-sm text-[#f5f0e8]/75">Opens September 18</p>
 								)}
 							</div>
 						</div>

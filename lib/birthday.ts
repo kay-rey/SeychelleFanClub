@@ -13,7 +13,7 @@ export const LOCAL_STORAGE_MUTED_KEY = "birthday-muted";
  * Temporary design unlock — treat the site as open on her birthday.
  * Set to `false` before September 18 so the real lock returns.
  */
-export const PREVIEW_AS_UNLOCKED = true;
+export const PREVIEW_AS_UNLOCKED = false;
 
 export const CONFETTI_COUNT = 14;
 export const CONFETTI_RADIUS = 180;
