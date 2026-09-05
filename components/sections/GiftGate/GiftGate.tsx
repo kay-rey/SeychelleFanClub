@@ -223,8 +223,8 @@ export function GiftGate({ opened, onOpen, onShakeChange }: GiftGateProps): JSX.
 				</div>
 			)}
 
-			<section className="relative min-h-screen z-[60] overflow-hidden">
-				<div className="absolute inset-0">
+			<section className="relative min-h-screen z-[60] overflow-x-hidden">
+				<div className="absolute inset-0 overflow-hidden">
 					<Image
 						src={COVER_IMAGE.src}
 						alt={COVER_IMAGE.alt}
@@ -243,7 +243,8 @@ export function GiftGate({ opened, onOpen, onShakeChange }: GiftGateProps): JSX.
 				<button
 					type="button"
 					onClick={toggleMuted}
-					className="absolute top-4 right-4 z-30 flex items-center justify-center w-11 h-11 rounded-full bg-[#f5f0e8]/85 backdrop-blur-sm border border-white/30 text-primary hover:bg-[#f5f0e8] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-secondary"
+					className="absolute right-4 z-30 flex items-center justify-center w-11 h-11 rounded-full bg-[#f5f0e8]/85 backdrop-blur-sm border border-white/30 text-primary hover:bg-[#f5f0e8] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-secondary"
+					style={{ top: "max(1rem, env(safe-area-inset-top, 0px))" }}
 					aria-label={muted ? "Unmute sounds" : "Mute sounds"}
 				>
 					{muted ? <VolumeX className="w-5 h-5" /> : <Volume2 className="w-5 h-5" />}
@@ -251,10 +252,14 @@ export function GiftGate({ opened, onOpen, onShakeChange }: GiftGateProps): JSX.
 
 				<div
 					className={cn(
-						"relative z-10 min-h-screen flex flex-col items-center justify-start px-6 pt-12 sm:pt-14 md:pt-16",
+						"relative z-10 min-h-screen flex flex-col items-center justify-start px-6 pb-10",
 						isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
 					)}
-					style={{ transitionDuration: `${HERO_FADE_DURATION}ms`, transitionProperty: "opacity, transform" }}
+					style={{
+						paddingTop: "max(4.5rem, calc(env(safe-area-inset-top, 0px) + 2.75rem))",
+						transitionDuration: `${HERO_FADE_DURATION}ms`,
+						transitionProperty: "opacity, transform",
+					}}
 				>
 					<div className="w-full max-w-3xl mx-auto text-center space-y-5 sm:space-y-6 editorial-fade-up">
 						<p className="font-sans text-[0.7rem] sm:text-xs uppercase tracking-[0.28em] text-[#f5f0e8]/90">
@@ -263,7 +268,7 @@ export function GiftGate({ opened, onOpen, onShakeChange }: GiftGateProps): JSX.
 						<h1
 							key={heroCopy.title}
 							className={cn(
-								"font-script text-5xl sm:text-6xl md:text-7xl lg:text-8xl leading-[1.15] text-balance text-[#f5f0e8]",
+								"font-script text-5xl sm:text-6xl md:text-7xl lg:text-8xl leading-[1.35] py-2 text-balance text-[#f5f0e8]",
 								justUnlocked && "unlock-title-enter"
 							)}
 							suppressHydrationWarning
