@@ -2,40 +2,11 @@ import type { JSX } from "react";
 import { LETTER_BODY, LETTER_GREETING, LETTER_SIGN_OFF } from "@/lib/birthday";
 
 /**
- * Closing letter on a limestone page with a faint deckled edge.
- * Deckle is applied only to the paper face so the type stays sharp.
+ * Closing letter on a limestone page with paper grain and a soft drop shadow.
  */
 export function BirthdayLetter(): JSX.Element {
 	return (
 		<section className="py-24 md:py-32 px-4 relative z-10">
-			<svg className="absolute h-0 w-0" aria-hidden>
-				<defs>
-					<filter
-						id="letter-deckle"
-						x="-3%"
-						y="-3%"
-						width="106%"
-						height="106%"
-						filterUnits="objectBoundingBox"
-					>
-						<feTurbulence
-							type="fractalNoise"
-							baseFrequency="0.035"
-							numOctaves="3"
-							seed="7"
-							result="noise"
-						/>
-						<feDisplacementMap
-							in="SourceGraphic"
-							in2="noise"
-							scale="5"
-							xChannelSelector="R"
-							yChannelSelector="G"
-						/>
-					</filter>
-				</defs>
-			</svg>
-
 			<div className="container mx-auto max-w-3xl">
 				<div className="relative px-8 py-16 sm:px-12 sm:py-20 md:px-16 md:py-24 text-center">
 					<div className="letter-paper-face" aria-hidden />
