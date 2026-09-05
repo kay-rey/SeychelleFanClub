@@ -217,14 +217,17 @@
 	pointer-events: none;
 }
 
-/* STEP 1: photo-only. Size to 100lvh — logs showed svh=745 fills innerHeight
-   but leaves an lvh(853) chrome band of #1c1812 below. No text yet, so lvh is safe. */
+/* STEP 1c: photo @ 100lvh fills the chrome band; position:fixed so the tall
+   cover is out of document flow (in-flow 100lvh made the page scrollable). */
 .gift-cover {
-	position: relative;
+	position: fixed;
+	top: 0;
+	left: 0;
 	width: 100%;
 	height: 100vh;
 	height: 100lvh;
 	overflow: hidden;
+	z-index: 1;
 }
 
 .gift-cover-media {

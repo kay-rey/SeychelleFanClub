@@ -52,6 +52,8 @@ export function GiftGate(_props: GiftGateProps): JSX.Element {
 			const vv = window.visualViewport;
 			const coverH = cover?.offsetHeight ?? null;
 			const gap = coverH == null ? null : Math.round(window.innerHeight - coverH);
+			const html = document.documentElement;
+			const body = document.body;
 			const units = {
 				vh: probe("100vh"),
 				svh: probe("100svh"),
@@ -60,14 +62,18 @@ export function GiftGate(_props: GiftGateProps): JSX.Element {
 			};
 			const payload = {
 				sessionId: "fac517",
-				runId: "step1-photo-lvh",
-				hypothesisId: "baseline",
-				location: "GiftGate.tsx:step1",
+				runId: "step1c-fixed-lvh",
+				hypothesisId: "A-scroll-from-inflow-lvh",
+				location: "GiftGate.tsx:step1c",
 				message: phase,
 				data: {
-					step: 1,
+					step: "1c",
 					innerHeight: window.innerHeight,
-					clientHeight: document.documentElement.clientHeight,
+					clientHeight: html.clientHeight,
+					scrollY: Math.round(window.scrollY),
+					scrollHeight: html.scrollHeight,
+					bodyScrollHeight: body.scrollHeight,
+					canScroll: html.scrollHeight > html.clientHeight + 1,
 					visualViewportHeight: vv?.height ?? null,
 					visualViewportOffsetTop: vv?.offsetTop ?? null,
 					screenHeight: window.screen.height,
@@ -78,6 +84,8 @@ export function GiftGate(_props: GiftGateProps): JSX.Element {
 					imgH: imgRect ? Math.round(imgRect.height) : null,
 					gapBelowInner: gap,
 					units,
+					htmlOverflow: getComputedStyle(html).overflow,
+					bodyOverflow: getComputedStyle(body).overflow,
 					computedHeight: cover ? getComputedStyle(cover).height : null,
 					computedPosition: cover ? getComputedStyle(cover).position : null,
 					href: window.location.href,
@@ -93,14 +101,13 @@ export function GiftGate(_props: GiftGateProps): JSX.Element {
 				setDebugJson(JSON.stringify(logsRef.current, null, 2));
 				setDebugText(
 					[
-						"STEP 1 — photo @ 100lvh",
+						"STEP 1c — fixed + 100lvh",
 						phase,
-						`cover=${coverH}`,
-						`media=${mediaRect ? Math.round(mediaRect.height) : "?"}`,
-						`inner=${window.innerHeight}`,
-						`vv=${vv?.height ?? "?"}`,
-						`gap=${gap}`,
-						`svh=${units.svh} lvh=${units.lvh} vh=${units.vh} dvh=${units.dvh}`,
+						`cover=${coverH} pos=${cover ? getComputedStyle(cover).position : "?"}`,
+						`scrollY=${Math.round(window.scrollY)} canScroll=${html.scrollHeight > html.clientHeight + 1}`,
+						`scrollH=${html.scrollHeight} clientH=${html.clientHeight}`,
+						`inner=${window.innerHeight} vv=${vv?.height ?? "?"} vvTop=${vv?.offsetTop ?? "?"}`,
+						`gap=${gap} svh=${units.svh} lvh=${units.lvh}`,
 					].join("\n")
 				);
 			}
@@ -122,9 +129,14 @@ export function GiftGate(_props: GiftGateProps): JSX.Element {
 		const onVv = (): void => {
 			measure("visualViewport-resize");
 		};
+		const onScroll = (): void => {
+			measure("scroll");
+		};
 		window.visualViewport?.addEventListener("resize", onVv);
+		window.addEventListener("scroll", onScroll, { passive: true });
 		return () => {
 			window.visualViewport?.removeEventListener("resize", onVv);
+			window.removeEventListener("scroll", onScroll);
 			ids.forEach((id) => window.clearTimeout(id));
 		};
 	}, []);
