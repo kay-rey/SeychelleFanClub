@@ -20,7 +20,7 @@ export const PREVIEW_AS_UNLOCKED = false;
  * - `next-minute`: unlocks at the next wall-clock minute, then stays unlocked until reload
  * - `next-midnight`: unlocks at the next Pacific midnight, then stays unlocked until reload
  */
-export const TEST_UNLOCK_AT_NEXT_MINUTE = true;
+export const TEST_UNLOCK_AT_NEXT_MINUTE = false;
 export const TEST_UNLOCK_AT_NEXT_MIDNIGHT = false;
 
 export const isUnlockSmokeTest =
