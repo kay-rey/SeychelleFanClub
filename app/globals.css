@@ -145,16 +145,14 @@
 		@apply border-border outline-ring/50;
 	}
 	html {
-		background-color: #f5f0e8;
-		/* Locked cover is the default first paint — no scroll until unlock. */
-		height: 100%;
+		/* Match cover scrim so any viewport chrome gap never flashes limestone. */
+		background-color: #1c1812;
 		overflow: hidden;
 		scrollbar-width: none;
 		-ms-overflow-style: none;
 	}
-	html[data-scroll-unlocked] {
-		height: auto;
-		min-height: 100dvh;
+	html[data-unlocked] {
+		background-color: #f5f0e8;
 		overflow-x: hidden;
 		overflow-y: auto;
 	}
@@ -162,14 +160,14 @@
 		display: none;
 	}
 	body {
-		background-color: #f5f0e8;
-		min-height: 100dvh;
+		background-color: inherit;
+		min-height: 100%;
 		overflow: hidden;
 		scrollbar-width: none;
 		-ms-overflow-style: none;
 		@apply text-foreground font-sans;
 	}
-	html[data-scroll-unlocked] body {
+	html[data-unlocked] body {
 		overflow: visible;
 	}
 	body::-webkit-scrollbar {

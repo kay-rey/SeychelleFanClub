@@ -29,7 +29,13 @@ interface GiftGateProps {
 }
 
 /**
- * Photography-first editorial cover. Locked until September 18 Pacific midnight.
+ * Photography-first editorial cover.
+ *
+ * Layout contract (locked and unlocked):
+ * - Always in document flow at exactly one small viewport (`100svh`)
+ * - Photo is an absolute fill layer (`inset-0` + `object-cover`) — never sized by text
+ * - Copy sits in an absolute overlay with safe-area padding — cannot stretch or clip the photo
+ * - Never switches between fixed and relative (that was the jump / white gap)
  */
 export function GiftGate({ opened, onOpen, onShakeChange }: GiftGateProps): JSX.Element {
 	const [isVisible, setIsVisible] = useState(false);
@@ -223,13 +229,9 @@ export function GiftGate({ opened, onOpen, onShakeChange }: GiftGateProps): JSX.
 				</div>
 			)}
 
-			<section
-				className={cn(
-					"z-[60] overflow-x-hidden",
-					opened ? "relative min-h-dvh" : "fixed inset-0 h-dvh w-full"
-				)}
-			>
-				<div className="absolute inset-0 overflow-hidden">
+			<section className="relative isolate z-[60] h-[100svh] w-full overflow-hidden">
+				{/* Photo fill — sized only by the section, never by copy */}
+				<div className="absolute inset-0">
 					<Image
 						src={COVER_IMAGE.src}
 						alt={COVER_IMAGE.alt}
@@ -237,7 +239,7 @@ export function GiftGate({ opened, onOpen, onShakeChange }: GiftGateProps): JSX.
 						priority
 						placeholder="blur"
 						sizes="100vw"
-						className="object-cover cover-image-motion"
+						className="object-cover object-center cover-image-motion"
 					/>
 					<div
 						className="absolute inset-0 bg-[linear-gradient(to_bottom,rgba(28,24,18,0.92)_0%,rgba(28,24,18,0.88)_24%,rgba(28,24,18,0.55)_34%,rgba(28,24,18,0.12)_44%,transparent_54%)]"
@@ -248,20 +250,25 @@ export function GiftGate({ opened, onOpen, onShakeChange }: GiftGateProps): JSX.
 				<button
 					type="button"
 					onClick={toggleMuted}
-					className="absolute right-4 z-30 flex items-center justify-center w-11 h-11 rounded-full bg-[#f5f0e8]/85 backdrop-blur-sm border border-white/30 text-primary hover:bg-[#f5f0e8] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-secondary"
-					style={{ top: "max(1rem, env(safe-area-inset-top, 0px))" }}
+					className="absolute z-20 flex items-center justify-center w-11 h-11 rounded-full bg-[#f5f0e8]/85 backdrop-blur-sm border border-white/30 text-primary hover:bg-[#f5f0e8] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-secondary"
+					style={{
+						top: "max(1rem, env(safe-area-inset-top, 0px))",
+						right: "max(1rem, env(safe-area-inset-right, 0px))",
+					}}
 					aria-label={muted ? "Unmute sounds" : "Mute sounds"}
 				>
 					{muted ? <VolumeX className="w-5 h-5" /> : <Volume2 className="w-5 h-5" />}
 				</button>
 
+				{/* Copy overlay — absolute so it cannot grow the section or clip the photo */}
 				<div
 					className={cn(
-						"relative z-10 flex h-full min-h-dvh flex-col items-center justify-start px-6 pb-10 transition-opacity",
+						"absolute inset-0 z-10 flex flex-col items-center px-6 transition-opacity",
 						isVisible ? "opacity-100" : "opacity-0"
 					)}
 					style={{
-						paddingTop: "max(4.5rem, calc(env(safe-area-inset-top, 0px) + 2.75rem))",
+						paddingTop: "max(3.5rem, calc(env(safe-area-inset-top, 0px) + 2.25rem))",
+						paddingBottom: "max(2rem, env(safe-area-inset-bottom, 0px))",
 						transitionDuration: `${HERO_FADE_DURATION}ms`,
 					}}
 				>
@@ -272,7 +279,7 @@ export function GiftGate({ opened, onOpen, onShakeChange }: GiftGateProps): JSX.
 						<h1
 							key={heroCopy.title}
 							className={cn(
-								"font-script text-5xl sm:text-6xl md:text-7xl lg:text-8xl leading-[1.35] py-2 text-balance text-[#f5f0e8]",
+								"font-script text-5xl sm:text-6xl md:text-7xl lg:text-8xl leading-[1.35] py-1 text-balance text-[#f5f0e8]",
 								justUnlocked && "unlock-title-enter"
 							)}
 							suppressHydrationWarning
